@@ -3,8 +3,10 @@
     "description": "php 7 bot for mixin network",
     "type": "project",
     "require": {
-        "ext-sockets": "^7.2",
-        "exinone/mixin-sdk-php": "^1.1"
+        "exinone/mixin-sdk-php": "^1.1",
+        "wrench/wrench": "^2.0",
+        "ratchet/pawl": "^0.3.3",
+        "cboden/ratchet": "^0.4.1"
     },
     "license": "BSD",
     "authors": [

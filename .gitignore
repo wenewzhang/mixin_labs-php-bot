@@ -1,3 +1,4 @@
 .git
 composer.lock
 composer.phar
+vendor
