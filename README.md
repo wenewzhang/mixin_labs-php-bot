@@ -18,5 +18,9 @@ composer install
 php chat-client.php
 ```
 
+## wrenchClient连接chat服务器的方法
+composer install
+php chat.php
+php wrenchClient.php
 test:
 ../../vendor/bin/phpunit MessageApiTest.php
