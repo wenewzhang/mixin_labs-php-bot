@@ -58,11 +58,11 @@
                       ];
                       $msgParams = [
                         'conversation_id' => $jsMsg->data->conversation_id,// $callTrait->config[client_id],
-                        'recipient_id'    => $jsMsg->data->user_id,
-                        'category'        => 'APP_BUTTON_GROUP',
+                        // 'recipient_id'    => $jsMsg->data->user_id,
+                        'category'        => 'PLAIN_TEXT',
                         'status'          => 'SENT',
                         'message_id'      => Uuid::uuid4()->toString(),
-                        'data'            => $msgData,
+                        'data'            => base64_encode("hello!"),//base64_encode(json_encode($msgData)),
                       ];
                       $msgPayButton = [
                         'id'     =>  Uuid::uuid4()->toString(),
