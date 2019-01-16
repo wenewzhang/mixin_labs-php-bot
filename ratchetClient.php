@@ -29,8 +29,10 @@
                                           ])
     ->then(function(Ratchet\Client\WebSocket $conn) {
         $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
-            echo "Received: \n";
+            $jsMsg = gzdecode($msg);
+            echo "Received: {$jsMsg}\n";
             // $conn->close();
+            // echo gzdecode($msg);
         });
 
         $conn->on('close', function($code = null, $reason = null) {
@@ -38,17 +40,12 @@
         });
         $message = [
             'id'     => Uuid::uuid4()->toString(),
-            'action' => 'CREATE_MESSAGE',
-            'params' => [
-                'conversation_id' => $category == 'CONTACT' && empty($conversation_id)
-                    ? $this->uniqueConversationId($user_id, $this->config['client_id'])
-                    : $conversation_id,
-                'message_id'      => Uuid::uuid4()->toString(),
-                'category'        => 'PLAIN_TEXT',
-                'data'            => base64_encode("hi,u"),
-            ],
+            'action' => 'LIST_PENDING_MESSAGES',
         ];
-        $conn->send($message);
+        print_r($message);
+        $jsMsg = json_encode($message);
+        echo "Send: {$jsMsg}\n";
+        $conn->send(gzencode($jsMsg));
     }, function(\Exception $e) use ($loop) {
         echo "Could not connect: {$e->getMessage()}\n";
         $loop->stop();
