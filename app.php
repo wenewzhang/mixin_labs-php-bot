@@ -51,16 +51,16 @@
                                   "6cfe566e-4aad-470b-8c9a-2fd35b49c68d".
                                   "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
                                   "&memo=";
-                      $msgData = [
-                          'icon_url'    =>  "https://mixin.one/assets/98b586edb270556d1972112bd7985e9e.png",
-                          'title'       =>  "Pay 0.001 EOS",
-                          'description' =>  "pay",
+                      $msgData = [[
+                          'label'    =>  "Pay 0.001 EOS",
+                          'color'       =>  "#ABABAB",
                           'action'      =>  $payLink,
+                        ]
                       ];
                       $msgParams = [
                         'conversation_id' => $jsMsg->data->conversation_id,// $callTrait->config[client_id],
                         // 'recipient_id'    => $jsMsg->data->user_id,
-                        'category'        => 'APP_CARD',//'PLAIN_TEXT',
+                        'category'        => 'APP_BUTTON_GROUP',//'PLAIN_TEXT',
                         'status'          => 'SENT',
                         'message_id'      => Uuid::uuid4()->toString(),
                         'data'            => base64_encode(json_encode($msgData)),//base64_encode("hello!"),
