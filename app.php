@@ -52,17 +52,18 @@
                                   "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
                                   "&memo=";
                       $msgData = [
-                          'label'  =>  "Pay 0.001 EOS",
-                          'color'  =>  "#ABABAB",
-                          'action' => $payLink,
+                          'icon_url'    =>  "https://mixin.one/assets/98b586edb270556d1972112bd7985e9e.png",
+                          'title'       =>  "Pay 0.001 EOS",
+                          'description' =>  "pay",
+                          'action'      =>  $payLink,
                       ];
                       $msgParams = [
                         'conversation_id' => $jsMsg->data->conversation_id,// $callTrait->config[client_id],
                         // 'recipient_id'    => $jsMsg->data->user_id,
-                        'category'        => 'PLAIN_TEXT',
+                        'category'        => 'APP_CARD',//'PLAIN_TEXT',
                         'status'          => 'SENT',
                         'message_id'      => Uuid::uuid4()->toString(),
-                        'data'            => base64_encode("hello!"),//base64_encode(json_encode($msgData)),
+                        'data'            => base64_encode(json_encode($msgData)),//base64_encode("hello!"),
                       ];
                       $msgPayButton = [
                         'id'     =>  Uuid::uuid4()->toString(),
@@ -70,6 +71,7 @@
                         'params' =>   $msgParams,
                       ];
                       print_r($msgPayButton);
+                      print_r(json_encode($msgPayButton));
                       $msg = new Frame(gzencode(json_encode($msgPayButton)),true,Frame::OP_BINARY);
                       $conn->send($msg);
                   }
