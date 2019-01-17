@@ -2,6 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 use ExinOne\MixinSDK\Traits\MixinSDKTrait;
+use ExinOne\MixinSDK\MixinSDK;
 use Ramsey\Uuid\Uuid;
 use Ratchet\RFC6455\Messaging\Frame;
 
@@ -35,9 +36,7 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
         print_r($jsMsg);
         if ($jsMsg->action === 'CREATE_MESSAGE' and property_exists($jsMsg,'data')) {
           echo "\nNeed reply server a receipt!\n";
-          $IncomingMsg = ["message_id" => $jsMsg->data->message_id, "status" => "READ"];
-  	      $RspMsg = ["id" => Uuid::uuid4()->toString(), "action" => "ACKNOWLEDGE_MESSAGE_RECEIPT",
-                      "params" => $IncomingMsg];
+          $RspMsg = generateReceipt($jsMsg->data->message_id);
           $msg = new Frame(gzencode(json_encode($RspMsg)),true,Frame::OP_BINARY);
           $conn->send($msg);
 
@@ -62,8 +61,22 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
               }//end of pay2
-          }
-        }
+              if ($isCmd === '3') {
+                  transfer();
+              }
+          } //end of PLAIN_TEXT
+          if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
+            // refundInstant
+              echo "user id:".$jsMsg->data->user_id;
+              $dtPay = json_decode(base64_decode($jsMsg->data->data));
+              print_r($dtPay);
+              if ($dtPay->amount > 0) {
+                echo "paid!".$dtPay->asset_id;
+                refundInstant($dtPay->asset_id,$dtPay->amount,$jsMsg->data->user_id);
+              }
+          } //end of SYSTEM_ACCOUNT_SNAPSHOT
+        } //end of CREATE_MESSAGE
+
     });
 
     $conn->on('close', function($code = null, $reason = null) {
@@ -171,4 +184,24 @@ function sendAppCard($jsMsg):Array
      'params' =>   $msgParams,
    ];
    return $msgPayButton;
+}
+
+function transfer() {
+  $mixinSdk = new MixinSDK(require './config.php');
+  print_r($mixinSdk->getConfig());
+}
+
+function generateReceipt($msgID):Array {
+  $IncomingMsg = ["message_id" => $msgID, "status" => "READ"];
+  $RspMsg = ["id" => Uuid::uuid4()->toString(), "action" => "ACKNOWLEDGE_MESSAGE_RECEIPT",
+              "params" => $IncomingMsg];
+  return $RspMsg;
+}
+
+function refundInstant($_assetID,$_amount,$_opponent_id) {
+  $mixinSdk = new MixinSDK(require './config.php');
+  // print_r();
+  $BotInfo = $mixinSdk->Wallet()->transfer($_assetID,$_opponent_id,
+                                           $mixinSdk->getConfig()['default']['pin'],$_amount);
+  print_r($BotInfo);
 }
