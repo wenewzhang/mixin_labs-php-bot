@@ -144,6 +144,8 @@ Replace the value with **YOUR APP** mixin_id, client_id, client_secret, and the 
 ### Hello world
 Fill the following content in app.php, create it if it is missing in your folder
 ```php
+<?php
+
 require __DIR__ . '/vendor/autoload.php';
 use ExinOne\MixinSDK\Traits\MixinSDKTrait;
 use ExinOne\MixinSDK\MixinSDK;
@@ -154,6 +156,7 @@ $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
     'timeout' => 15
 ]);
+$connector = new \Ratchet\Client\Connector($loop,$reactConnector);
 class callTraitClass {
   use MixinSDKTrait;
   public $config;
@@ -165,10 +168,6 @@ class callTraitClass {
 }
 $callTrait = new callTraitClass();
 $Token = $callTrait->getToken('GET', '/', '');
-print_r($callTrait->config['client_id']);
-// $Header = 'Authorization'.'Bearer '.$Token;
-// print($Header);
-$connector = new \Ratchet\Client\Connector($loop,$reactConnector);
 // $connector('ws://127.0.0.1:9000', ['protocol' => 'Mixin-Blaze-1'], ['Origin' => 'http://localhost',
 $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                                     'Authorization' => 'Bearer '.$Token
@@ -235,6 +234,7 @@ function generateReceipt($msgID):Array {
               "params" => $IncomingMsg];
   return $RspMsg;
 }
+
 ```
 Run the app.php
 ```bash
