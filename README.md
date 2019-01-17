@@ -39,7 +39,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-Make sure the install directory is include in the $PATH variable, run **php -v** and **composer -V** can check the installation, if console output like below, that's mean it's works!
+Make sure the install directory be include in the $PATH variable, run **php -v** and **composer -V** can check the installation, if console output like below, that's mean it's works!
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
 PHP 7.2.13 (cli) (built: Dec  7 2018 10:41:23) ( NTS )
@@ -108,9 +108,7 @@ Create an app by following [tutorial](https://mixin-network.gitbook.io/mixin-net
 Remember to [generate parameter](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
 and write down required information, they are required in config.php file soon.
 
-
-
-![mixin_network-keys](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/mixin_network-keys.jpg)
+![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
 In the folder, create a file: config.php. Copy the following content into it.
 > config.php
 ```php
