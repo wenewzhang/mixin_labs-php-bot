@@ -44,25 +44,29 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
               echo "PLAIN_TEXT:".base64_decode($jsMsg->data->data);
               $isCmd = strtolower(base64_decode($jsMsg->data->data));
               if ($isCmd ==='?' or $isCmd ==='help') {
-                  $msgData = sendPlainText($jsMsg);
+                  $msgData = sendUsage($jsMsg->data->conversation_id);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
-              }
-              if ($isCmd === '1') {
+              } elseif ($isCmd === '1') {
                  // print($callTrait->config['client_id']);
                   $msgData = sendAppButtons($jsMsg);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
               }//end of pay1
 
-              if ($isCmd === '2') {
+              elseif ($isCmd === '2') {
                  // print($callTrait->config['client_id']);
                   $msgData = sendAppCard($jsMsg);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
               }//end of pay2
-              if ($isCmd === '3') {
+              elseif ($isCmd === '3') {
                   transfer();
+              } else {
+                  $msgData = sendPlainText($jsMsg->data->conversation_id,
+                                            base64_decode($jsMsg->data->data));
+                  $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
+                  $conn->send($msg);
               }
           } //end of PLAIN_TEXT
           if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
@@ -98,20 +102,25 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
 
 $loop->run();
 
-function sendPlainText($jsMsg):Array
-{
-   $msgHelp = <<<HTML
-    Usage:
-    ? or help : for help!
-    1         : pay by APP_CARD
-    2         : pay by APP_BUTTON_GROUP
-HTML;
+
+function sendUsage($conversation_id):Array {
+  $msgHelp = <<<EOF
+   Usage:
+   ? or help : for help!
+   1         : pay by APP_CARD
+   2         : pay by APP_BUTTON_GROUP
+EOF;
+  return sendPlainText($conversation_id,$msgHelp);
+}
+
+function sendPlainText($conversation_id,$msgContent):Array {
+
    $msgParams = [
-     'conversation_id' => $jsMsg->data->conversation_id,
+     'conversation_id' => $conversation_id,
      'category'        => 'PLAIN_TEXT',
      'status'          => 'SENT',
      'message_id'      => Uuid::uuid4()->toString(),
-     'data'            => base64_encode($msgHelp),//base64_encode("hello!"),
+     'data'            => base64_encode($msgContent),//base64_encode("hello!"),
    ];
    $msgPayButton = [
      'id'     =>  Uuid::uuid4()->toString(),
