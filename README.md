@@ -332,4 +332,4 @@ function generateReceipt($msgID):Array {
 ### End
 Now your bot is running. You can try your idea now,enjoy!
 
-A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/helloworld.php)
+A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)

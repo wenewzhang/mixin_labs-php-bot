@@ -288,3 +288,5 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
 
 ```
 Call MixinSDK to transfer the coin to user.
+
+A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/app.php)
