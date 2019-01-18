@@ -3,7 +3,7 @@ This tutorial will let you know how to write a Mixin Messenger bot in PHP. The b
 
 ## Index
 1. [Create bot and receive message from user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)
-2. [Receive token and pay token](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
+2. [Receive coin and pay coin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
 
 ## Create bot and receive message from user
 You will create a bot in Mixin Messenger to receive user message after read the chapter.
@@ -331,3 +331,5 @@ function generateReceipt($msgID):Array {
 ```
 ### End
 Now your bot is running. You can try your idea now,enjoy!
+
+A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/helloworld.php)
