@@ -255,7 +255,7 @@ In [Mixin Messenger](https://mixin.one/),add the bot as your friend,(for example
 
 
 ### Source code explanation
-The WebSocket providing full-duplex communication channels over a single TCP connection, It is a persistence connection, so create loop for the connection.
+The WebSocket providing full-duplex communication channels over a single TCP connection, It is a persistence connection, so create loop for it.
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
