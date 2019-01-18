@@ -221,6 +221,29 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
 }
 ```
 ### Hello Coins!
+Execute **php app.php** in the project directory.
+
+```bash
+php app.php
+```
+When the console output "LIST_PENDING_MESSAGES", that mean the bot connect to the mixin.one successfully!
+```bash
+wenewzha:mixin_labs-php-bot wenewzhang$ php app.php
+a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971","action":"LIST_PENDING_MESSAGES"}stdClass Object
+(
+    [id] => 12c7a470-d6a4-403d-94e8-e6f8ae833971
+    [action] => LIST_PENDING_MESSAGES
+)
+```bash
+Fellowing the usage, user can pay by click the links.
+- **1** the bot send an APP_CARD link.
+- **2** the bot send an APP_BUTTON_GROUP link.
+![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/pay-links.jpg)
+
+Click the above links will pop a window, then input PIN code to pay coin to bot.
+![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/click-link-to-pay.jpg)
+
+All the [Mixin Network supports message type is here](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/)
 
 Generate payment URL and refund it to user
 User can pay 0.01 EOS to bot by click the button and the 0.01 EOS will be refund in 1 seconds,
