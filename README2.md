@@ -234,7 +234,8 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
     [id] => 12c7a470-d6a4-403d-94e8-e6f8ae833971
     [action] => LIST_PENDING_MESSAGES
 )
-```bash
+```
+
 Fellowing the usage, user can pay by click the links.
 - **1** the bot send an APP_CARD link.
 - **2** the bot send an APP_BUTTON_GROUP link.
