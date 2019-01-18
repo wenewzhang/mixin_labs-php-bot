@@ -239,10 +239,10 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
 Fellowing the usage, user can pay by click the links.
 - **1** the bot send an APP_CARD link.
 - **2** the bot send an APP_BUTTON_GROUP link.
-![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/pay-links.jpg)
+![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/pay-links.jpg)
 
 Click the above links will pop a window, then input PIN code to pay coin to bot.
-![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/click-link-to-pay.jpg)
+![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/click-link-to-pay.jpg)
 
 All the [Mixin Network supports message type is here](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/)
 
