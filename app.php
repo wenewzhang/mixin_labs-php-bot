@@ -8,7 +8,6 @@ use Ratchet\RFC6455\Messaging\Frame;
 
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
-    'dns' => '8.8.8.8',
     'timeout' => 15
 ]);
 class callTraitClass {

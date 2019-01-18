@@ -1,8 +1,7 @@
-In [last chapter](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), we create our first app, user send "Hello,world!", the bot reply the same message.
+In [the previous chapter](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), we created our first app, when user sends "Hello,world!", the bot reply the same message.
 
 # Receive and send coin
-Your bot can receive coin from user and then pay it back immediately after read the chapter.
-Let's create a app.php file with below content.
+This chapter will show you that your bot can receive coin from user and then pay it back to the user immediately. let's create an app.php file with below contents:
 ```php
 <?php
 require __DIR__ . '/vendor/autoload.php';
@@ -13,7 +12,6 @@ use Ratchet\RFC6455\Messaging\Frame;
 
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
-    'dns' => '8.8.8.8',
     'timeout' => 15
 ]);
 class callTraitClass {
@@ -234,7 +232,7 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-When the console output "LIST_PENDING_MESSAGES", that mean the bot connect to the mixin.one successfully!
+When the console output "LIST_PENDING_MESSAGES", that means the bot connect to the mixin.one successfully!
 
 ![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/pay-links.jpg)
 
@@ -274,8 +272,8 @@ if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
 } //end of SYSTEM_ACCOUNT_SNAPSHOT
 ```
 
-When bot send token to user successfully, the jsData.amount is negative.
-When user send token to bot, the jsData.amount is positive.
+When bot send token to user successfully, the $dtPay->amount is negative.
+When user send token to bot, the $dtPay->amount is positive.
 
 ```php
 function refundInstant($_assetID,$_amount,$_opponent_id) {

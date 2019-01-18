@@ -1,24 +1,24 @@
-# Mixin Messenger application development tutorial in PHP
-This tutorial will let you know how to write a Mixin Messenger bot in PHP. The bot can receive and response to user's message. User can pay coins to bot and bot can transfer coins to user immediately.
-
-## Index
-1. [Create bot and receive message from user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)
-2. [Receive coin and pay coin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
-
-## Create bot and receive message from user
-You will create a bot in Mixin Messenger to receive user message after read the chapter.
+# Mixin Messenger 机器人程序开发教程之PHP
+[Mixin Network](https://mixin.one) 是一个免费的 极速的端对端加密数字货币交易系统.
+在本章中，你可以按教程在Mixin Messenger中创建一个bot来接收用户消息, 学到如何给机器人转帐 或者 让机器人给你转账.
 
 
-### PHP environment setup:
-This tutorial is written in PHP 7. So you need to install PHP, composer before writing code.
+## 课程简介
+1. [创建一个接受消息的机器人](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md#创建一个接受消息的机器人)
+2. [机器人:接受加密货币并立即退还用户](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md)
 
+## 创建一个接受消息的机器人
+通过本教程，你将学会如何用PHP创建一个机器人APP,让它能接受消息.
+
+### PHP 环境安装:
+本教程的程序基于PHP 7开发，所以你需要先安装PHP7.2/PHP7.3与composer, 其中，composer是PHP的包管理系统!
 on macOS
 ```bash
 brew update
 brew install php@7.2
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-//install composer to /usr/local/opt/php@7.2/bin and give a brief name 'composer'
+//将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
@@ -35,11 +35,11 @@ apt-get install php7.2 php7.2-cli php7.2-common
 //install composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-//install composer to /usr/local/bin and give a brief name 'composer'
+//将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-Make sure the install directory be include in the $PATH variable, run **php -v** and **composer -V** can check the installation, if console output like below, that means it works!
+请确保PHP与composer安装在$PATH包含的目录之内，直接运行**php -v** 或 **composer -V** 就可以检查出来，如果提示如下，表示安装正确！
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
 PHP 7.2.13 (cli) (built: Dec  7 2018 10:41:23) ( NTS )
@@ -49,13 +49,19 @@ Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
 wenewzha:minecraft wenewzhang$ composer -V
 Composer version 1.8.0 2018-12-03 10:31:16
 ```
-### Create the project
-Go to your documents then create  a directory and name it, for example: **mixin_labs-php-bot**
+如果提示command not found,表示bash没有在$PATH下找到php,请重复以上的安装步骤！
+```bash
+wenewzha:mixin_network-nodejs-bot2 wenewzhang$ php -v
+-bash: php: command not found
+```
+
+### 创建你的项目
+到你的工作文档中，创建一个目录，并取一个名字，比如:**mixin_labs-php-bot**
 ```bash
 mkdir mixin_labs-php-bot
-mixin_labs-php-bot
+cd mixin_labs-php-bot
 ```
-Execute **composer init** in your project directory, according the prompt to create the composer.json,
+转到新创建的项目目录下, 执行 **composer init**, 依提示完成 composer.json的创建,
  ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# composer init
   Welcome to the Composer config generator
@@ -82,34 +88,34 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-This  tutorial need a library [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) and [Ratchet pawl](https://github.com/ratchetphp/Pawl), **mixin-sdk-php** is a PHP SDK for Mixin Network, the **Ratchet pawl** is a asynchronous websocket client.
-So, add them in the "require" block.
+本教程引用了 [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) 与 [Ratchet pawl](https://github.com/ratchetphp/Pawl), **mixin-sdk-php** 是一个Mixin Network PHP SDK ,  **Ratchet pawl** WebSocket客户端.
+打开composer.json, 在"require"增加两行引用:
 ```bash
 "require": {
     "exinone/mixin-sdk-php": "^1.1",
     "ratchet/pawl": "^0.3.3",
 },
 ```
-Save the composer.json, then execute **composer install** to download the packages.
+保存composer.json后，执行 **composer install** 来下载：
 ```bash
 composer install
 ```
-After the downloading finished, you can find a vendor under the project directory.
+下载完成后，目录下会出现一个vendor的子目录。
 ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# ls
 composer.json  composer.lock  vendor
 ```
-If you clone this repository, just execute **composer install** to download all dependency packages.
+ 如果你是git克隆的源代码，直接执行 **composer install** 来下载依赖包。
 
-### Create you first app in developer dashboard
-Create an app by following [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account).
+### 创建第一个机器人APP
+按下面的提示，到mixin.one创建一个APP[tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account).
 
-### Generate parameter for your app
-Remember to [generate parameter](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
-and write down required information, they are required in config.php file soon.
+### 生成相应的参数
+记下这些[生成的参数](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
+它们将用于config.php中.
 
 ![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
-In the folder, create a file: config.php. Copy the following content into it.
+在项目目录下，创建config.php,将生成的参数，替换成你的！
 > config.php
 ```php
 return [
@@ -139,10 +145,10 @@ EOF
     ,  //import your private_key
 ];
 ```
-Replace the value with **YOUR APP** mixin_id, client_id, client_secret, and the pin, pin token, session_id, private key you have already generated them in dashboard.
+需要替换的参数包括： mixin_id, client_id, client_secret, and the pin, pin token, session_id, private key.
 
-### Hello world
-Fill the following content in app.php, create it if it is missing in your folder
+### 经典的Hello world
+在项目目录下创建一个app.php文件，将下面的代码拷进去：
 ```php
 <?php
 
@@ -236,26 +242,26 @@ function generateReceipt($msgID):Array {
 }
 
 ```
-Run the app.php
+保存，并在终端里执行app.php
 ```bash
 php app.php
 ```
-If everything is ok, the following content will be display
+如果一切正常，提示如下：
 ```bash
-wenewzha:mixin_labs-php-bot wenewzhang$ php helloworld.php
+wenewzha:mixin_labs-php-bot wenewzhang$ php app.php
 a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca","action":"LIST_PENDING_MESSAGES"}stdClass Object
 (
     [id] => 4454b6c5-4a89-440c-bd22-7a79cf4954ca
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-In [Mixin Messenger](https://mixin.one/),add the bot as your friend,(for example, this bot id is 7000101639) and then send any text!
+在手机安装 [Mixin Messenger](https://mixin.one/),增加机器人为好友,(比如这个机器人是7000101639) 然后发送消息给它,效果如下!
 
 ![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.jpeg)
 
 
-### Source code explanation
-The WebSocket providing full-duplex communication channels over a single TCP connection, It is a persistence connection, so create loop for the connection.
+### 源代码解释
+WebSocket是建立在TCP基础之上的全双工通讯方式，我们需要建立一个loop循环来维持通迅。
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
@@ -263,12 +269,11 @@ $reactConnector = new \React\Socket\Connector($loop, [
 ]);
 $connector = new \Ratchet\Client\Connector($loop,$reactConnector);
 ```
+机器人APP通过Mixin Messenger服务器来接收用户发过来的消息，连接服务器，需要Token来验证用户的身份,
+详细资料可参考如下链接:
+[Token认证](https://developers.mixin.one/api/beta-mixin-message/authentication/), [接收服务器消息](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
 
-To receive message from Mixin messenger user, the application need to create a connection to Mixin Messenger server. The application also need to create a token which is used in later communication.
-
-[API of the operation](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guide of the operation](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
-
-The mixin-sdk-php implements the getToken function, call it and generate token here.
+mixin-sdk-php 实现了令牌Token的生成(getToken), 调用代码如下：
 ```php
 class callTraitClass {
   use MixinSDKTrait;
@@ -282,13 +287,13 @@ class callTraitClass {
 $callTrait = new callTraitClass();
 $Token = $callTrait->getToken('GET', '/', '');
 ```
-Connect to the mixin.one server.
+连接到服务器，注意协议类型与Token:
 ```php
 $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                                     'Authorization' => 'Bearer '.$Token
                                       ])
 ```
-Send "LIST_PENDING_MESSAGES" to server, let the server know the bot is available
+向服务器发送"LIST_PENDING_MESSAGES",这样服务器才会将收到的消息发送给机器人APP.
 ```php
 /*                   start listen for the incoming message          */
     $message = [
@@ -299,7 +304,8 @@ Send "LIST_PENDING_MESSAGES" to server, let the server know the bot is available
     $msg = new Frame(gzencode(json_encode($message)),true,Frame::OP_BINARY);
     $conn->send($msg);
 ```
-Then add **onMessage** to receive and analyze the incoming messages
+
+增加侦听 **onMessage** 接收并分析消息:
 ```php
 ->then(function(Ratchet\Client\WebSocket $conn) {
     $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
@@ -324,9 +330,9 @@ Then add **onMessage** to receive and analyze the incoming messages
         echo "Connection closed ({$code} - {$reason})\n";
     });                                      
 ```
-Not only text messages, images and other type message can be received. You can find message details in [Here](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
+Mixin Messenger支持的消息类型很多，具体可到下面链接查看:  [WebSocket消息类型](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
 
-Send the READ message to the server let it knows this message has already been read. If you don't send it,  the bot will receive the duplicated message again after the bot connect to server again!
+每接收到一个消息，需要按消息编号(message_id)给服务器回复一个"已读"的消息,避免服务器在机器人重新登入后，再次发送处理过的消息！
 ```php
 echo "\nNeed reply server a receipt!\n";
 $RspMsg = generateReceipt($jsMsg->data->message_id);
@@ -340,7 +346,7 @@ function generateReceipt($msgID):Array {
   return $RspMsg;
 }
 ```
-### End
-Now your bot is running. You can try your idea now,enjoy!
+### 完成
+现在你的机器人APP运行起来了，你打算如何改造你的机器人呢？
 
-A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
+完整的代码[在这儿](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
