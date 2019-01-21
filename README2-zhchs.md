@@ -1,7 +1,9 @@
-In [the previous chapter](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), we created our first app, when user sends "Hello,world!", the bot reply the same message.
 
-# Receive and send coin
-This chapter will show you that your bot can receive coin from user and then pay it back to the user immediately. let's create an app.php file with below contents:
+在 [上一篇教程中](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md), 我们创建了自动回复消息的机器人,当用户发送消息"Hello,World!"时，机器人会自动回复同一条消息!
+
+# 第二课: 机器人接收与处理加密货币
+按本篇教程后学习后完成后，你的机器人将会接受用户发送过来的加密货币，然后立即转回用户。下面是全部源代码，创建一个app.php试一下吧！
+
 ```php
 <?php
 require __DIR__ . '/vendor/autoload.php';
@@ -217,8 +219,8 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
   print_r($BotInfo);
 }
 ```
-### Hello Coins!
-Execute **php app.php** in the project directory.
+### 你好，我的币!
+在工程目录下，执行 **php app.php**
 
 ```bash
 php app.php
@@ -232,31 +234,31 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-When the console output "LIST_PENDING_MESSAGES", that means the bot connect to the mixin.one successfully!
+如果控制台出现 "LIST_PENDING_MESSAGES"字样, 连接到mixin.one成功了，正在侦听用户发送消息给它!
 
 ![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/pay-links.jpg)
 
-Follow the usage, user can pay by click the links.
-- **1** the bot send an APP_CARD link.
-- **2** the bot send an APP_BUTTON_GROUP link.
-- **? or help** for help!
-Click the above links will pop a window, then input PIN code to pay coin to bot.
+按帮助来操作,发送消息得到相应的支付提示
+- **1** 机器人回复 APP_CARD 支付链接.
+- **2** 机器人回复 APP_BUTTON_GROUP 支付链接.
+- **? or help** : 显示帮助
+点击上面的链接，将会弹出一个窗口，输入你的密码，将要支付币给机器人!
 ![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/click-link-to-pay.jpg)
 
-All the [Mixin Messenger supports message type is here](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/)
+[Mixin Messenger支持的消息类型](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/)
 
-User can pay 0.01 EOS to bot by click the button and the 0.01 EOS will be refund in 1 seconds,
+如下图所示，用户点击支付链接，输入密码，支付0.01 EOS给机器人，机器人马上返还给用户！
 ![pay-link](https://github.com/myrual/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
 
-Developer can send token to their bots in message panel. The bot receive the tokens and then send back immediately.
+亲爱的开发者，你也可以从消息控制面板里，点击转帐，直接将币转给机器人！它还是一样的立即返还！
 ![transfer and tokens](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/transfer-any-tokens.jpg)
 
-## Source code explanation
+## 源代码解释
 ```php
 $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
 $conn->send($msg);
 ```
-The bot send messages to user, Which use json serialize and then use gzencode compress it.
+机器人发送给用户的消息，先用json序列化，再用gzencode压缩。
 
 ```php
 if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
@@ -270,9 +272,7 @@ if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
     }
 } //end of SYSTEM_ACCOUNT_SNAPSHOT
 ```
-
-When bot send token to user successfully, the $dtPay->amount is negative.
-When user send token to bot, the $dtPay->amount is positive.
+如果机器人收到币，$dtPay->amount 大于零；如果机器人支付币给用户，接收到的消息是一样的，唯一不同的是$dtPay->amount是一个负数.
 
 ```php
 function refundInstant($_assetID,$_amount,$_opponent_id) {
@@ -284,6 +284,6 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
 }
 
 ```
-Call MixinSDK to transfer the coin to user.
+最后一步，调用MixinSDK将币还给用户！
 
-A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/app.php)
+完整的代码在这儿 [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/app.php)
