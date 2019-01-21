@@ -88,7 +88,7 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-本教程引用了 [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) 与 [Ratchet pawl](https://github.com/ratchetphp/Pawl), **mixin-sdk-php** 是一个Mixin Network PHP SDK ,  **Ratchet pawl** WebSocket客户端.
+本教程引用了 [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) 与 [Ratchet pawl](https://github.com/ratchetphp/Pawl), **mixin-sdk-php** 是一个Mixin Network PHP SDK ,  **Ratchet pawl** 是一个WebSocket客户端.
 打开composer.json, 在"require"增加两行引用:
 ```bash
 "require": {
