@@ -350,3 +350,6 @@ function generateReceipt($msgID):Array {
 现在你的机器人APP运行起来了，你打算如何改造你的机器人呢？
 
 完整的代码[在这儿](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
+
+
+### 下一课[机器人接收与处理加密货币](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md)
