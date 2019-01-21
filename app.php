@@ -129,13 +129,14 @@ function sendPlainText($conversation_id,$msgContent):Array {
    return $msgPayButton;
 }
 function sendAppButtons($jsMsg):Array {
+  $client_id = (require "./config.php")['client_id'];
   $payLinkEOS = "https://mixin.one/pay?recipient=".
-               "a1ce2967-a534-417d-bf12-c86571e4eefa"."&asset=".
+               $client_id."&asset=".
                "6cfe566e-4aad-470b-8c9a-2fd35b49c68d".
                "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
                "&memo=";
   $payLinkBTC = "https://mixin.one/pay?recipient=".
-                "a1ce2967-a534-417d-bf12-c86571e4eefa"."&asset=".
+                $client_id."&asset=".
                 "c6d0c728-2624-429b-8e0d-d9d19b6592fa".
                 "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
                 "&memo=";
@@ -167,8 +168,9 @@ function sendAppButtons($jsMsg):Array {
 
 function sendAppCard($jsMsg):Array
 {
+  $client_id = (require "./config.php")['client_id'];
   $payLink = "https://mixin.one/pay?recipient=".
-               "a1ce2967-a534-417d-bf12-c86571e4eefa"."&asset=".
+               $client_id."&asset=".
                "6cfe566e-4aad-470b-8c9a-2fd35b49c68d".
                "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
                "&memo=";
