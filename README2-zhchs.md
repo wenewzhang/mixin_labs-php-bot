@@ -242,7 +242,7 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
 - **1** 机器人回复 APP_CARD 支付链接.
 - **2** 机器人回复 APP_BUTTON_GROUP 支付链接.
 - **? or help** : 显示帮助
-点击上面的链接，将会弹出一个窗口，输入你的密码，将要支付币给机器人!
+点击上面的链接，将会弹出一个窗口，输入你的密码，将支付币给机器人!
 ![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/click-link-to-pay.jpg)
 
 [Mixin Messenger支持的消息类型](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/)
