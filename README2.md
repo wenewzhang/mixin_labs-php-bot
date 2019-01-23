@@ -217,7 +217,7 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
   print_r($BotInfo);
 }
 ```
-### Hello Coins!
+### Hello Bitcoin!
 Execute **php app.php** in the project directory.
 
 ```bash
@@ -245,11 +245,11 @@ Click the above links will pop a window, then input PIN code to pay coin to bot.
 
 All the [Mixin Messenger supports message type is here](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/)
 
-User can pay 0.01 EOS to bot by click the button and the 0.01 EOS will be refund in 1 seconds,
-![pay-link](https://github.com/myrual/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
+User can pay 0.001 Bitcoin to bot by click the button and the 0.001 Bitcoin will be refund in 1 seconds,In fact, user can pay any coins either.
+![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
 
-Developer can send token to their bots in message panel. The bot receive the tokens and then send back immediately.
-![transfer and tokens](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/transfer-any-tokens.jpg)
+Developer can send Bitcoin to their bots in message panel. The bot receive the Bitcoin and then send back immediately.
+![transfer  Bitcoin](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/transfer-any-tokens.jpg)
 
 ## Source code explanation
 ```php
@@ -271,8 +271,8 @@ if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
 } //end of SYSTEM_ACCOUNT_SNAPSHOT
 ```
 
-When bot send token to user successfully, the $dtPay->amount is negative.
-When user send token to bot, the $dtPay->amount is positive.
+When bot send Bitcoin to user successfully, the $dtPay->amount is negative.
+When user send Bitcoin to bot, the $dtPay->amount is positive.
 
 ```php
 function refundInstant($_assetID,$_amount,$_opponent_id) {
@@ -284,6 +284,6 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
 }
 
 ```
-Call MixinSDK to transfer the coin to user.
+Call MixinSDK to transfer the Bitcoin to user.
 
 A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/app.php)
