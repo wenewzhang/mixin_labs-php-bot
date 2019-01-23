@@ -1,9 +1,9 @@
 # Mixin Messenger application development tutorial in PHP
-This tutorial will let you know how to write a Mixin Messenger bot in PHP. The bot can receive and response to user's message. User can pay coins to bot and bot can transfer coins to user immediately.
+This tutorial will let you know how to write a Mixin Messenger bot in PHP. The bot can receive and response to user's message. User can pay Bitcoin to bot and bot can transfer Bitcoin to user immediately.
 
 ## Index
 1. [Create bot and receive message from user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)
-2. [Receive coin and pay coin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
+2. [Receive Bitcoin and pay Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
 
 ## Create bot and receive message from user
 You will create a bot in Mixin Messenger to receive user message after read the chapter.

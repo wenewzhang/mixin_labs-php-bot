@@ -1,6 +1,6 @@
 In [the previous chapter](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), we created our first app, when user sends "Hello,world!", the bot reply the same message.
 
-# Receive and send coin
+# Receive and send Bitcoin
 This chapter will show you that your bot can receive coin from user and then pay it back to the user immediately. let's create an app.php file with below contents:
 ```php
 <?php
