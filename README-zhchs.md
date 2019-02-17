@@ -13,7 +13,8 @@
 
 ### PHP 环境安装:
 本教程的程序基于PHP 7开发，所以你需要先安装PHP7.2/PHP7.3与composer, 其中，composer是PHP的包管理系统!
-on macOS
+
+#### on macOS
 ```bash
 brew update
 brew install php@7.2
@@ -25,7 +26,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-on Ubuntu
+#### on Ubuntu
 ```bash
 apt update
 apt upgrade
