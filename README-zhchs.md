@@ -19,7 +19,9 @@ brew update
 brew install php@7.2
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-//将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
+```
+将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
+```bash
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
@@ -36,7 +38,9 @@ apt-get install php7.2 php7.2-cli php7.2-common
 //install composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-//将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
+```
+将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
+```bash
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
