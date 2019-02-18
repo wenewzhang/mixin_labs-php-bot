@@ -17,7 +17,7 @@ on macOS
 brew update
 brew install php@7.2
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 //将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
@@ -34,11 +34,12 @@ apt-get update
 apt-get install php7.2 php7.2-cli php7.2-common
 //install composer
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('sha384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 //将PHP安装到/usr/local/opt/php@7.2/bin 目录，并取一个简单的各字：composer
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
+最新的Composer在这儿![Composer](https://getcomposer.org/download/)
 请确保PHP与composer安装在$PATH包含的目录之内，直接运行**php -v** 或 **composer -V** 就可以检查出来，如果提示如下，表示安装正确！
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
