@@ -2,6 +2,7 @@
 [Mixin Network](https://mixin.one) 是一个免费的 极速的端对端加密数字货币交易系统.
 在本章中，你可以按教程在Mixin Messenger中创建一个bot来接收用户消息, 学到如何给机器人转**比特币** 或者 让机器人给你转**比特币**.
 
+[Mixin network 资源汇总](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
 ## 课程简介
 1. [创建一个接受消息的机器人](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md#创建一个接受消息的机器人)
@@ -12,7 +13,8 @@
 
 ### PHP 环境安装:
 本教程的程序基于PHP 7开发，所以你需要先安装PHP7.2/PHP7.3与composer, 其中，composer是PHP的包管理系统!
-on macOS
+
+#### on macOS
 ```bash
 brew update
 brew install php@7.2
@@ -22,7 +24,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-on Ubuntu
+#### on Ubuntu
 ```bash
 apt update
 apt upgrade
