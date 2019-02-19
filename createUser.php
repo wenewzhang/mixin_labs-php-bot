@@ -23,7 +23,9 @@ $mixinSdkNew = new MixinSDK($newConfig);
 
 $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
 print_r($pinInfo);
-
+print_r($trans_info);
+$asset_infoNew = $mixinSdkNew->Wallet()->readAsset(ASSET_ID);
+print_r("BitCoin wallet address is :".$asset_infoNew["public_key"]);
 //
 // $pubKey1 = str_replace("-----BEGIN PUBLIC KEY-----", '', $user_info["pubKey"]) ;
 // $pubKey = trim(str_replace("-----END PUBLIC KEY-----", '', $pubKey1));
@@ -40,8 +42,6 @@ print_r($pinInfo);
 $trans_info = $mixinSdk->Wallet()->transfer(ASSET_ID,$newConfig["client_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
-$asset_infoNew = $mixinSdkNew->Wallet()->readAsset(ASSET_ID);
-print_r($asset_infoNew);
 
 $userInfo = $mixinSdk->Network()->readUser(MASTER_ID);
 $userInfo["user_id"];
