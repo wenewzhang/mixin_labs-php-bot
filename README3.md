@@ -3,7 +3,7 @@ In last two chapters, we create a bot to [receive user's message and send messag
 # How to xxx Bitcoin by PHP
 ## Create Bitcoin wallet by PHP
 #### Create a Mixin Network account to acquire Bitcoin wallet
-Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to prepare an unique RSA key pair and call Mixin Network API to create a Mixin Network account. The account not only support Bitcoin wallet, but also support Ethereum, EOS, Litecoin. All ERC20 Token and EOS token are also supported by the account.
+Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to prepare an unique RSA key pair and call Mixin Network API to create a Mixin Network account. The account not only support Bitcoin wallet, but also support Ethereum, EOS, Etc. Full blockchain support list is [here](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
 
 #### Read Bitcoin asset balance and deposit address
 Now we can read the Bitcoin asset by Deposit/Read Asset API. 
