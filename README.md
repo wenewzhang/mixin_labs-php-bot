@@ -82,35 +82,37 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-This tutorial require two librarys. [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network . [Ratchet pawl](https://github.com/ratchetphp/Pawl) is a asynchronous websocket client.
+This tutorial require two librarys. 
+* [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network. 
+* [Ratchet pawl](https://github.com/ratchetphp/Pawl) is a asynchronous websocket client.
 
-In composer.json file, add the two library in the "require" code block.
+In composer.json file, add the two libraries in the "require" code block.
 ```bash
 "require": {
     "exinone/mixin-sdk-php": "^1.1",
     "ratchet/pawl": "^0.3.3",
 },
 ```
-Save composer.json file and then execute **composer install** to download required packages.
+Save composer.json file and then execute **composer install** to download required libraries.
 ```bash
 composer install
 ```
-A vendor directory is created in the project directory after librarys are downloaded.
+A vendor directory is created in the project directory after all libraries are downloaded.
 ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# ls
 composer.json  composer.lock  vendor
 ```
-If you clone this repository from Github repo, you only need to execute **composer install** to download all librarys.
+If you clone this repository from Github repo, you only need to execute **composer install** to download all libraries.
 
-### Create you first app in developer dashboard
-Create an app by following [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account).
+### Create you first app in Mixin Network developer dashboard
+You need to create an app in dashboard. This [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) can help you.
 
-### Generate parameter for your app
-Remember to [generate parameter](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
-and write down required information, they are required in config.php file soon.
+### Generate parameter of your app in dashboard
+After app is created in dashboard, you still need to [generate parameter](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
+and write down required content, these content will be written into config.php file.
 
 ![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
-In the folder, create a file: config.php. Copy the following content into it.
+In project folder, create a file: config.php. Copy the following content into it.
 > config.php
 ```php
 return [
@@ -140,10 +142,10 @@ EOF
     ,  //import your private_key
 ];
 ```
-Replace the value with **YOUR APP** mixin_id, client_id, client_secret, and the pin, pin token, session_id, private key you have already generated them in dashboard.
+Replace the value with **content generated in dashboard**.
 
 ### Hello world
-Fill the following content in app.php, create it if it is missing in your folder
+Copy the following code into app.php, create app.php file if it is missing in your folder
 ```php
 <?php
 
@@ -237,11 +239,11 @@ function generateReceipt($msgID):Array {
 }
 
 ```
-Run the app.php
+Run the code
 ```bash
 php app.php
 ```
-If everything is ok, the following content will be display
+The following content will be displayed in console.
 ```bash
 wenewzha:mixin_labs-php-bot wenewzhang$ php helloworld.php
 a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca","action":"LIST_PENDING_MESSAGES"}stdClass Object
@@ -250,13 +252,13 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca"
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-In [Mixin Messenger](https://mixin.one/),add the bot as your friend,(for example, this bot id is 7000101639) and then send any text!
+Add the bot as your friend in [Mixin Messenger](https://mixin.one/messenger) and send some word(for example, this bot id is 7000101639).
 
 ![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.jpeg)
 
 
-### Source code explanation
-The WebSocket providing full-duplex communication channels over a single TCP connection, It is a persistence connection, so create loop for it.
+### Source code summary
+The PHP code create a Websocket client.
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
@@ -283,13 +285,13 @@ class callTraitClass {
 $callTrait = new callTraitClass();
 $Token = $callTrait->getToken('GET', '/', '');
 ```
-Connect to the mixin.one server.
+Connect to  Mixin messenger server with correct token.
 ```php
 $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                                     'Authorization' => 'Bearer '.$Token
                                       ])
 ```
-Send "LIST_PENDING_MESSAGES" to server, let the server know the bot is available
+Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
 ```php
 /*                   start listen for the incoming message          */
     $message = [
@@ -300,7 +302,7 @@ Send "LIST_PENDING_MESSAGES" to server, let the server know the bot is available
     $msg = new Frame(gzencode(json_encode($message)),true,Frame::OP_BINARY);
     $conn->send($msg);
 ```
-Then add **onMessage** to receive and analyze the incoming messages
+**onMessage** function will be called when message is received by websocket client.
 ```php
 ->then(function(Ratchet\Client\WebSocket $conn) {
     $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
@@ -325,9 +327,9 @@ Then add **onMessage** to receive and analyze the incoming messages
         echo "Connection closed ({$code} - {$reason})\n";
     });                                      
 ```
-Not only text messages, images and other type message can be received. You can find message details in [Here](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
+Not only text, images and other type message can be received. You can find more [details](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) about Messenger message.
 
-Send the READ message to the server let it knows this message has already been read. If you don't send it,  the bot will receive the duplicated message again after the bot connect to server again!
+Send a READ operation message to the server let it knows this message has already been read. If you don't send it, the bot will receive the duplicated message again after the bot connect to server again!
 ```php
 echo "\nNeed reply server a receipt!\n";
 $RspMsg = generateReceipt($jsMsg->data->message_id);
@@ -342,6 +344,6 @@ function generateReceipt($msgID):Array {
 }
 ```
 ### End
-Now your bot is running. You can try your idea now,enjoy!
+Now your bot worked. You can hack on it now.
 
-A full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
+Full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
