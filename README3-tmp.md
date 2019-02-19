@@ -108,12 +108,6 @@ $trans_info = $mixinSdk->Wallet()->transfer(ASSET_ID,$newConfig["client_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
 
-## Deposit some Bitcoin into the address from other exchange or wallet
-Now you can deposit some bitcoin from other exchange or wallet. This is maybe too expensive for our tutorial. So you can use your own Mixin messenger user account to transfer super tiny bitcoin to the account you just created. It is free and confirmed instantly.
-
-Transfer Bitcoin to the account is very easy. You just need to prepare a URL like:
-
-```
 ```
 
 ![bitcoin-transfer](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/bitcoin-transfer-to-bot.jpg)
