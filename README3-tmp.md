@@ -1,3 +1,4 @@
+#  Create a Bitcoin wallet of Mixin Network by PHP
 In last two chapters, we create a bot to [receive user's message and send message back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), the bot can [receive Bitcoin and send it back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md). Next, we will show you how to create a Bitcoin wallet, read and send Bitcoin by PHP based on Mixin Network API.
 
 ## Create a Mixin Network account
