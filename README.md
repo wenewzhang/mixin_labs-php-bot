@@ -4,17 +4,14 @@ A Mixin messenger bot will be created in this tutorial. The bot is powered by PH
 [Mixin network resource](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
 ## What you will learn from this tutorial
-1. [Create bot and receive message from user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)
-2. [Receive and send Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
-3. [Create a Bitcoin wallet of Mixin Network by PHP](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)
-## Create bot and receive message from user
-You will create a bot in Mixin Messenger to receive user message after read the chapter.
-
-
+1. [How to create bot in Mixin messenger and reply message to user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)
+2. [How to receive Bitcoin and send Bitcoin in Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
+3. [How to create a Bitcoin wallet based on Mixin Network API](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)
+## Create bot in Mixin messenger and reply message to user
 ### PHP environment setup:
-This tutorial is written in PHP 7. So you need to install PHP, composer before writing code.
+This tutorial is written in PHP 7. So you need to install [PHP](http://php.net/) and [Composer](https://getcomposer.org/).
 
-on macOS
+On macOS
 ```bash
 brew update
 brew install php@7.2
@@ -24,7 +21,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-on Ubuntu
+On Ubuntu
 ```bash
 apt update
 apt upgrade
@@ -41,8 +38,8 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-The latest composer can  find [here](https://getcomposer.org/download/)
-Make sure the install directory be include in the $PATH variable, run **php -v** and **composer -V** can check the installation, if console output like below, that means it works!
+The latest composer can be download from [here](https://getcomposer.org/download/)
+Make sure the the $PATH variable contains install directory, following command can be used to check the installation
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
 PHP 7.2.13 (cli) (built: Dec  7 2018 10:41:23) ( NTS )
@@ -53,12 +50,12 @@ wenewzha:minecraft wenewzhang$ composer -V
 Composer version 1.8.0 2018-12-03 10:31:16
 ```
 ### Create the project
-Go to your documents then create  a directory and name it, for example: **mixin_labs-php-bot**
+Go to your documents folder then create a directory, for example: **mixin_labs-php-bot**
 ```bash
 mkdir mixin_labs-php-bot
 mixin_labs-php-bot
 ```
-Execute **composer init** in your project directory, according the prompt to create the composer.json,
+Execute **composer init** in your project directory, follow the instruction to create the composer.json,
  ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# composer init
   Welcome to the Composer config generator
@@ -85,24 +82,25 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-This  tutorial need a library [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) and [Ratchet pawl](https://github.com/ratchetphp/Pawl), **mixin-sdk-php** is a PHP SDK for Mixin Network, the **Ratchet pawl** is a asynchronous websocket client.
-So, add them in the "require" block.
+This tutorial require two librarys. [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network . [Ratchet pawl](https://github.com/ratchetphp/Pawl) is a asynchronous websocket client.
+
+In composer.json file, add the two library in the "require" code block.
 ```bash
 "require": {
     "exinone/mixin-sdk-php": "^1.1",
     "ratchet/pawl": "^0.3.3",
 },
 ```
-Save the composer.json, then execute **composer install** to download the packages.
+Save composer.json file and then execute **composer install** to download required packages.
 ```bash
 composer install
 ```
-After the downloading finished, you can find a vendor under the project directory.
+A vendor directory is created in the project directory after librarys are downloaded.
 ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# ls
 composer.json  composer.lock  vendor
 ```
-If you clone this repository, just execute **composer install** to download all dependency packages.
+If you clone this repository from Github repo, you only need to execute **composer install** to download all librarys.
 
 ### Create you first app in developer dashboard
 Create an app by following [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account).
