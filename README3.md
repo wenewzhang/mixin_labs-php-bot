@@ -16,7 +16,7 @@ The address of Bitcoin is not generated automatically at same time when the acco
 You can found information about Bitcoin asset in the account. Public address is the deposit address for you. 
 ```
 ```
-You may ask where is Bitcoin private key? The private key is protected by multi signature from Mixin Network. Bitcoin Asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key. This design
+You may ask where is Bitcoin private key? The private key is protected by multi signature from Mixin Network. Bitcoin Asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key. 
 
 ## Deposit some Bitcoin into the address from other exchange or wallet
 Now you can deposit some bitcoin from other exchange or wallet. This is maybe too expensive for our tutorial. So you can use your own Mixin messenger user account to transfer super tiny bitcoin to the account you just created. It is free and confirmed instantly.
