@@ -19,22 +19,36 @@ You can found information about Bitcoin asset in the account. Public address is 
 You may ask where is Bitcoin private key? The private key is protected by multi signature from Mixin Network. Bitcoin Asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key. This design
 
 ## Deposit some Bitcoin into the address from other exchange or wallet
-Now you can deposit some bitcoin from other exchange or wallet. This is maybe too expensive for our tutorial so you can use your own Mixin messenger user account to transfer super tiny bitcoin to the account which you just created for free.
-Now you can read Bitcoin balance of the account again to confirm the action.
+Now you can deposit some bitcoin from other exchange or wallet. This is maybe too expensive for our tutorial. So you can use your own Mixin messenger user account to transfer super tiny bitcoin to the account you just created. It is free and confirmed instantly.
 
+Transfer Bitcoin to the account is very easy. You just need to prepare a URL like:
+
+```
+```
+
+![send]()
+Now you can read Bitcoin balance of the account again to confirm the action.
+```
+```
 ## Instantly send Bitcoin to another Mixin Network account with zero cost
-Now we transfer the Bitcoin back to your Mixin Messenger user account for free and instantly.
+let's transfer the Bitcoin back to your Mixin Messenger user account for free and instantly.
 ```
 ```
+![Confirm the result in Mixin messenger]()
+
 ## Send Bitcoin to another Bitcoin address like normal Bitcoin transaction
-Now let's withdraw Bitcoin to other exchange or wallet. We need to add a Bitcoin withdrawal address by call API, the ID of address will be returned in result of API.
+Now let's withdraw Bitcoin to other exchange or wallet. 
+#### Create withdraw address
+We need to add a Bitcoin withdrawal address by call [API](), the ID of address will be returned in result of API.
 ```
 ```
+#### Withdraw Bitcoin
 Now we can perform a withdraw action by call API.
 ```
 ```
 The API result will give you the Bitcoin transaction ID.
 
+#### Confirm the transction in blockchain explore
 
 
 EOS|6cfe566e-4aad-470b-8c9a-2fd35b49c68d
