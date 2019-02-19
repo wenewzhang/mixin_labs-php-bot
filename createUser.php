@@ -5,6 +5,9 @@ $mixinSdk = new MixinSDK(require './config.php');
 
 const PIN       = "945689";
 const MASTER_ID = "37222956";
+const ASSET_ID  = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
+// const ASSET_ID  = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
+const AMOUNT    = "0.001";
 
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 print_r($user_info);
@@ -31,20 +34,20 @@ print_r($pinInfo);
 //                                                 "BTC",false);
 // $asset_info = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 // print_r($asset_info);
-$asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
-print_r($asset_infoNew);
+// $asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+// print_r($asset_infoNew);
 
-$trans_info = $mixinSdk->Wallet()->transfer("965e5c6e-434c-3fa9-b780-c50f43cd955c",$newConfig["client_id"],
-                                         $mixinSdk->getConfig()['default']['pin'],"0.01");
+$trans_info = $mixinSdk->Wallet()->transfer(ASSET_ID,$newConfig["client_id"],
+                                         $mixinSdk->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
-$asset_infoNew = $mixinSdkNew->Wallet()->readAsset("965e5c6e-434c-3fa9-b780-c50f43cd955c");
+$asset_infoNew = $mixinSdkNew->Wallet()->readAsset(ASSET_ID);
 print_r($asset_infoNew);
 
 $userInfo = $mixinSdk->Network()->readUser(MASTER_ID);
 $userInfo["user_id"];
 
-$trans_info2 = $mixinSdkNew->Wallet()->transfer("965e5c6e-434c-3fa9-b780-c50f43cd955c",$userInfo["user_id"],
-                                         $mixinSdkNew->getConfig()['default']['pin'],"0.01");
+$trans_info2 = $mixinSdkNew->Wallet()->transfer(ASSET_ID,$userInfo["user_id"],
+                                         $mixinSdkNew->getConfig()['default']['pin'],AMOUNT);
 
 print_r($trans_info2);
 // $asset_infosNew = $mixinSdk->Wallet()->readAssets();
