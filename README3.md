@@ -8,7 +8,7 @@ Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to 
 ```
 
 #### Read Bitcoin asset balance and deposit address
-Now we can read the Bitcoin asset by Deposit/Read Asset API. 
+Now we can read the Bitcoin asset by Deposit/Read Asset API after we created an account.
 ```
 ```
 The address of Bitcoin is not generated automatically at same time when the account is created, it is created when user read Bitcoin asset for the first time.
