@@ -144,7 +144,7 @@ EOF
 ```
 Replace the value with **content generated in dashboard**.
 
-### Hello world
+### Hello world in PHP
 Copy the following code into app.php, create app.php file if it is missing in your folder
 ```php
 <?php
