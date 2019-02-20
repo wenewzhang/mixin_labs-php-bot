@@ -3,11 +3,11 @@ require __DIR__ . '/vendor/autoload.php';
 use ExinOne\MixinSDK\MixinSDK;
 $mixinSdk = new MixinSDK(require './config.php');
 
-const PIN       = "945689";
-const MASTER_ID = "37222956";
-const ASSET_ID  = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
-// const ASSET_ID  = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
-const AMOUNT    = "0.001";
+const PIN           = "945689";
+const MASTER_ID     = "37222956";
+const BTC_ASSET_ID  = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
+// const ASSET_ID   = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
+const AMOUNT        = "0.001";
 
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 print_r($user_info);
@@ -24,7 +24,7 @@ $mixinSdkNew = new MixinSDK($newConfig);
 $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
 print_r($pinInfo);
 print_r($trans_info);
-$asset_infoNew = $mixinSdkNew->Wallet()->readAsset(ASSET_ID);
+$asset_infoNew = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
 print_r("BitCoin wallet address is :".$asset_infoNew["public_key"]);
 //
 // $pubKey1 = str_replace("-----BEGIN PUBLIC KEY-----", '', $user_info["pubKey"]) ;
@@ -39,14 +39,14 @@ print_r("BitCoin wallet address is :".$asset_infoNew["public_key"]);
 // $asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 // print_r($asset_infoNew);
 
-$trans_info = $mixinSdk->Wallet()->transfer(ASSET_ID,$newConfig["client_id"],
+$trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
 
 $userInfo = $mixinSdk->Network()->readUser(MASTER_ID);
 $userInfo["user_id"];
 
-$trans_info2 = $mixinSdkNew->Wallet()->transfer(ASSET_ID,$userInfo["user_id"],
+$trans_info2 = $mixinSdkNew->Wallet()->transfer(BTC_ASSET_ID,$userInfo["user_id"],
                                          $mixinSdkNew->getConfig()['default']['pin'],AMOUNT);
 
 print_r($trans_info2);
