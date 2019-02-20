@@ -25,7 +25,7 @@ $newConfig["session_id"]  = $user_info["session_id"];
 $newConfig["client_id"]   = $user_info["user_id"];
 ```
 
-Created user should get information like below:
+result of createUser is:
 ```php
 Array
 (
@@ -74,14 +74,13 @@ OGnv4SY6cLo/xFUf9fx0nmxfYXLzKE63vA9Ii5ZPq39bYK/2R5iKGvHn+OcTAQ2q
 ```
 
 Now you need to carefully keep the account information. You need these information to read asset balance and other content.
-
 ### Create Bitcoin wallet for the Mixin Network account
 The Bitcoin  wallet is not generated automatically at same time when we create Mixin Network account. Read Bitcoin asset once to generate a Bitcoin wallet.
 ```php
 $asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 echo "BitCoin wallet address is :".$asset_infoNew["public_key"];
 ```
-You can found information about Bitcoin asset in the account. Public key is the Bitcoin deposit address. Full response of read asset is
+You can found information about Bitcoin asset in the account. Public key is the Bitcoin deposit address. Full response of read  Bitcoin asset is
 ```php
 Array
 (
@@ -104,29 +103,7 @@ Array
     [capitalization] => 0
 )
 ```
-Read EOS asset result like below:
-```php
-Array
-(
-    [type] => asset
-    [asset_id] => 6cfe566e-4aad-470b-8c9a-2fd35b49c68d
-    [chain_id] => 6cfe566e-4aad-470b-8c9a-2fd35b49c68d
-    [symbol] => EOS
-    [name] => EOS
-    [icon_url] => https://images.mixin.one/a5dtG-IAg2IO0Zm4HxqJoQjfz-5nf1HWZ0teCyOnReMd3pmB8oEdSAXWvFHt2AJkJj5YgfyceTACjGmXnI-VyRo=s128
-    [balance] => 0
-    [public_key] =>
-    [account_name] => eoswithmixin
-    [account_tag] => 0aa2b00fad2c69059ca1b50de2b45569
-    [price_btc] => 0.00097367
-    [price_usd] => 3.87734515
-    [change_btc] => 0.05950956117519646
-    [change_usd] => 0.07238079041492786
-    [asset_key] => eosio.token:EOS
-    [confirmations] => 64
-    [capitalization] => 0
-)
-```
+
 
 The API provide many information about Bitcoin asset.
 * Deposit address:[public_key]
@@ -164,9 +141,28 @@ Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 |BCH|fd11b6e3-0b87-41f1-a41f-f0e9b49e5bf0
 
 If you read EOS deposit address, the deposit address is composed of two parts: account_name and account tag. When you transfer EOS token to your account in Mixin network, you should fill both account name and memo. The memo content is value of 'account_tag'.
+Result of read EOS asset is:
 ```php
-'account_name' => $label,
-'account_tag'  => $public_key,
+Array
+(
+    [type] => asset
+    [asset_id] => 6cfe566e-4aad-470b-8c9a-2fd35b49c68d
+    [chain_id] => 6cfe566e-4aad-470b-8c9a-2fd35b49c68d
+    [symbol] => EOS
+    [name] => EOS
+    [icon_url] => https://images.mixin.one/a5dtG-IAg2IO0Zm4HxqJoQjfz-5nf1HWZ0teCyOnReMd3pmB8oEdSAXWvFHt2AJkJj5YgfyceTACjGmXnI-VyRo=s128
+    [balance] => 0
+    [public_key] =>
+    [account_name] => eoswithmixin
+    [account_tag] => 0aa2b00fad2c69059ca1b50de2b45569
+    [price_btc] => 0.00097367
+    [price_usd] => 3.87734515
+    [change_btc] => 0.05950956117519646
+    [change_usd] => 0.07238079041492786
+    [asset_key] => eosio.token:EOS
+    [confirmations] => 64
+    [capitalization] => 0
+)
 ```
 
 ### Deposit Bitcoin and read balance
