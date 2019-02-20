@@ -7,7 +7,8 @@ We have created a bot to [echo message](https://github.com/wenewzhang/mixin_labs
 4. How to send Bitcoin to other wallet
 
 ## Create a Bitcoin wallet by Mixin Network PHP SDK
-Pre-request: Create a Mixin Network account
+Pre-request: You should have a Mixin Network account
+##### Create Mixin network account
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
@@ -90,21 +91,20 @@ Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 |ZEC|c996abc9-d94e-4494-b1cf-2a3fd3ac5714
 |BCH|fd11b6e3-0b87-41f1-a41f-f0e9b49e5bf0
 
-### Deposit Bitcoin and read Bitcoin balance
-Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. 
+### Deposit Bitcoin and read balance
+Now you can deposit Bitcoin into the deposit address.
 
-This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin:
-: Add BTC deposit address in your Mixin messenger account and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network. 
+This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin: add the address in your Mixin messenger account withdrawal address and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network. 
 
-Now you can read Bitcoin balance of the account again to confirm the action.
+Now you can read Bitcoin balance of the account.
 ```php
 $btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
 ### Instantly send Bitcoin to another Mixin Network account with zero cost
-Pre-request:  Create PIN for account
+Pre-request: A PIN has been created for account
 
-A PIN is required to send any asset in Mixin Network. Let's create pin for the account.
+A PIN is required to send any asset in Mixin Network. Let's create pin for the account if it is missing.
 ```php
 //Create a PIN.
 $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
