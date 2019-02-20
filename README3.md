@@ -5,7 +5,7 @@ In last two chapters, we create a bot to [receive user's message and send messag
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
-createUser function in PHP SDK create a RSA keypair then call Mixin Network to create an account. Then the function return all account information.
+The function in PHP SDK create a RSA keypair automatically, then call Mixin Network to create an account. Then the function return all account information.
 #### Account information
 ```php
 //Create User api include all account information
@@ -22,7 +22,7 @@ You will find that the parameter has same name with app's parameter generated in
 Now you need to keep the account information and secure.
 
 ### Create Bitcoin wallet
-The wallet of Bitcoin is not generated automatically at same time when we create Mixin Network account. We need to create one by read Bitcoin asset once.
+The Bitcoin  wallet is not generated automatically at same time when we create Mixin Network account. We need to create one by read Bitcoin asset once.
 ```php
 $asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 echo "BitCoin wallet address is :".$asset_infoNew["public_key"];
@@ -50,15 +50,18 @@ Array
     [capitalization] => 0
 )
 ```
+The API provide many information about Bitcoin asset. Logo, price in USD, price change in USD. Your Bitcoin deposit will be accepted by Mixin Network only after your deposit is confirmed by 12 Bitcoin blocks. 
 
-You may ask where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
+### Private key
+You may ask where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network so it is invisible for user. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
 
 ### Not only Bitcoin
 The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support [list](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
 
+Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 
 ### Deposit some Bitcoin into the address from other exchange or wallet and read balance
-Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. This is maybe too expensive for our tutorial. There is a free and fast solution to deposit Bitcoin in Mixin Messenger: Add the deposit address in your BTC account and withdraw small amount Bitcoin to the address. It is free and confirmed instantly.
+Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin : Add the BTC deposit address in your Mixin messenger account and withdraw small amount Bitcoin to the address. It is free and confirmed instantly because they are on Mixin Network. 
 
 Now you can read Bitcoin balance of the account again to confirm the action.
 ```php
@@ -80,10 +83,10 @@ $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"]
 print_r($trans_info);
 ```
 ![Confirm the result in Mixin messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/newuser-transfer-bitcoin-to-me.jpg)
-## Send Bitcoin to another Bitcoin address like normal Bitcoin transaction
-Now let's withdraw Bitcoin to other exchange or wallet.
+### Send Bitcoin to another Bitcoin exchange or wallet
+If you want to send Bitcoin to another exchange or wallet, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
 
-## Create withdrawal address and get the withdrawal fee
+#### Add withdrawal address and get the withdrawal fee
 We need to add a Bitcoin withdrawal address by call [API](), the ID of address will be returned in result of API.
 ```php
 $btcInfo = $mixinSdk->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
@@ -91,7 +94,7 @@ $btcInfo = $mixinSdk->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b659
                                                     $mixinSdk->getConfig()['default']['pin'],
                                                     "BTC withdral",false);
 ```
-The **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** if a Bitcoin wallet address, Output like below, fee is 0.0025738 BTC, The API result will give you the withdrawal address ID.                                                   
+The **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** is a Bitcoin wallet address, Output like below, fee is 0.0025738 BTC, The API result will give you the withdrawal address ID.                                                   
 ```php
 Array
 (
@@ -113,7 +116,14 @@ For EOS, the $label is the account_name, the others, $label just a memo.
 'account_name' => $label,
 'account_tag'  => $public_key,
 ```
-Now, commit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is created above.
+
+#### Read withdraw fee again
+```php
+$wdInfo->Wallet()->readAddress($btcInfo["address_id"]);
+```
+
+#### Send Bitcoin to destination address
+Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is created above.
 ```php
 $wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
