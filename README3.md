@@ -27,7 +27,7 @@ $newConfig["client_id"]   = $user_info["user_id"];
 Now you need to carefully keep the account information. You need these information to read asset balance and other content.
 
 ### Create Bitcoin wallet for the Mixin Network account
-The Bitcoin  wallet is not generated automatically at same time when we create Mixin Network account. We need to create one. Just read Bitcoin asset once to generate a Bitcoin wallet.
+The Bitcoin  wallet is not generated automatically at same time when we create Mixin Network account. Read Bitcoin asset once to generate a Bitcoin wallet.
 ```php
 $asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 echo "BitCoin wallet address is :".$asset_infoNew["public_key"];
@@ -65,7 +65,7 @@ The API provide many information about Bitcoin asset.
 
 
 ### Private key?
-You may ask where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network so it is invisible for user. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
+Where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network so it is invisible for user. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
 
 ### Not only Bitcoin, but also Ethereum, EOS
 The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support [list](https://mixin.one/network/chains). All ERC20 Token and EOS token are supported by the account.
