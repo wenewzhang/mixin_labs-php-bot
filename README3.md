@@ -23,9 +23,8 @@ $newConfig["pin_token"]   = $user_info["pin_token"];
 $newConfig["session_id"]  = $user_info["session_id"];
 $newConfig["client_id"]   = $user_info["user_id"];
 ```
-You will find that the parameter has same name with app's parameter generated in dashboard. All account in Mixin network use same rule to communicate with Mixin Network. There are some small differences: developer account can only create app in dashboard, and app can only create account by API.
 
-Now you need to keep the account information and secure.
+Now you need to save the account information well and privately.
 
 ### Create Bitcoin wallet for the Mixin Network account
 The Bitcoin  wallet is not generated automatically at same time when we create Mixin Network account. We need to create one by read Bitcoin asset once.
