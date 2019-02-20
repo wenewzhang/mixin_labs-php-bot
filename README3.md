@@ -101,7 +101,9 @@ Now you can read Bitcoin balance of the account.
 $btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
-### Send Bitcoin with 0 transaction fee and confirm it instantly
+### Send Bitcoin inside Mixin Network to enjoy instant confirmation and ZERO transaction fee
+Any transaction happen between Mixin network account is free and is confirmed in 1 second.
+
 Pre-request: A PIN has been created for account
 
 A PIN is required to send any asset in Mixin Network. Let's create pin for the account if it is missing.
@@ -110,26 +112,29 @@ A PIN is required to send any asset in Mixin Network. Let's create pin for the a
 $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
 print_r($pinInfo);
 ```
-#### Send Bitcoin with 0 transaction fee and confirm it instantly inside Mixin network
-Any transaction happen between Mixin network account is free and is confirmed in 1 second.
+#### Send Bitcoin to another Mixin Network account
+
 ```php
 $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
 ```
 ![Confirm the result in Mixin messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/newuser-transfer-bitcoin-to-me.jpg)
+
 ### Send Bitcoin to another Bitcoin exchange or wallet
-If you want to send Bitcoin to another exchange or wallet, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
+If you want to send Bitcoin to another exchange or wallet which is not supported by Mixin network account, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
 
 Pre-request: Withdrawal address is added and know the Bitcoin withdrawal fee
-We need to add a Bitcoin withdrawal address by call [API](), the ID of address will be returned in result of API.
+
+#### Add deposit address
+Call createAddress, the ID of address will be returned in result of API and is required soon.
 ```php
 $btcInfo = $mixinSdk->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
                                                     "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C",
                                                     $mixinSdk->getConfig()['default']['pin'],
                                                     "BTC withdral",false);
 ```
-The **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** is a Bitcoin wallet address, Output like below, fee is 0.0025738 BTC, The API result will give you the withdrawal address ID.                                                   
+The **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** is a Bitcoin wallet address, Output like below, fee is 0.0025738 BTC, The API result contains the withdrawal address ID.                                                   
 ```php
 Array
 (
@@ -158,7 +163,7 @@ $wdInfo->Wallet()->readAddress($btcInfo["address_id"]);
 ```
 
 #### Send Bitcoin to destination address
-Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is the address id created above.
+Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is the address id return by createAddress
 ```php
 $wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
