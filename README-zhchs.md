@@ -89,7 +89,7 @@ root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# composer init
 This command will guide you through creating your composer.json config.
 Package name (<vendor>/<name>) [user/mixin_labs-php-bot]:
 Description []: PHP 7 bot for Mixin Messenger
-Author [, n to skip]: JimmyZhang <zhangjingping@mixin.one>
+Author [, n to skip]: JimmyZhang <this-a-email-address@nodomain.com>
 Minimum Stability []:
 Package Type (e.g. library, project, metapackage, composer-plugin) []:
 License []:
@@ -102,7 +102,7 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
     "authors": [
         {
             "name": "JimmyZhang",
-            "email": "zhangjingping@mixin.one"
+            "email": "this-a-email-address@nodomain.com"
         }
     ],
     "require": {}
