@@ -21,7 +21,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-If you install a old php 7.1 before, execute **brew unlink php@7.1** to remove the symbol links, and the execute **brew link php@7.3** to link php3 to **php** default
+If you install a old php 7.1 before, execute **brew unlink php@7.1** to remove the symbol links, and then execute **brew link php@7.3** to link php 7.3 to **php** default
 ```bash
 wenewzha:mixin_labs-php-bot wenewzhang$ brew unlink php@7.1
 Unlinking /usr/local/Cellar/php/7.1.23... 24 symlinks removed

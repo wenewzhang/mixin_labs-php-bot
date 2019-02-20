@@ -24,6 +24,24 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
+如果之前你安装过php 7.1 或者更旧的php版本，执行**brew unlink php@7.1**删除这些链接，然后再执行**brew link php@7.3**将php 7.3链接到php.
+```bash
+wenewzha:mixin_labs-php-bot wenewzhang$ brew unlink php@7.1
+Unlinking /usr/local/Cellar/php/7.1.23... 24 symlinks removed
+wenewzha:mixin_labs-php-bot wenewzhang$ brew link php@7.3
+Warning: php@7.3 is keg-only and must be linked with --force
+
+If you need to have this software first in your PATH instead consider running:
+  echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
+  echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
+```
+之后，根据你的系统实际情况，看看**php -v**能不能执行成功，如果不行，将默认的PATH设置并保存到.bash_profile.
+```bash
+echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
+echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
 #### on Ubuntu
 ```bash
 apt update
