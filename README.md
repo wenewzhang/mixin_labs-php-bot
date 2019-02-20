@@ -289,7 +289,7 @@ The code generates a valid token and creates connection between the websocket an
 
 [API of the operation](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guide of the operation](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
 
-The mixin-sdk-php implements the getToken function, call it and generate token here.
+The mixin-sdk-php implements the getToken function, call it and generate a token.
 ```php
 class callTraitClass {
   use MixinSDKTrait;
@@ -303,7 +303,7 @@ class callTraitClass {
 $callTrait = new callTraitClass();
 $Token = $callTrait->getToken('GET', '/', '');
 ```
-Connect to  Mixin messenger server with correct token.
+Connect to  Mixin messenger server with the correct token.
 ```php
 $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                                     'Authorization' => 'Bearer '.$Token
