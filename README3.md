@@ -3,7 +3,7 @@ In last two chapters, we create a bot to [receive user's message and send messag
 #  Create a Bitcoin wallet of Mixin Network by PHP
 Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to prepare an unique RSA key pair and call Mixin Network API to create a Mixin Network account. The account not only support Bitcoin wallet, but also support Ethereum, EOS, Etc. Full blockchain support list is [here](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
 
-### Create a Mixin Network account to acquire Bitcoin wallet
+## Create a Mixin Network account to acquire Bitcoin wallet
 You may ask where is Bitcoin private key? The private key is protected by multi signature from Mixin Network. Bitcoin Asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
 Mixin Network doesn't handle the RSA private key which is created by the mixin-sdk-php, so please keep in mind: **STORE YOUR PRIVATE KEY SAFETY!**
 ```
@@ -23,7 +23,7 @@ $body = [
 ];
 ...
 ```
-### Read Bitcoin asset balance and deposit address
+## Read Bitcoin asset balance and deposit address
 The address of Bitcoin is not generated automatically at same time when the account is created, it is created when user read Bitcoin asset for the first time.
 Now we can read the Bitcoin asset by Deposit/Read Asset API after we created an account.
 ```php
@@ -59,7 +59,7 @@ By the way, EOS wallet is different:
 [account_tag] => aae7be03e8ac0d927dcf2fd5a0e5b65c
 ```
 
-### Full example
+## Full example
 
 For a general Mixin Network account, just can find the Mixin ID through Mixin Messenger, for example, my Mixin ID is 37222956,
 ```php
@@ -83,11 +83,12 @@ Array
 )
 ```
 Steps of this example:
- - 1.Create a new user which come with Bitcoin wallet.
- - 2.Update the new user's PIN code.
- - 3.Transfer 0.001 bitcoin to new user.
- - 4.Transfer 0.001 bitcoin from new user to master.
- - 5.Transfer 0.001 bitcoin to this bot through Mixin Messenger.
+ - **1.** Transfer 0.001 bitcoin to this bot through Mixin Messenger by manual.
+ - **2.** Create a new user, and then get the Bitcoin wallet address.
+ - **3.** Update the new user's PIN code.
+ - **4.** Transfer 0.001 bitcoin to new user.
+ - **5.** Transfer 0.001 bitcoin from new user to master.
+
 Keep in mind change MASTER_ID to your's Mixin ID, or the coins will transfer to me, LOL!
 ```php
 <?php
@@ -149,13 +150,16 @@ let's transfer the Bitcoin back to your Mixin Messenger user account for free an
 
 ## Send Bitcoin to another Bitcoin address like normal Bitcoin transaction
 Now let's withdraw Bitcoin to other exchange or wallet.
-#### Create withdraw address
+
+## Create withdraw address
 We need to add a Bitcoin withdrawal address by call [API](), the ID of address will be returned in result of API.
+```php
+$mixinSDK->Wallet()->createAddress($assetId, $publicKey, $pin, $label);
 ```
-```
-## Withdraw Bitcoin
-Now we can perform a withdraw action by call API.
-```
+For EOS, the $label is the account_name, the others, $label just a memo.
+```php
+'account_name' => $label,
+'account_tag'  => $public_key,
 ```
 The API result will give you the Bitcoin transaction ID.
 
