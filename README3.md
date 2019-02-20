@@ -100,7 +100,7 @@ If you read EOS deposit address, the deposit address is composed of two parts: a
 ### Deposit Bitcoin and read balance
 Now you can deposit Bitcoin into the deposit address.
 
-This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin: add the address in your Mixin messenger account withdrawal address and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network. 
+This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin: add the address in your Mixin messenger account withdrawal address and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network.
 
 Now you can read Bitcoin balance of the account.
 ```php
@@ -161,13 +161,13 @@ Array
 
 #### Read withdraw fee anytime
 ```php
-$wdInfo->Wallet()->readAddress($btcInfo["address_id"]);
+$wdInfo = $mixinSdk->Wallet()->readAddress($btcInfo["address_id"]);
 ```
 
 #### Send Bitcoin to destination address
 Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is the address id return by createAddress
 ```php
-$wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
+$wdInfo = $mixinSdk->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
                             $mixinSdk->getConfig()['default']['pin'],
                             "BTC withdral");
@@ -176,12 +176,9 @@ $wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
 
 ## Full example
 ```php
-$wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
+$wdInfo = $mixinSdk->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
                             $mixinSdk->getConfig()['default']['pin'],
                             "BTC withdral");
 ```
-[Full source code]()
-
-
-
+[Full source code](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
