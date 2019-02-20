@@ -177,7 +177,7 @@ $wdInfo = $mixinSdk->Wallet()->withdrawal($btcInfo["address_id"],
                             $mixinSdk->getConfig()['default']['pin'],
                             "BTC withdral");
 ```
-#### Confirm the transction in blockchain explore
+#### Confirm the transaction in blockchain explore
 
 ## Full example
 ```php
