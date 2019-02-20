@@ -18,6 +18,8 @@ The function in PHP SDK create a RSA keypair automatically, then call Mixin Netw
 //Create User api include all account information
 print_r($user_info);
 print($user_info["pubKey"]);
+//TODO: print private key
+print($user_info["pubKey"]);
 $newConfig = array();
 $newConfig["private_key"] = $user_info["priKey"];
 $newConfig["pin_token"]   = $user_info["pin_token"];
@@ -62,7 +64,7 @@ The API provide many information about Bitcoin asset.
 * Asset name:[name]
 * Asset uuid in Mixin network: [asset_key]
 * Price in USD from Coinmarketcap.com: [price_usd]
-* Least confirmed block before deposit is accepted by Mixin network:[confirmations]
+* Least confirmed blocks before deposit is accepted by Mixin network:[confirmations]
 
 
 ### Private key?
@@ -93,6 +95,7 @@ Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 
 If you read EOS deposit address, the deposit address is composed of two parts: account_name and account tag. When you transfer EOS token to your account in Mixin network, you should fill both account name and memo. The memo content is value of 'account_tag'.
 ```php
+//TODO: read EOS asset result
 'account_name' => $label,
 'account_tag'  => $public_key,
 ```
@@ -122,7 +125,8 @@ print_r($pinInfo);
 We can send Bitcoin to our bot. You can find the uuid of app in dashboard or in config.php
 
 ```php
-$trans_info = $mixinSdkNew->Wallet()->transfer(BTC_ASSET_ID,uuid_of_app],
+$uuid_of_bot = '123'
+$trans_info = $mixinSdkNew->Wallet()->transfer(BTC_ASSET_ID,$uuid_of_bot],
                                          $mixinSdkNew->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
 ```
@@ -133,16 +137,16 @@ $btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
 ### Send Bitcoin to another Bitcoin exchange or wallet
-If you want to send Bitcoin to another exchange or wallet which is not supported by Mixin network account, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
+If you want to send Bitcoin to another exchange or wallet, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
 
 Pre-request: Withdrawal address is added and know the Bitcoin withdrawal fee
 
-#### Add deposit address
+#### Add destination address to withdrawal address list
 Call createAddress, the ID of address will be returned in result of API and is required soon.
 ```php
-$btcInfo = $mixinSdk->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
+$btcInfo = $mixinSdkNew->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
                                                     "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C",
-                                                    $mixinSdk->getConfig()['default']['pin'],
+                                                    $mixinSdkNew->getConfig()['default']['pin'],
                                                     "BTC withdral",false);
 ```
 The **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** is a Bitcoin wallet address, Output like below, fee is 0.0025738 BTC, The API result contains the withdrawal address ID.                                                   
@@ -166,15 +170,15 @@ Array
 
 #### Read withdraw fee anytime
 ```php
-$wdInfo = $mixinSdk->Wallet()->readAddress($btcInfo["address_id"]);
+$wdInfo = $mixinSdkNew->Wallet()->readAddress($btcInfo["address_id"]);
 ```
 
 #### Send Bitcoin to destination address
 Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is the address id return by createAddress
 ```php
-$wdInfo = $mixinSdk->Wallet()->withdrawal($btcInfo["address_id"],
+$wdInfo = $mixinSdkNew->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
-                            $mixinSdk->getConfig()['default']['pin'],
+                            $mixinSdkNew->getConfig()['default']['pin'],
                             "BTC withdral");
 ```
 #### Confirm the transaction in blockchain explore
