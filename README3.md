@@ -67,7 +67,10 @@ The account not only contain a Bitcoin wallet, but also contains wallet for Ethe
 Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 
 ### Deposit Bitcoin and read Bitcoin balance
-Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin : Add BTC deposit address in your Mixin messenger account and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network. 
+Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. 
+
+This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin:
+: Add BTC deposit address in your Mixin messenger account and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network. 
 
 Now you can read Bitcoin balance of the account again to confirm the action.
 ```php
