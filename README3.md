@@ -1,12 +1,19 @@
 In last two chapters, we create a bot to [receive user's message and send message back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), the bot can [receive Bitcoin and send it back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
 
-# Create a Bitcoin wallet based on Mixin Network API by PHP
+
+# What you will learn from this chapter
+1. How to create Bitcoin wallet by Mixin Network PHP SDK
+2. How to read Bitcoin balance by Mixin Network PHP SDK
+3. How to send Bitcoin with zero transaction fee and confirmed in 1 second by Mixin Network PHP SDK
+4. How to send Bitcoin to other exchange and wallet
+
+## Create a Bitcoin wallet by Mixin Network PHP SDK
 #### Create a Mixin Network account
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
 The function in PHP SDK create a RSA keypair automatically, then call Mixin Network to create an account. Then the function return all account information.
-#### Account information
+
 ```php
 //Create User api include all account information
 print_r($user_info);
@@ -52,15 +59,15 @@ Array
 ```
 The API provide many information about Bitcoin asset. Logo, price in USD, price change in USD. Your Bitcoin deposit will be accepted by Mixin Network only after your deposit is confirmed by 12 Bitcoin blocks. 
 
-### Private key
+### Private key?
 You may ask where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network so it is invisible for user. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
 
-### Not only Bitcoin
-The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support [list](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
+### Not only Bitcoin, but also Ethereum, EOS
+The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support [list](https://mixin.one/network/chains). All ERC20 Token and EOS token are supported by the account.
 
 Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 
-### Deposit Bitcoin and read balance
+### Deposit Bitcoin and read Bitcoin balance
 Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin : Add BTC deposit address in your Mixin messenger account and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network. 
 
 Now you can read Bitcoin balance of the account again to confirm the action.
@@ -117,13 +124,13 @@ For EOS, the $label is the account_name, the others, $label just a memo.
 'account_tag'  => $public_key,
 ```
 
-#### Read withdraw fee again
+#### Read withdraw fee later
 ```php
 $wdInfo->Wallet()->readAddress($btcInfo["address_id"]);
 ```
 
 #### Send Bitcoin to destination address
-Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is created above.
+Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is the address id created above.
 ```php
 $wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
@@ -133,74 +140,14 @@ $wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
 #### Confirm the transction in blockchain explore
 
 ## Full example
-
-For a general Mixin Network account, just can find the Mixin ID through Mixin Messenger, for example, my Mixin ID is 37222956,
 ```php
-$userInfo = $mixinSdk->Network()->readUser("37222956");
-$userInfo["user_id"];
-print_r($userInfo);
+$wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
+                            "0.01",
+                            $mixinSdk->getConfig()['default']['pin'],
+                            "BTC withdral");
 ```
-So, i find my user id is 0b4f49dc-8fb4-4539-9a89-fb3afc613747,
-```bash
-Array
-(
-    [type] => user
-    [user_id] => 0b4f49dc-8fb4-4539-9a89-fb3afc613747
-    [identity_number] =>
-    [full_name] => jimmyzhang
-    [avatar_url] =>
-    [relationship] => STRANGER
-    [mute_until] => 2019-01-09T02:28:02.628864253Z
-    [created_at] => 2018-11-29T04:47:33.018214877Z
-    [is_verified] =>
-)
-```
-Steps of this example:
- - **1.** Transfer 0.001 bitcoin to this bot through Mixin Messenger by manual.
- - **2.** Create a new user, and then get the Bitcoin wallet address.
- - **3.** Update the new user's PIN code.
- - **4.** Transfer 0.001 bitcoin to new user.
- - **5.** Transfer 0.001 bitcoin from new user to master.
+[Full source code]()
 
-Keep in mind change MASTER_ID to your's Mixin ID, or the coins will transfer to me, LOL!
-```php
-<?php
-require __DIR__ . '/vendor/autoload.php';
-use ExinOne\MixinSDK\MixinSDK;
-$mixinSdk = new MixinSDK(require './config.php');
-
-const PIN           = "945689";
-const MASTER_ID     = "37222956";
-const BTC_ASSET_ID  = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";//bitcoin
-// const ASSET_ID   = "965e5c6e-434c-3fa9-b780-c50f43cd955c";//CNB
-const AMOUNT        = "0.001";
-
-$user_info = $mixinSdk->Network()->createUser("Tom cat");
-print_r($user_info);
-print($user_info["pubKey"]);
-
-$newConfig = array();
-$newConfig["private_key"] = $user_info["priKey"];
-$newConfig["pin_token"]   = $user_info["pin_token"];
-$newConfig["session_id"]  = $user_info["session_id"];
-$newConfig["client_id"]   = $user_info["user_id"];
-$newConfig["pin"]         = PIN;
-$mixinSdkNew = new MixinSDK($newConfig);
-
-$pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
-print_r($pinInfo);
-print_r($trans_info);
-$asset_infoNew = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
-print_r("BitCoin wallet address is :".$asset_infoNew["public_key"]);
-
-
-$trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
-                                         $mixinSdk->getConfig()['default']['pin'],AMOUNT);
-print_r($trans_info);
-
-```
-
-![bitcoin-transfer](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/bitcoin-transfer-to-bot.jpg)
 
 ## Mixin Network support cryptocurrencies (2019-02-19)
 
