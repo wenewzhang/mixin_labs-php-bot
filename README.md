@@ -276,7 +276,7 @@ Add the bot as your friend in [Mixin Messenger](https://mixin.one/messenger) and
 
 
 ### Source code summary
-The PHP code create a Websocket client.
+The PHP code creates a Websocket client.
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
