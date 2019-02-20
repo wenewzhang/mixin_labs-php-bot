@@ -5,7 +5,7 @@ In last two chapters, we create a bot to [receive user's message and send messag
 1. How to create Bitcoin wallet by Mixin Network PHP SDK
 2. How to read Bitcoin balance by Mixin Network PHP SDK
 3. How to send Bitcoin with zero transaction fee and confirmed in 1 second by Mixin Network PHP SDK
-4. How to send Bitcoin to other exchange and wallet
+4. How to send Bitcoin to other wallet by Mixin Network PHP SDK
 
 ## Create a Bitcoin wallet by Mixin Network PHP SDK
 #### Create a Mixin Network account
