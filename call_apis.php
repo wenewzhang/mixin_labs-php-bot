@@ -90,6 +90,7 @@ while (true) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
       $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
       $asset_info = $mixinSdkNew->Wallet()->readAsset(EOS_ASSET_ID);
+      print_r($asset_info);
       print_r("EOS wallet address is :".$asset_info["account_name"]."\n");
       print_r($asset_info["account_tag"]."\n");
     }

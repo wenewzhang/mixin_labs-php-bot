@@ -18,13 +18,59 @@ The function in PHP SDK create a RSA keypair automatically, then call Mixin Netw
 //Create User api include all account information
 print_r($user_info);
 print($user_info["pubKey"]);
-//TODO: print private key
-print($user_info["pubKey"]);
 $newConfig = array();
 $newConfig["private_key"] = $user_info["priKey"];
 $newConfig["pin_token"]   = $user_info["pin_token"];
 $newConfig["session_id"]  = $user_info["session_id"];
 $newConfig["client_id"]   = $user_info["user_id"];
+```
+
+Created user should get information like below:
+```php
+Array
+(
+    [type] => user
+    [user_id] => de06f952-6ec7-3789-8467-9aa79869a6ef
+    [identity_number] => 0
+    [full_name] => Tom cat
+    [avatar_url] =>
+    [relationship] =>
+    [mute_until] => 0001-01-01T00:00:00Z
+    [created_at] => 2019-02-20T12:29:29.86008273Z
+    [is_verified] =>
+    [session_id] => bc9293e5-ed9a-48da-99f9-915f561a1c60
+    [phone] =>
+    [pin_token] => TIPyCtRTTYOg2sr+lu0z2D3xS8SOtQAy0ZDnacRrn6u2ytutZinzeEpRTD9N1+DS/T1zJ8VoX4ED19nhF5SApjqjUaRjKI5lga4rQGcePjCvM0D89FdpmKJzNMLjzV2DglKFMPbnJTu1btfILc0XWiSNEiiFr2mHuLI7bYuQzWI=
+    [invitation_code] =>
+    [code_id] =>
+    [code_url] => https://mixin.one/codes/
+    [has_pin] =>
+    [receive_message_source] => EVERYBODY
+    [accept_conversation_source] => EVERYBODY
+    [priKey] => -----BEGIN PRIVATE KEY-----
+MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALh0dSy2GcKek/Jp
+4lTMZxJ30AWP+inZ4c+FG+3ch3fenmXysCyM56hgvVZwh4RrRpvVjRt/NNE3k2Wg
+N9LNZqWXCmo4ae/hJjpwuj/EVR/1/HSebF9hcvMoTre8D0iLlk+rf1tgr/ZHmIoa
+8ef45xMBDargfsF4b5k7kUavU9/xAgMBAAECgYB1ShBMOwsMVxvKdIvn0gXkl20e
+bFvtis9szr5gtO8rSNK+DuD5oyuXRNSAh5OUn0ZJxzQv/OZP9x/x6jw0/kk7Aj6c
+jjN3beC7UoayDYms4yNFoWNPqZEXkQ0b2tRsF3mdNj6LVm6Gq7FPDD1TYJ4GR4eO
+cWHCkZWym26HbZ30AQJBAPNFeZ7nd9wQIzu0wN9isrZebnCko3yax64MDsUAsrmP
+B1wdHkdX0tJpCldighYD10Cyi+nSz3ODmmbPbLu8AjECQQDCGyi0lpCoV+skLVR0
+4weU99Msz1neqOw1khQCJLzUW8UdDhsVwfCdzCeuZrCz+gl/aZaJ6d+6rNTMp1hL
+ionBAkBEs34hTiUfVL9egTFm5KyrrAdscFJrQhraIDWblRLkLGxbqy194GN9YIS3
+IO6z4OnNL58rrYlAig30sud2LSZBAkEAjuNXT7kWvBYcbwE/jtwhlLPqrK3nRlWr
+rLPgLsPEjb8Ql5busVGXQ1IqU+QcaCDEJRshSlzz6YOZEx6NjO5rAQJAejvW3DmT
+RjUSDJD8hGr9eCpKQTBDXyUEvyLIMCuRmm9Cbz0HRl4aVXOVblVWoJ6YsGvbCkSl
+LQCrPL2T58JTkg==
+-----END PRIVATE KEY-----
+
+    [pubKey] => -----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4dHUsthnCnpPyaeJUzGcSd9AF
+j/op2eHPhRvt3Id33p5l8rAsjOeoYL1WcIeEa0ab1Y0bfzTRN5NloDfSzWallwpq
+OGnv4SY6cLo/xFUf9fx0nmxfYXLzKE63vA9Ii5ZPq39bYK/2R5iKGvHn+OcTAQ2q
+4H7BeG+ZO5FGr1Pf8QIDAQAB
+-----END PUBLIC KEY-----
+)
 ```
 
 Now you need to carefully keep the account information. You need these information to read asset balance and other content.
@@ -58,6 +104,30 @@ Array
     [capitalization] => 0
 )
 ```
+Read EOS asset result like below:
+```php
+Array
+(
+    [type] => asset
+    [asset_id] => 6cfe566e-4aad-470b-8c9a-2fd35b49c68d
+    [chain_id] => 6cfe566e-4aad-470b-8c9a-2fd35b49c68d
+    [symbol] => EOS
+    [name] => EOS
+    [icon_url] => https://images.mixin.one/a5dtG-IAg2IO0Zm4HxqJoQjfz-5nf1HWZ0teCyOnReMd3pmB8oEdSAXWvFHt2AJkJj5YgfyceTACjGmXnI-VyRo=s128
+    [balance] => 0
+    [public_key] =>
+    [account_name] => eoswithmixin
+    [account_tag] => 0aa2b00fad2c69059ca1b50de2b45569
+    [price_btc] => 0.00097367
+    [price_usd] => 3.87734515
+    [change_btc] => 0.05950956117519646
+    [change_usd] => 0.07238079041492786
+    [asset_key] => eosio.token:EOS
+    [confirmations] => 64
+    [capitalization] => 0
+)
+```
+
 The API provide many information about Bitcoin asset.
 * Deposit address:[public_key]
 * Logo: [icon_url]
@@ -95,7 +165,6 @@ Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 
 If you read EOS deposit address, the deposit address is composed of two parts: account_name and account tag. When you transfer EOS token to your account in Mixin network, you should fill both account name and memo. The memo content is value of 'account_tag'.
 ```php
-//TODO: read EOS asset result
 'account_name' => $label,
 'account_tag'  => $public_key,
 ```

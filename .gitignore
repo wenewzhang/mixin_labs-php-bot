@@ -4,3 +4,4 @@ composer.phar
 vendor
 config.php
 new_users.csv
+config-my.php

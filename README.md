@@ -1,5 +1,5 @@
 # PHP Mixin Messenger application development tutorial
-A Mixin messenger bot will be created in this tutorial. The bot is powered by PHP and echo message and Bitcoin from user. 
+A Mixin messenger bot will be created in this tutorial. The bot is powered by PHP and echo message and Bitcoin from user.
 
 [Mixin network resource](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
@@ -14,13 +14,31 @@ This tutorial is written in PHP 7. So you need to install [PHP](http://php.net/)
 On macOS
 ```bash
 brew update
-brew install php@7.2
+brew install php@7.3
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 //install composer to /usr/local/opt/php@7.2/bin and give a brief name 'composer'
 php composer-setup.php --install-dir=/usr/local/opt/php@7.2/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
+If you install a old php 7.1 before, execute **brew unlink php@7.1** to remove the symbol links, and the execute **brew link php@7.3** to link php3 to **php** default
+```bash
+wenewzha:mixin_labs-php-bot wenewzhang$ brew unlink php@7.1
+Unlinking /usr/local/Cellar/php/7.1.23... 24 symlinks removed
+wenewzha:mixin_labs-php-bot wenewzhang$ brew link php@7.3
+Warning: php@7.3 is keg-only and must be linked with --force
+
+If you need to have this software first in your PATH instead consider running:
+  echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
+  echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
+```
+After the php 7.3 installed and symlinks created, according your OS environment settings, if **php -v** prompt "command not found", issue **echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"'** to bash_profile.
+```bash
+echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
+echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
+```
+
 On Ubuntu
 ```bash
 apt update
@@ -82,8 +100,8 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-This tutorial require two librarys. 
-* [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network. 
+This tutorial require two librarys.
+* [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network.
 * [Ratchet pawl](https://github.com/ratchetphp/Pawl) is a asynchronous websocket client.
 
 In composer.json file, add the two libraries in the "require" code block.
