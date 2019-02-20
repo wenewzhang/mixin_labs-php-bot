@@ -1,5 +1,4 @@
-In last two chapters, we create a bot to [receive user's message and send message back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), the bot can [receive Bitcoin and send it back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
-
+In last two chapters, we create a bot to [echo message](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) and [echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) to user.
 
 # What you will learn from this chapter
 1. How to create Bitcoin wallet by Mixin Network PHP SDK
@@ -8,7 +7,7 @@ In last two chapters, we create a bot to [receive user's message and send messag
 4. How to send Bitcoin to other wallet by Mixin Network PHP SDK
 
 ## Create a Bitcoin wallet by Mixin Network PHP SDK
-### Pre-request: Create a Mixin Network account
+Pre-request: Create a Mixin Network account
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
@@ -76,7 +75,8 @@ $btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
 ### Instantly send Bitcoin to another Mixin Network account with zero cost
-#### Pre-request:  Create PIN for account
+Pre-request:  Create PIN for account
+
 A PIN is required to send any asset in Mixin Network. Let's create pin for the account.
 ```php
 //Create a PIN.
