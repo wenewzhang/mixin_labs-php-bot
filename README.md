@@ -100,7 +100,7 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-This tutorial require two librarys.
+This tutorial requires two libraries.
 * [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network.
 * [Ratchet pawl](https://github.com/ratchetphp/Pawl) is a asynchronous websocket client.
 
@@ -122,7 +122,7 @@ composer.json  composer.lock  vendor
 ```
 If you clone this repository from Github repo, you only need to execute **composer install** to download all libraries.
 
-### Create you first app in Mixin Network developer dashboard
+### Create your first app in Mixin Network developer dashboard
 You need to create an app in dashboard. This [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) can help you.
 
 ### Generate parameter of your app in dashboard
