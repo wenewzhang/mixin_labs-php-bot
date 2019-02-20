@@ -91,6 +91,12 @@ Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 |ZEC|c996abc9-d94e-4494-b1cf-2a3fd3ac5714
 |BCH|fd11b6e3-0b87-41f1-a41f-f0e9b49e5bf0
 
+If you read EOS deposit address, the deposit address is composed of two parts: account_name and account tag. When you transfer EOS token to your account in Mixin network, you should fill both account name and memo. The memo content is value of 'account_tag'.
+```php
+'account_name' => $label,
+'account_tag'  => $public_key,
+```
+
 ### Deposit Bitcoin and read balance
 Now you can deposit Bitcoin into the deposit address.
 
@@ -151,11 +157,7 @@ Array
     [updated_at] => 2019-02-20T01:47:56.44067294Z
 )
 ```
-If you read EOS deposit address, the deposit address is composed of two parts: account_name and account tag. When you transfer EOS token to your account in Mixin network, you should fill both account name and memo. The memo content is value of 'account_tag'.
-```php
-'account_name' => $label,
-'account_tag'  => $public_key,
-```
+
 
 #### Read withdraw fee anytime
 ```php
