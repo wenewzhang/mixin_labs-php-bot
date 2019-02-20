@@ -151,7 +151,7 @@ Array
     [updated_at] => 2019-02-20T01:47:56.44067294Z
 )
 ```
-For EOS, the $label is the account_name, the others, $label just a memo.
+If you read EOS deposit address, the deposit address is composed of two parts: account_name and account tag. When you transfer EOS token to your account in Mixin network, you should fill both account name and memo. The memo content is value of 'account_tag'.
 ```php
 'account_name' => $label,
 'account_tag'  => $public_key,
