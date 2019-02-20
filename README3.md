@@ -1,4 +1,4 @@
-We have created a bot to [echo message](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) and [echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) to user.
+We have created a bot to [echo message](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) and [echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
 
 # What you will learn from this chapter
 1. How to create Bitcoin wallet
