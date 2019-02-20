@@ -3,34 +3,33 @@ In last two chapters, we create a bot to [receive user's message and send messag
 # Create a Bitcoin wallet based on Mixin Network API by PHP
 Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to prepare an unique RSA key pair and call Mixin Network API to create a Mixin Network account. The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support list is [here](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
 
-## Create a Mixin Network account to acquire Bitcoin wallet
-You may ask where is Bitcoin private key? The private key is protected by multi signature from Mixin Network. Bitcoin Asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
-Mixin Network doesn't handle the RSA private key which is created by the mixin-sdk-php, so please keep in mind: **STORE YOUR PRIVATE KEY SAFETY!**
-```
+#### Create a Mixin Network account
+```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
-What's happened when issue createUser function? Which create a private key, public key and session secret.
-In fact, session secret is a public key which is used to generate Bitcoin wallet address.
+createUser function in PHP SDK create a RSA keypair then call Mixin Network to create an account. Then the function return all account information.
+#### Account information
 ```php
-...
-$session_secret = str_replace(["-----BEGIN PUBLIC KEY-----\n", "-----END PUBLIC KEY-----", "\n"], '', $pub_key);
-...
-
-[$priKey, $pubKey, $session_secret] = $this->generateSSLKey();
-$body = [
-    'session_secret' => $session_secret,
-    'full_name'      => (string) $fullName,
-];
-...
+//Create User api include all account information
+print_r($user_info);
+print($user_info["pubKey"]);
+$newConfig = array();
+$newConfig["private_key"] = $user_info["priKey"];
+$newConfig["pin_token"]   = $user_info["pin_token"];
+$newConfig["session_id"]  = $user_info["session_id"];
+$newConfig["client_id"]   = $user_info["user_id"];
 ```
-## Read Bitcoin asset balance and deposit address
-The address of Bitcoin is not generated automatically at same time when the account is created, it is created when user read Bitcoin asset for the first time.
-Now we can read the Bitcoin asset by Deposit/Read Asset API after we created an account.
+You will find that the parameter has same name with app's parameter generated in dashboard. All account in Mixin network use same rule to communicate with Mixin Network. There are some small differences: developer account can only create app in dashboard, and app can only create account by API.
+
+Now you need to keep the account information and secure.
+
+### Create Bitcoin wallet
+The wallet of Bitcoin is not generated automatically at same time when we create Mixin Network account. We need to create one by read Bitcoin asset once.
 ```php
-$asset_infoNew = $mixinSdkNew->Wallet()->readAsset(ASSET_ID);
+$asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 echo "BitCoin wallet address is :".$asset_infoNew["public_key"];
 ```
-You can found information about Bitcoin asset in the account. Public key is the deposit address for you.
+You can found information about Bitcoin asset in the account. Public key is the Bitcoin deposit address. Full response of read asset is
 ```php
 Array
 (
@@ -53,28 +52,28 @@ Array
     [capitalization] => 0
 )
 ```
-By the way, EOS wallet is different:
-```php
-[account_name] => eoswithmixin
-[account_tag] => aae7be03e8ac0d927dcf2fd5a0e5b65c
-```
 
-## Deposit some Bitcoin into the address from other exchange or wallet
-Now you can deposit some bitcoin from other exchange or wallet. This is maybe too expensive for our tutorial. So you can use your own Mixin messenger user account to transfer super tiny bitcoin to the account you just created. It is free and confirmed instantly.
+You may ask where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
+Mixin Network doesn't handle the RSA private key which is created by the mixin-sdk-php.
 
-Transfer Bitcoin to the account is very easy. You just need to prepare a URL like:
-
-```
-```
+### Deposit some Bitcoin into the address from other exchange or wallet and read balance
+Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. This is maybe too expensive for our tutorial. There is a free and fast solution to deposit Bitcoin in Mixin Messenger: Add the deposit address in your BTC account and withdraw small amount Bitcoin to the address. It is free and confirmed instantly.
 
 Now you can read Bitcoin balance of the account again to confirm the action.
 ```php
 $btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
-## Instantly send Bitcoin to another Mixin Network account with zero cost
-let's transfer the Bitcoin back to your Mixin Messenger user account for free and instantly.
+### Instantly send Bitcoin to another Mixin Network account with zero cost
+#### Create PIN for account
+A PIN is required to send any asset in Mixin Network. Let's create pin for the account.
+```php
+//Create a PIN.
+$pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
+print_r($pinInfo);
 ```
+#### Send Bitcoin with 0 transaction fee and confirm it instantly
+```php
 $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
