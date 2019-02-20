@@ -271,8 +271,8 @@ if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
 } //end of SYSTEM_ACCOUNT_SNAPSHOT
 ```
 
-* The $dtPay->amount is negative if bot send Bitcoin to user successfully.
-* The $dtPay->amount is positive if bot receive Bitcoin.
+* The $dtPay->amount is negative if bot sends Bitcoin to user successfully.
+* The $dtPay->amount is positive if bot receives Bitcoin.
 
 Following code transfer the Bitcoin to user.
 ```php
