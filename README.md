@@ -276,7 +276,7 @@ Add the bot as your friend in [Mixin Messenger](https://mixin.one/messenger) and
 
 
 ### Source code summary
-The PHP code creates a Websocket client.
+The PHP code creates a websocket client.
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
@@ -285,7 +285,7 @@ $reactConnector = new \React\Socket\Connector($loop, [
 $connector = new \Ratchet\Client\Connector($loop,$reactConnector);
 ```
 
-To receive message from Mixin messenger user, the application need to create a connection to Mixin Messenger server. The application also need to create a token which is used in later communication.
+The code generates a valid token and creates connection between the websocket and Mixin Messenger server. Messages will be pushed to websocket client.
 
 [API of the operation](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guide of the operation](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
 
@@ -320,7 +320,7 @@ Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
     $msg = new Frame(gzencode(json_encode($message)),true,Frame::OP_BINARY);
     $conn->send($msg);
 ```
-**onMessage** function will be called when message is received by websocket client.
+**onMessage** function will be called when message is pushed to websocket client.
 ```php
 ->then(function(Ratchet\Client\WebSocket $conn) {
     $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
@@ -345,9 +345,9 @@ Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
         echo "Connection closed ({$code} - {$reason})\n";
     });                                      
 ```
-Not only text, images and other type message can be received. You can find more [details](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) about Messenger message.
+Not only text, images and other type message will be pushed to bot. You can find more [details](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) about Messenger message.
 
-Send a READ operation message to the server let it knows this message has already been read. If you don't send it, the bot will receive the duplicated message again after the bot connect to server again!
+Send a READ operation message to the server let it knows this message has been read. The bot will receive the duplicated message when the bot connected to server again if bot don't send response.
 ```php
 echo "\nNeed reply server a receipt!\n";
 $RspMsg = generateReceipt($jsMsg->data->message_id);
