@@ -1,8 +1,6 @@
 In last two chapters, we create a bot to [receive user's message and send message back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), the bot can [receive Bitcoin and send it back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
 
 # Create a Bitcoin wallet based on Mixin Network API by PHP
-Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to prepare an unique RSA key pair and call Mixin Network API to create a Mixin Network account. The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support list is [here](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
-
 #### Create a Mixin Network account
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
@@ -54,7 +52,10 @@ Array
 ```
 
 You may ask where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
-Mixin Network doesn't handle the RSA private key which is created by the mixin-sdk-php.
+
+### Not only Bitcoin
+The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support [list](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
+
 
 ### Deposit some Bitcoin into the address from other exchange or wallet and read balance
 Now you can deposit some bitcoin into the Bitcoin deposit address from other exchange or wallet. This is maybe too expensive for our tutorial. There is a free and fast solution to deposit Bitcoin in Mixin Messenger: Add the deposit address in your BTC account and withdraw small amount Bitcoin to the address. It is free and confirmed instantly.
