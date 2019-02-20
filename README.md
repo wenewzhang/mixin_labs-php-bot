@@ -270,8 +270,7 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca"
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-Add the bot as your friend in [Mixin Messenger](https://mixin.one/messenger) and send some word(for example, this bot id is 7000101639).
-
+Add the bot(for example, this bot id is 7000101639) as your friend in [Mixin Messenger](https://mixin.one/messenger) and send your messages.
 ![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.jpeg)
 
 
