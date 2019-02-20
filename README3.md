@@ -104,7 +104,7 @@ This is maybe too expensive for this tutorial. There is a free and lightening fa
 
 Now you can read Bitcoin balance of the account.
 ```php
-$btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+$btc = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
 ### Send Bitcoin inside Mixin Network to enjoy instant confirmation and ZERO transaction fee
@@ -119,16 +119,15 @@ $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
 print_r($pinInfo);
 ```
 #### Send Bitcoin to another Mixin Network account
-We can send Bitcoin to the App which is created in developer dashboard. You can find the uuid of app in dashboard, or in config.php
+We can send Bitcoin to our bot. You can find the uuid of app in dashboard or in config.php
 
 ```php
 $trans_info = $mixinSdkNew->Wallet()->transfer(BTC_ASSET_ID,uuid_of_app],
                                          $mixinSdkNew->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
 ```
-![Confirm the result in Mixin messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/newuser-transfer-bitcoin-to-me.jpg)
 
-Read app's Bitcoin balance is easy, just need to reload 
+Read bot's Bitcoin balance to confirm the transaction
 ```php
 $btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
