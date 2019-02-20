@@ -59,6 +59,69 @@ By the way, EOS wallet is different:
 [account_tag] => aae7be03e8ac0d927dcf2fd5a0e5b65c
 ```
 
+## Deposit some Bitcoin into the address from other exchange or wallet
+Now you can deposit some bitcoin from other exchange or wallet. This is maybe too expensive for our tutorial. So you can use your own Mixin messenger user account to transfer super tiny bitcoin to the account you just created. It is free and confirmed instantly.
+
+Transfer Bitcoin to the account is very easy. You just need to prepare a URL like:
+
+```
+```
+
+Now you can read Bitcoin balance of the account again to confirm the action.
+```php
+$btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+print_r($btc);
+```
+## Instantly send Bitcoin to another Mixin Network account with zero cost
+let's transfer the Bitcoin back to your Mixin Messenger user account for free and instantly.
+```
+$trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
+                                         $mixinSdk->getConfig()['default']['pin'],AMOUNT);
+print_r($trans_info);
+```
+![Confirm the result in Mixin messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/newuser-transfer-bitcoin-to-me.jpg)
+## Send Bitcoin to another Bitcoin address like normal Bitcoin transaction
+Now let's withdraw Bitcoin to other exchange or wallet.
+
+## Create withdrawal address and get the withdrawal fee
+We need to add a Bitcoin withdrawal address by call [API](), the ID of address will be returned in result of API.
+```php
+$info = $mixinSdk->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
+                                                    "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C",
+                                                    $mixinSdk->getConfig()['default']['pin'],
+                                                    "BTC withdral",false);
+```
+The **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** if a Bitcoin wallet address, Output like below, fee is 0.0025738 BTC, The API result will give you the withdrawal address ID.                                                   
+```php
+Array
+(
+    [type] => address
+    [address_id] => 345855b5-56a5-4f3b-ba9e-d99601ef86c1
+    [asset_id] => c6d0c728-2624-429b-8e0d-d9d19b6592fa
+    [public_key] => 14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C
+    [label] => BTC withdral
+    [account_name] =>
+    [account_tag] =>
+    [fee] => 0.0025738
+    [reserve] => 0
+    [dust] => 0.0001
+    [updated_at] => 2019-02-20T01:47:56.44067294Z
+)
+```
+For EOS, the $label is the account_name, the others, $label just a memo.
+```php
+'account_name' => $label,
+'account_tag'  => $public_key,
+```
+Now, commit the withdrawal request to Mixin Network.
+```php
+$wdInfo->Wallet()->withdrawal($btc["address_id"],
+                            "0.01",
+                            $mixinSdk->getConfig()['default']['pin'],
+                            "BTC withdral");
+```
+#### Confirm the transction in blockchain explore
+
 ## Full example
 
 For a general Mixin Network account, just can find the Mixin ID through Mixin Messenger, for example, my Mixin ID is 37222956,
@@ -128,42 +191,6 @@ print_r($trans_info);
 ```
 
 ![bitcoin-transfer](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/bitcoin-transfer-to-bot.jpg)
-![bitcoin-transfer](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/newuser-transfer-bitcoin-to-me.jpg)
-
-## Deposit some Bitcoin into the address from other exchange or wallet
-Now you can deposit some bitcoin from other exchange or wallet. This is maybe too expensive for our tutorial. So you can use your own Mixin messenger user account to transfer super tiny bitcoin to the account you just created. It is free and confirmed instantly.
-
-Transfer Bitcoin to the account is very easy. You just need to prepare a URL like:
-
-```
-```
-
-![send]()
-Now you can read Bitcoin balance of the account again to confirm the action.
-```
-```
-## Instantly send Bitcoin to another Mixin Network account with zero cost
-let's transfer the Bitcoin back to your Mixin Messenger user account for free and instantly.
-```
-```
-![Confirm the result in Mixin messenger]()
-
-## Send Bitcoin to another Bitcoin address like normal Bitcoin transaction
-Now let's withdraw Bitcoin to other exchange or wallet.
-
-## Create withdraw address
-We need to add a Bitcoin withdrawal address by call [API](), the ID of address will be returned in result of API.
-```php
-$mixinSDK->Wallet()->createAddress($assetId, $publicKey, $pin, $label);
-```
-For EOS, the $label is the account_name, the others, $label just a memo.
-```php
-'account_name' => $label,
-'account_tag'  => $public_key,
-```
-The API result will give you the Bitcoin transaction ID.
-
-#### Confirm the transction in blockchain explore
 
 ## Mixin Network support cryptocurrencies (2019-02-19)
 
