@@ -113,7 +113,7 @@ $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
 print_r($pinInfo);
 ```
 #### Send Bitcoin to another Mixin Network account
-
+TODO: How to know developer's account uuid.
 ```php
 $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
