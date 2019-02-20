@@ -30,7 +30,8 @@ $msg .= "5: Read EOS address\n6: Transfer Bitcoin from bot to new user\n7: Trans
 $msg .= "8: withdraw bot's Bitcoin\n";
 $msg .= "9: exit \nMake your choose:";
 while (true) {
-  $line = readline($msg);
+  echo $msg;
+  $line = readline("");
   if ($line != '9') print("run...\n");
   if ($line == '1') {
     $user_info = $mixinSdk->Network()->createUser("Tom cat");
