@@ -55,7 +55,14 @@ Array
     [capitalization] => 0
 )
 ```
-The API provide many information about Bitcoin asset. Logo, price in USD, price change in USD. Your Bitcoin deposit will be accepted by Mixin Network only after your deposit is confirmed by 12 Bitcoin blocks. 
+The API provide many information about Bitcoin asset.
+* Deposit address:[public_key]
+* Logo: [icon_url]
+* Asset name:[name]
+* Asset uuid in Mixin network: [asset_key]
+* Price in USD from Coinmarketcap.com: [price_usd]
+* Least confirmed block before deposit is accepted by Mixin network:[confirmations]
+
 
 ### Private key?
 You may ask where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network so it is invisible for user. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
