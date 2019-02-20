@@ -1,7 +1,7 @@
-In last two chapters, we create a bot to [receive user's message and send message back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), the bot can [receive Bitcoin and send it back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md). Next, we will show you how to create a Bitcoin wallet, read and send Bitcoin by PHP based on Mixin Network API.
+In last two chapters, we create a bot to [receive user's message and send message back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), the bot can [receive Bitcoin and send it back to user](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
 
-#  Create a Bitcoin wallet of Mixin Network by PHP
-Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to prepare an unique RSA key pair and call Mixin Network API to create a Mixin Network account. The account not only support Bitcoin wallet, but also support Ethereum, EOS, Etc. Full blockchain support list is [here](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
+# Create a Bitcoin wallet based on Mixin Network API by PHP
+Creating a Bitcoin wallet is very easy on Mixin Network. Developer just need to prepare an unique RSA key pair and call Mixin Network API to create a Mixin Network account. The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support list is [here](https://mixin.one/network/chains). All ERC20 Token and EOS token are also supported by the account.
 
 ## Create a Mixin Network account to acquire Bitcoin wallet
 You may ask where is Bitcoin private key? The private key is protected by multi signature from Mixin Network. Bitcoin Asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
