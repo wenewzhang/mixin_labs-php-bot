@@ -86,7 +86,7 @@ Now let's withdraw Bitcoin to other exchange or wallet.
 ## Create withdrawal address and get the withdrawal fee
 We need to add a Bitcoin withdrawal address by call [API](), the ID of address will be returned in result of API.
 ```php
-$info = $mixinSdk->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
+$btcInfo = $mixinSdk->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
                                                     "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C",
                                                     $mixinSdk->getConfig()['default']['pin'],
                                                     "BTC withdral",false);
@@ -113,9 +113,9 @@ For EOS, the $label is the account_name, the others, $label just a memo.
 'account_name' => $label,
 'account_tag'  => $public_key,
 ```
-Now, commit the withdrawal request to Mixin Network.
+Now, commit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is created above.
 ```php
-$wdInfo->Wallet()->withdrawal($btc["address_id"],
+$wdInfo->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
                             $mixinSdk->getConfig()['default']['pin'],
                             "BTC withdral");
