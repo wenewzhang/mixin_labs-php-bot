@@ -345,7 +345,7 @@ Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
         echo "Connection closed ({$code} - {$reason})\n";
     });                                      
 ```
-Not only text, images and other type message will be pushed to bot. You can find more [details](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) about Messenger message.
+Not only text, images and other type message will be pushed to your bot. You can find more [details](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) about Messenger message.
 
 Send a READ operation message to the server let it knows this message has been read. The bot will receive the duplicated message when the bot connected to server again if bot don't send response.
 ```php
