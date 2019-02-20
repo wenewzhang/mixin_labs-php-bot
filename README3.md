@@ -119,14 +119,20 @@ $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
 print_r($pinInfo);
 ```
 #### Send Bitcoin to another Mixin Network account
-TODO: How to know developer's account uuid.
+We can send Bitcoin to the App which is created in developer dashboard. You can find the uuid of app in dashboard, or in config.php
+
 ```php
-$trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
-                                         $mixinSdk->getConfig()['default']['pin'],AMOUNT);
+$trans_info = $mixinSdkNew->Wallet()->transfer(BTC_ASSET_ID,uuid_of_app],
+                                         $mixinSdkNew->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
 ```
 ![Confirm the result in Mixin messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/newuser-transfer-bitcoin-to-me.jpg)
 
+Read app's Bitcoin balance is easy, just need to reload 
+```php
+$btc = $mixinSdk->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+print_r($btc);
+```
 ### Send Bitcoin to another Bitcoin exchange or wallet
 If you want to send Bitcoin to another exchange or wallet which is not supported by Mixin network account, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
 
