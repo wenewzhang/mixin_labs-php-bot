@@ -1,4 +1,5 @@
 # PHP Mixin Messenger application development tutorial
+![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
 A Mixin messenger bot will be created in this tutorial. The bot is powered by PHP and echo message and Bitcoin from user.
 
 [Mixin network resource](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
