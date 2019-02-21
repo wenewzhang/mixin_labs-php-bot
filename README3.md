@@ -197,7 +197,8 @@ $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$user_info["user_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
 ```
 
-Read bot's Bitcoin balance to confirm the transaction
+Read bot's Bitcoin balance to confirm the transaction.
+Caution: **$mixinSdkNew** is for the New User!
 ```php
 $btc = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);

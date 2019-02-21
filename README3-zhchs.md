@@ -196,7 +196,7 @@ $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$user_info["user_id"],
 print_r($trans_info);
 ```
 
-读取Bitcoin的余额，来确认比特币是不是转成功了！
+读取Bitcoin的余额，来确认比特币是不是转成功了！ 注意**$mixinSdkNew**是新用户的。
 ```php
 $btc = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
 print_r($btc);
