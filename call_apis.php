@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 use ExinOne\MixinSDK\MixinSDK;
-$mixinSdkBot = new MixinSDK(require './config.php');
+$mixinSdk_BotInstance = new MixinSDK(require './config.php');
 
 const PIN             = "945689";
 const MASTER_ID       = "37222956";
@@ -34,19 +34,19 @@ while (true) {
   $line = readline("");
   if ($line != '9') print("run...\n");
   if ($line == '1') {
-    $user_info = $mixinSdkBot->Network()->createUser("Tom cat");
-    print_r($user_info);
-    print($user_info["pubKey"]);
+    $tomcat_info = $mixinSdk_BotInstance->Network()->createUser("Tom cat");
+    print_r($tomcat_info);
+    print($tomcat_info["pubKey"]);
 
-    $newConfig = array();
-    $newConfig["private_key"] = $user_info["priKey"];
-    $newConfig["pin_token"]   = $user_info["pin_token"];
-    $newConfig["session_id"]  = $user_info["session_id"];
-    $newConfig["client_id"]   = $user_info["user_id"];
-    $newConfig["pin"]         = PIN;
-    $mixinSdkNew = new MixinSDK($newConfig);
+    $tomcat_Config = array();
+    $tomcat_Config["private_key"] = $tomcat_info["priKey"];
+    $tomcat_Config["pin_token"]   = $tomcat_info["pin_token"];
+    $tomcat_Config["session_id"]  = $tomcat_info["session_id"];
+    $tomcat_Config["client_id"]   = $tomcat_info["user_id"];
+    $tomcat_Config["pin"]         = PIN;
+    $mixinSdk_tomcat = new MixinSDK($tomcat_Config);
 
-    $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
+    $pinInfo = $mixinSdk_tomcat->Pin()->updatePin('',PIN);
     print_r($pinInfo);
     $csvary = array($newConfig);
     $fp = fopen('new_users.csv', 'a');
@@ -58,8 +58,8 @@ while (true) {
   if ($line == '2') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-      $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
-      $asset_info = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
+      $mixinSdk_eachAccountInstance = new MixinSDK(GenerateConfigByCSV($data));
+      $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(BTC_ASSET_ID);
       print_r("Bitcoin wallet balance is :".$asset_info["balance"]."\n");
     }
       fclose($handle);
@@ -68,8 +68,8 @@ while (true) {
   if ($line == '3') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-      $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
-      $asset_info = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
+      $mixinSdk_eachAccountInstance = new MixinSDK(GenerateConfigByCSV($data));
+      $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(BTC_ASSET_ID);
       print_r("Bitcoin wallet address is :".$asset_info["public_key"]."\n");
     }
       fclose($handle);
@@ -78,8 +78,8 @@ while (true) {
   if ($line == '4') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-      $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
-      $asset_info = $mixinSdkNew->Wallet()->readAsset(EOS_ASSET_ID);
+      $mixinSdk_eachAccountInstance= new MixinSDK(GenerateConfigByCSV($data));
+      $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(EOS_ASSET_ID);
       print_r("EOS wallet balance is :".$asset_info["balance"]."\n");
     }
       fclose($handle);
@@ -88,8 +88,8 @@ while (true) {
   if ($line == '5') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-      $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
-      $asset_info = $mixinSdkNew->Wallet()->readAsset(EOS_ASSET_ID);
+      $mixinSdk_eachAccountInstance= new MixinSDK(GenerateConfigByCSV($data));
+      $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(EOS_ASSET_ID);
       print_r($asset_info);
       print_r("EOS wallet address is :".$asset_info["account_name"]."\n");
       print_r($asset_info["account_tag"]."\n");
@@ -102,23 +102,23 @@ while (true) {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
       $new_user_id = $data[3];
-      $trans_info = $mixinSdkBot->Wallet()->transfer(BTC_ASSET_ID,$new_user_id,
-                                               $mixinSdkBot->getConfig()['default']['pin'],AMOUNT);
+      $trans_info = $mixinSdk_BotInstance->Wallet()->transfer(BTC_ASSET_ID,$new_user_id,
+                                               $mixinSdk_BotInstance->getConfig()['default']['pin'],AMOUNT);
       print_r($trans_info);
     }
       fclose($handle);
     } else print("Create user first\n");
   }
   if ($line == '7') {
-    $userInfo = $mixinSdkBot->Network()->readUser(MASTER_ID);
+    $userInfo = $mixinSdk_BotInstance->Network()->readUser(MASTER_ID);
     if (isset($userInfo["user_id"])) {
       if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-          $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
-          $asset_info = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
+          $mixinSdk_eachAccountInstance= new MixinSDK(GenerateConfigByCSV($data));
+          $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(BTC_ASSET_ID);
           if ( (float) $asset_info["balance"] > 0 ) {
-            $trans_info = $mixinSdkNew->Wallet()->transfer(BTC_ASSET_ID,$userInfo["user_id"],
-                                                     $mixinSdkNew->getConfig()['default']['pin'],$asset_info["balance"]);
+            $trans_info = $mixinSdk_eachAccountInstance->Wallet()->transfer(BTC_ASSET_ID,$userInfo["user_id"],
+                                                     $mixinSdk_eachAccountInstance->getConfig()['default']['pin'],$asset_info["balance"]);
             print_r($trans_info);
           } else print($data[3] . " has no coins!\n");
       }
@@ -127,16 +127,16 @@ while (true) {
     } else print("Can not find this user id by Mixin ID!");
   }
   if ($line == '8') {
-    $btcInfo = $mixinSdkBot->Wallet()->createAddress(BTC_ASSET_ID,
+    $btcInfo = $mixinSdk_BotInstance->Wallet()->createAddress(BTC_ASSET_ID,
                                               BTC_WALLET_ADDR,
-                                              $mixinSdkBot->getConfig()['default']['pin'],
+                                              $mixinSdk_BotInstance->getConfig()['default']['pin'],
                                               "BTC withdral",false);
     print("Bitcoin winthdrawal fee is:".$btcInfo["fee"]."\n");
-    $wdInfo = $mixinSdkBot->Wallet()->withdrawal($btc["address_id"],
+    $wdInfo = $mixinSdk_BotInstance->Wallet()->withdrawal($btc["address_id"],
                                 AMOUNT,
-                                $mixinSdkBot->getConfig()['default']['pin'],
+                                $mixinSdk_BotInstance->getConfig()['default']['pin'],
                                 "BTC withdral");
-    // $wdInfo = $mixinSdkBot->Wallet()->readAddress($btcInfo["address_id"]);
+    // $wdInfo = $mixinSdk_BotInstance->Wallet()->readAddress($btcInfo["address_id"]);
     print_r($wdInfo);
   }
   if ($line == '9') {
