@@ -1,20 +1,19 @@
-We have created a bot to [echo message](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) and [echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
+我们已经创建过一个回复消息的机器人 [echo message](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) 和一个能自动支付比特币的机器人 [echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
 
-# What you will learn from this chapter
-1. How to create Bitcoin wallet
-2. How to read Bitcoin balance
-3. How to send Bitcoin with zero transaction fee and confirmed in 1 second
-4. How to send Bitcoin to other wallet
+# 通过本教程的学习，你可以学到如下内容
+1. 如何创建一个比特币钱包.
+2. 如何读取比特币钱包的余额.
+3. 如何支付比特币并即时确认.
+4. 如何将Mixin Network的比特币提现到你的冷钱包或第三方交易所.
 
-## Create a Bitcoin wallet by Mixin Network PHP SDK
-Pre-request: You should have a Mixin Network account, create your first app in Mixin Network developer dashboard
-This [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) can help you.
+## 通过Mixin Network PHP SDK创建一个比特币钱包
+### 创建第一个机器人APP
+按下面的提示，到mixin.one创建一个APP[tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account).
 
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
-The function in PHP SDK create a RSA key pair automatically, then call Mixin Network to create an account. last the function return all account information.
-
+上面的语句会在本地创建一个RSA密钥对，然后调用Mixin Network来创建帐号，最后输出帐号信息.
 ```php
 //Create User api include all account information
 print_r($user_info);
@@ -26,7 +25,7 @@ $newConfig["session_id"]  = $user_info["session_id"];
 $newConfig["client_id"]   = $user_info["user_id"];
 ```
 
-Result of createUser is:
+帐号创建成功后输出如下:
 ```php
 Array
 (
@@ -73,15 +72,14 @@ OGnv4SY6cLo/xFUf9fx0nmxfYXLzKE63vA9Ii5ZPq39bYK/2R5iKGvHn+OcTAQ2q
 -----END PUBLIC KEY-----
 )
 ```
-
-Now you need to carefully keep the account information. You need these information to read asset balance and other content.
-### Create Bitcoin wallet for the Mixin Network account
-The Bitcoin  wallet is not generated automatically at same time when we create Mixin Network account. Read Bitcoin asset once to generate a Bitcoin wallet.
+现在你需要小心保管好你的帐号信息，在读取比特币资产余额或者其它内容时，将需要用到.
+### 给新建的帐号创建一个比特币钱包
+比特币钱包并不会在第一时间就与帐号一块创建, 它会在你读取比特币余额时创建.
 ```php
 $asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 echo "BitCoin wallet address is :".$asset_infoNew["public_key"];
 ```
-You can found information about Bitcoin asset in the account. Public key is the Bitcoin deposit address. Full response of read  Bitcoin asset is
+新创建的帐号的比特币资产详细信息如下，其中public key就是比特币的存币地址:
 ```php
 Array
 (
@@ -105,24 +103,25 @@ Array
 )
 ```
 
-
+这个API提供的比特币信息如下:
 The API provide many information about Bitcoin asset.
-* Deposit address:[public_key]
+* 存币地址:[public_key]
 * Logo: [icon_url]
-* Asset name:[name]
-* Asset uuid in Mixin network: [asset_key]
-* Price in USD from Coinmarketcap.com: [price_usd]
-* Least confirmed blocks before deposit is accepted by Mixin network:[confirmations]
+* 资产名字:[name]
+* 资产在Mixin Network的uuid: [asset_key]
+* 对美元的价格(Coinmarketcap.com提供): [price_usd]
+* 存币时确认的区块数量:[confirmations]
 
 
-### Private key?
-Where is Bitcoin private key? The private key is protected by multi signature inside Mixin Network so it is invisible for user. Bitcoin asset can only be withdraw to other address when user provide correct RSA private key signature, PIN code and Session key.
+### 比特币私钥呢？
+比特币的私钥呢？这个私钥被Mixin Network通过多重签名保护，所以对用户来说是不可见的,比特币资产的提现，都是通过上面的RSA私钥,PIN代码与公钥(session key)进行.
 
-### Not only Bitcoin, but also Ethereum, EOS
-The account not only contain a Bitcoin wallet, but also contains wallet for Ethereum, EOS, etc. Full blockchain support [list](https://mixin.one/network/chains). All ERC20 Token and EOS token are supported by the account.
+### 不只是比特币，还有以太币，EOS币等
+这个新创建的帐号不只有比特币，还有以太币，EOS币钱包等等, 完整的区块链支持列表[列表](https://mixin.one/network/chains). 支持所有的 ERC20代币与EOS代币.
 
-Create other asset wallet is same as create Bitcoin wallet, just read the asset.
-#### Mixin Network support cryptocurrencies (2019-02-19)
+创建其它的币的钱包与比特币钱包一样，也只需要读取它的资产信息即可.
+
+#### Mixin Network 当前支持的加密货币 (2019-02-19)
 
 |crypto |uuid in Mixin Network
 |---|---
@@ -141,8 +140,9 @@ Create other asset wallet is same as create Bitcoin wallet, just read the asset.
 |ZEC|c996abc9-d94e-4494-b1cf-2a3fd3ac5714
 |BCH|fd11b6e3-0b87-41f1-a41f-f0e9b49e5bf0
 
-If you read EOS deposit address, the deposit address is composed of two parts: account_name and account tag. When you transfer EOS token to your account in Mixin network, you should fill both account name and memo. The memo content is value of 'account_tag'.
-Result of read EOS asset is:
+EOS的存币钱包与其它的币有些不同，它由两部分组成， account_name and account tag, 如果你向Mixin Network存入EOS币，你需要填两项数据，account name 统一是**eoswithmixin**,备注里输入你的account_tag,比如**0aa2b00fad2c69059ca1b50de2b45569**.
+
+EOS的完整资产内容如下:
 ```php
 Array
 (
@@ -166,43 +166,43 @@ Array
 )
 ```
 
-### Deposit Bitcoin and read balance
-Now you can deposit Bitcoin into the deposit address.
+### 存入比特币与读取余额
+现在，你可以向比特币的钱包，存币了。
 
-This is maybe too expensive for this tutorial. There is a free and lightening fast solution to deposit Bitcoin: add the address in your Mixin messenger account withdrawal address and withdraw small amount Bitcoin from your account to the address. It is free and confirmed instantly because they are both on Mixin Network.
+当然，在比特币网络里转币，手续费是相当贵的，费用的中位数在0.001BTC,按当前4000美元的价格，在4美元左右，有一个方便的办法，如果你有[Mixin Messenger]()帐号，里面并且有比特币的话，可以直接转比特币给新创建的帐号，它们在同一个Mixin Network网络内，这是免手续费的，并且即时确认.
 
-Now you can read Bitcoin balance of the account.
+通过下面的代码，可以读取比特币钱包信息.
 ```php
 $btc = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
-### Send Bitcoin inside Mixin Network to enjoy instant confirmation and ZERO transaction fee
-Any transaction happen between Mixin network account is free and is confirmed in 1 second.
+### Mixin Network网内免手续费的，并且即时确认
+任何币在Mixin Network内部的交易，都是免手续费的，并且即时确认!
+**所有的交易，都需要通过密码(PIN)完成**
 
-Pre-request: A PIN has been created for account
-
-A PIN is required to send any asset in Mixin Network. Let's create pin for the account if it is missing.
+对于新创建的帐号，我们通过updatePin来设置, 代码如下：
 ```php
 //Create a PIN.
 $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
 print_r($pinInfo);
 ```
-#### Send Bitcoin to another Mixin Network account
-We can send Bitcoin to our bot through Mixin Messenger, and then transfer Bitcoin from bot to new user.
-
+#### Mixin Network帐号之间的比特币支付
+通过Mixin Messenger，我们可以先转比特币给机器人，然后让机器人转币给新用户。
 ```php
 $mixinSdk = new MixinSDK(require './config.php');
 //$user_info["user_id"] generated by create user;
 $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$user_info["user_id"],
                                          $mixinSdk->getConfig()['default']['pin'],AMOUNT);
+print_r($trans_info);
 ```
 
-Read bot's Bitcoin balance to confirm the transaction
+读取Bitcoin的余额，来确认比特币是不是转成功了！
 ```php
-$btc = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+$btc = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
 print_r($btc);
 ```
-### Send Bitcoin to another Bitcoin exchange or wallet
+### 如何将比特币存入你的冷钱包或者第三方交易所
+如果你希望将币存入你的冷钱包或者第三方交易所
 If you want to send Bitcoin to another exchange or wallet, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
 
 Pre-request: Withdrawal address is added and know the Bitcoin withdrawal fee
