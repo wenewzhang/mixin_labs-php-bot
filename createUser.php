@@ -22,10 +22,10 @@ $newConfig["session_id"]  = $user_info["session_id"];
 $newConfig["client_id"]   = $user_info["user_id"];
 $newConfig["pin"]         = PIN;
 //Install the parameter in PHP SDK
-$account_instance = new MixinSDK($newConfig);
+$tom_cat = new MixinSDK($newConfig);
 
 //Create a PIN.
-$pinInfo = $account_instance->Pin()->updatePin('',PIN);
+$pinInfo = $tom_cat->Pin()->updatePin('',PIN);
 print_r($pinInfo);
 print_r($trans_info);
 //Create Bitcoin deposit address by read Bitcoin asset
@@ -41,7 +41,7 @@ print_r($trans_info);
 $userInfo = $bot_instance->Network()->readUser(MASTER_ID);
 $userInfo["user_id"];
 
-$trans_info2 = $account_instance->Wallet()->transfer(BTC_ASSET_ID,$userInfo["user_id"],
+$trans_info2 = $tom_cat->Wallet()->transfer(BTC_ASSET_ID,$userInfo["user_id"],
                                          $account_instance->getConfig()['default']['pin'],AMOUNT);
 
 print_r($trans_info2);
