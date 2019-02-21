@@ -1,4 +1,4 @@
-我们已经创建过一个回复消息的机器人 [echo message](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) 和一个能自动支付比特币的机器人 [echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
+我们已经创建过一个[回复消息](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md)的机器人和一个能自动[支付比特币](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)的机器人.
 
 # 通过本教程的学习，你可以学到如下内容
 1. 如何创建一个比特币钱包.
@@ -7,9 +7,7 @@
 4. 如何将Mixin Network的比特币提现到你的冷钱包或第三方交易所.
 
 ## 通过Mixin Network PHP SDK创建一个比特币钱包
-### 创建第一个机器人APP
-按下面的提示，到mixin.one创建一个APP[tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account).
-
+前期准备： 你要有一个Mixin Network账户。如果没有账户，一行代码就能创建一个
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
