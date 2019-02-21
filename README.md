@@ -133,6 +133,7 @@ and write down required content, these content will be written into config.php f
 In project folder, create a file: config.php. Copy the following content into it.
 > config.php
 ```php
+<?php
 return [
     'mixin_id'      => '7000101716',
     'client_id'     => 'a1ce2967-a534-417d-bf12-c86571e4eefa',
