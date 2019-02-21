@@ -48,7 +48,7 @@ while (true) {
 
     $pinInfo = $mixinSdk_tomcat->Pin()->updatePin('',PIN);
     print_r($pinInfo);
-    $csvary = array($newConfig);
+    $csvary = array($tomcat_Config);
     $fp = fopen('new_users.csv', 'a');
     foreach ($csvary as $fields) {
         fputcsv($fp, $fields);
