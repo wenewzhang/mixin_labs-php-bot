@@ -10,16 +10,16 @@ const BTC_ASSET_ID  = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
 const AMOUNT        = "0.001";
 
 //Mixin PHP SDK generate RSA key pair automatically
-$user_info = $bot_instance->Network()->createUser("Tom cat");
+$tom_cat_info = $bot_instance->Network()->createUser("Tom cat");
 //Create User api include all account information
-print_r($user_info);
-print($user_info["pubKey"]);
+print_r($tom_cat_info);
+print($tom_cat_info["pubKey"]);
 
 $newConfig = array();
-$newConfig["private_key"] = $user_info["priKey"];
-$newConfig["pin_token"]   = $user_info["pin_token"];
-$newConfig["session_id"]  = $user_info["session_id"];
-$newConfig["client_id"]   = $user_info["user_id"];
+$newConfig["private_key"] = $tom_cat_info["priKey"];
+$newConfig["pin_token"]   = $tom_cat_info["pin_token"];
+$newConfig["session_id"]  = $tom_cat_info["session_id"];
+$newConfig["client_id"]   = $tom_cat_info["user_id"];
 $newConfig["pin"]         = PIN;
 //Install the parameter in PHP SDK
 $tom_cat = new MixinSDK($newConfig);
@@ -33,7 +33,7 @@ $asset_infoNew = $account_instance->Wallet()->readAsset(BTC_ASSET_ID);
 print_r("BitCoin wallet address is :".$asset_infoNew["public_key"]);
 
 //Transfer Bitcoin to developer's account, zero fee and confirmed instantly
-$trans_info = $bot_instance->Wallet()->transfer(BTC_ASSET_ID,$newConfig["client_id"],
+$trans_info = $bot_instance->Wallet()->transfer(BTC_ASSET_ID,$$tom_cat_info["client_id"],
                                          $bot_instance->getConfig()['default']['pin'],AMOUNT);
 print_r($trans_info);
 
