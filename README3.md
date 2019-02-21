@@ -7,8 +7,7 @@ We have created a bot to [echo message](https://github.com/wenewzhang/mixin_labs
 4. How to send Bitcoin to other wallet
 
 ## Create a Bitcoin wallet by Mixin Network PHP SDK
-Pre-request: You should have a Mixin Network account, create your first app in Mixin Network developer dashboard
-This [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) can help you.
+Pre-request: You should have a Mixin Network account. Create an accounte can be done by one line code:
 
 ```php
 $user_info = $mixinSdkBot->Network()->createUser("Tom cat");
