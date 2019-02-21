@@ -38,10 +38,10 @@ $trans_info = $bot_instance->Wallet()->transfer(BTC_ASSET_ID,$$tom_cat_info["cli
 print_r($trans_info);
 
 //Read user information by ID
-$userInfo = $bot_instance->Network()->readUser(MASTER_ID);
-$userInfo["user_id"];
+$master_userInfo = $bot_instance->Network()->readUser(MASTER_ID);
+$master_userInfo["user_id"];
 
-$trans_info2 = $tom_cat->Wallet()->transfer(BTC_ASSET_ID,$userInfo["user_id"],
+$trans_info2 = $tom_cat->Wallet()->transfer(BTC_ASSET_ID,$master_userInfo["user_id"],
                                          $account_instance->getConfig()['default']['pin'],AMOUNT);
 
 print_r($trans_info2);
