@@ -11,7 +11,7 @@ Pre-request: You should have a Mixin Network account, create your first app in M
 This [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) can help you.
 
 ```php
-$user_info = $mixinSdk->Network()->createUser("Tom cat");
+$user_info = $mixinSdkBot->Network()->createUser("Tom cat");
 ```
 The function in PHP SDK create a RSA key pair automatically, then call Mixin Network to create an account. last the function return all account information.
 
