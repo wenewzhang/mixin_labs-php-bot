@@ -7,6 +7,7 @@
 ## 课程简介
 1. [创建一个接受消息的机器人](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md#创建一个接受消息的机器人)
 2. [机器人接受比特币并立即退还用户](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md)
+3. [如何通过Mixin Network API创建新帐号](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md)
 
 ## 创建一个接受消息的机器人
 通过本教程，你将学会如何用PHP创建一个机器人APP,让它能接受消息.
