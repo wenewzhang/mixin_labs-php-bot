@@ -202,20 +202,19 @@ $btc = $mixinSdkNew->Wallet()->readAsset(BTC_ASSET_ID);
 print_r($btc);
 ```
 ### 如何将比特币存入你的冷钱包或者第三方交易所
-如果你希望将币存入你的冷钱包或者第三方交易所
-If you want to send Bitcoin to another exchange or wallet, you need to know the destination deposit address, then add the address in withdraw address list of the Mixin network account.
+如果你希望将币存入你的冷钱包或者第三方交易所, 先要得到冷钱包或者你在第三方交易所的钱包地址，然后将钱包地址提交到Mixin Network.
 
-Pre-request: Withdrawal address is added and know the Bitcoin withdrawal fee
+- **要点提示**: 提现是需要支付收续费的,准备好比特币包地址!
 
-#### Add destination address to withdrawal address list
-Call createAddress, the ID of address will be returned in result of API and is required soon.
+#### 增加目的钱包地址到Mixin Network
+调用createAddress API, 将会返回一个address_id,这个地址用来确认提现事务！
 ```php
 $btcInfo = $mixinSdkNew->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
                                                     "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C",
                                                     $mixinSdkNew->getConfig()['default']['pin'],
                                                     "BTC withdral",false);
 ```
-The **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** is a Bitcoin wallet address, Output like below, fee is 0.0025738 BTC, The API result contains the withdrawal address ID.                                                   
+ 这里的 **14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C** 就是一个比特币钱包地址, 如下所示，提现费用是0.0025738 BTC, address_id  是"345855b5-56a5-4f3b-ba9e-d99601ef86c1".                                                   
 ```php
 Array
 (
@@ -234,27 +233,27 @@ Array
 ```
 
 
-#### Read withdraw fee anytime
+#### 创建提现地址成功后，你可以用readAddress读取费率，在费率便宜的时候，再提现.
 ```php
-$wdInfo = $mixinSdkNew->Wallet()->readAddress($btcInfo["address_id"]);
+$wdInfo = $mixinSdkBot->Wallet()->readAddress($btcInfo["address_id"]);
 ```
 
-#### Send Bitcoin to destination address
-Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is the address id return by createAddress
+#### 提交提现请求，Mixin Network会即时处理提现请求.
+提交提现请求到Mixin Network, $btcInfo["address_id"]就是createAddress创建的。
 ```php
-$wdInfo = $mixinSdkNew->Wallet()->withdrawal($btcInfo["address_id"],
+$wdInfo = $mixinSdkBot->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
-                            $mixinSdkNew->getConfig()['default']['pin'],
+                            $mixinSdkBot->getConfig()['default']['pin'],
                             "BTC withdral");
 ```
-#### Confirm the transaction in blockchain explore
+#### 可以通过blockchain explore来查看进度.
 
 ## Full example
 ```php
 <?php
 require __DIR__ . '/vendor/autoload.php';
 use ExinOne\MixinSDK\MixinSDK;
-$mixinSdk = new MixinSDK(require './config.php');
+$mixinSdkBot = new MixinSDK(require './config.php');
 
 const PIN             = "945689";
 const MASTER_ID       = "37222956";
@@ -280,13 +279,14 @@ const AMOUNT          = "0.001";
 
 $msg  = "1: Create user and update PIN\n2: Read Bitcoin balance \n3: Read Bitcoin Address\n4: Read EOS balance\n";
 $msg .= "5: Read EOS address\n6: Transfer Bitcoin from bot to new user\n7: Transfer Bitcoin from new user to Master\n";
-$msg .= "8: withdraw bot's Bitcoin\n";
-$msg .= "9: exit \nMake your choose:";
+$msg .= "8: Withdraw bot's Bitcoin\n";
+$msg .= "9: Exit \nMake your choose:";
 while (true) {
-  $line = readline($msg);
+  echo $msg;
+  $line = readline("");
   if ($line != '9') print("run...\n");
   if ($line == '1') {
-    $user_info = $mixinSdk->Network()->createUser("Tom cat");
+    $user_info = $mixinSdkBot->Network()->createUser("Tom cat");
     print_r($user_info);
     print($user_info["pubKey"]);
 
@@ -342,6 +342,7 @@ while (true) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
       $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
       $asset_info = $mixinSdkNew->Wallet()->readAsset(EOS_ASSET_ID);
+      print_r($asset_info);
       print_r("EOS wallet address is :".$asset_info["account_name"]."\n");
       print_r($asset_info["account_tag"]."\n");
     }
@@ -352,16 +353,16 @@ while (true) {
   if ($line == '6') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-      // $mixinSdkNew = new MixinSDK(GenerateConfigByCSV($data));
-      $trans_info = $mixinSdk->Wallet()->transfer(BTC_ASSET_ID,$data[3],
-                                               $mixinSdk->getConfig()['default']['pin'],AMOUNT);
+      $new_user_id = $data[3];
+      $trans_info = $mixinSdkBot->Wallet()->transfer(BTC_ASSET_ID,$new_user_id,
+                                               $mixinSdkBot->getConfig()['default']['pin'],AMOUNT);
       print_r($trans_info);
     }
       fclose($handle);
     } else print("Create user first\n");
   }
   if ($line == '7') {
-    $userInfo = $mixinSdk->Network()->readUser(MASTER_ID);
+    $userInfo = $mixinSdkBot->Network()->readUser(MASTER_ID);
     if (isset($userInfo["user_id"])) {
       if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -378,15 +379,17 @@ while (true) {
     } else print("Can not find this user id by Mixin ID!");
   }
   if ($line == '8') {
-    $btc = $mixinSdk->Wallet()->createAddress(BTC_ASSET_ID,
+    $btcInfo = $mixinSdkBot->Wallet()->createAddress(BTC_ASSET_ID,
                                               BTC_WALLET_ADDR,
-                                              $mixinSdk->getConfig()['default']['pin'],
+                                              $mixinSdkBot->getConfig()['default']['pin'],
                                               "BTC withdral",false);
-    print("Bitcoin winthdrawal fee is:".$btc["fee"]."\n");
-    $wdInfo = $mixinSdk->Wallet()->withdrawal($btc["address_id"],
+    print("Bitcoin winthdrawal fee is:".$btcInfo["fee"]."\n");
+    $wdInfo = $mixinSdkBot->Wallet()->withdrawal($btc["address_id"],
                                 AMOUNT,
-                                $mixinSdk->getConfig()['default']['pin'],
+                                $mixinSdkBot->getConfig()['default']['pin'],
                                 "BTC withdral");
+    // $wdInfo = $mixinSdkBot->Wallet()->readAddress($btcInfo["address_id"]);
+    print_r($wdInfo);
   }
   if ($line == '9') {
     exit();
@@ -404,5 +407,6 @@ function GenerateConfigByCSV($data) :array {
   return $newConfig;
 }
 
+
 ```
-[Full source code](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
+[完整的代码在这儿](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)

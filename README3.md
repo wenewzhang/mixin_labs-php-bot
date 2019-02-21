@@ -237,15 +237,15 @@ Array
 
 #### Read withdraw fee anytime
 ```php
-$wdInfo = $mixinSdkNew->Wallet()->readAddress($btcInfo["address_id"]);
+$wdInfo = $mixinSdkBot->Wallet()->readAddress($btcInfo["address_id"]);
 ```
 
 #### Send Bitcoin to destination address
 Submit the withdrawal request to Mixin Network, the $btcInfo["address_id"] is the address id return by createAddress
 ```php
-$wdInfo = $mixinSdkNew->Wallet()->withdrawal($btcInfo["address_id"],
+$wdInfo = $mixinSdkBot->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
-                            $mixinSdkNew->getConfig()['default']['pin'],
+                            $mixinSdkBot->getConfig()['default']['pin'],
                             "BTC withdral");
 ```
 #### Confirm the transaction in blockchain explore
@@ -259,7 +259,7 @@ $mixinSdkBot = new MixinSDK(require './config.php');
 
 const PIN             = "945689";
 const MASTER_ID       = "37222956";
-const BTC_ASSET_ID    = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
+const BTC_ASSET_ID    = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
 const EOS_ASSET_ID    = "6cfe566e-4aad-470b-8c9a-2fd35b49c68d";
 const BTC_WALLET_ADDR = "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C";
 const AMOUNT          = "0.001";
@@ -381,15 +381,16 @@ while (true) {
     } else print("Can not find this user id by Mixin ID!");
   }
   if ($line == '8') {
-    $btc = $mixinSdkBot->Wallet()->createAddress(BTC_ASSET_ID,
+    $btcInfo = $mixinSdkBot->Wallet()->createAddress(BTC_ASSET_ID,
                                               BTC_WALLET_ADDR,
                                               $mixinSdkBot->getConfig()['default']['pin'],
                                               "BTC withdral",false);
-    print("Bitcoin winthdrawal fee is:".$btc["fee"]."\n");
+    print("Bitcoin winthdrawal fee is:".$btcInfo["fee"]."\n");
     $wdInfo = $mixinSdkBot->Wallet()->withdrawal($btc["address_id"],
                                 AMOUNT,
                                 $mixinSdkBot->getConfig()['default']['pin'],
                                 "BTC withdral");
+    // $wdInfo = $mixinSdkBot->Wallet()->readAddress($btcInfo["address_id"]);
     print_r($wdInfo);
   }
   if ($line == '9') {
@@ -407,6 +408,7 @@ function GenerateConfigByCSV($data) :array {
   $newConfig["pin"]         = $data[4];
   return $newConfig;
 }
+
 
 ```
 [Full source code](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
