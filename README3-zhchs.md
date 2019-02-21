@@ -7,7 +7,7 @@
 4. 如何将Mixin Network的比特币提现到你的冷钱包或第三方交易所.
 
 ## 通过Mixin Network PHP SDK创建一个比特币钱包
-前期准备： 你要有一个Mixin Network账户。如果没有账户，一行代码就能创建一个
+前期准备：你要有一个Mixin Network账户。如果没有账户，一行代码就能创建一个
 ```php
 $user_info = $mixinSdk->Network()->createUser("Tom cat");
 ```
@@ -23,7 +23,7 @@ $newConfig["session_id"]  = $user_info["session_id"];
 $newConfig["client_id"]   = $user_info["user_id"];
 ```
 
-帐号创建成功后输出如下:
+帐号创建成功后结果如下:
 ```php
 Array
 (
@@ -70,14 +70,14 @@ OGnv4SY6cLo/xFUf9fx0nmxfYXLzKE63vA9Ii5ZPq39bYK/2R5iKGvHn+OcTAQ2q
 -----END PUBLIC KEY-----
 )
 ```
-现在你需要小心保管好你的帐号信息，在读取比特币资产余额或者其它内容时，将需要用到.
+现在你需要小心保管好你的帐号信息，在读取该账户的比特币资产余额或者进行其他操作时，将需要用到这些信息.
 ### 给新建的帐号创建一个比特币钱包
-比特币钱包并不会在第一时间就与帐号一块创建, 它会在你读取比特币余额时创建.
+新账号并不默认内置比特币钱包， 现在读一下比特币余额就可以创建一个比特币钱包。
 ```php
 $asset_infoNew = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 echo "BitCoin wallet address is :".$asset_infoNew["public_key"];
 ```
-新创建的帐号的比特币资产详细信息如下，其中public key就是比特币的存币地址:
+创建的帐号的比特币资产详细信息如下，其中public key就是比特币的存币地址:
 ```php
 Array
 (
@@ -101,8 +101,7 @@ Array
 )
 ```
 
-这个API提供的比特币信息如下:
-The API provide many information about Bitcoin asset.
+这个API能够提供若干与比特币有关的信息:
 * 存币地址:[public_key]
 * Logo: [icon_url]
 * 资产名字:[name]
@@ -112,12 +111,12 @@ The API provide many information about Bitcoin asset.
 
 
 ### 比特币私钥呢？
-比特币的私钥呢？这个私钥被Mixin Network通过多重签名保护，所以对用户来说是不可见的,比特币资产的提现，都是通过上面的RSA私钥,PIN代码与公钥(session key)进行.
+比特币的私钥呢？这个私钥被Mixin Network通过多重签名保护，所以对用户来说是不可见的,比特币资产的提现和转账都需要用户提供正确的的RSA签名,PIN代码与会话密钥才能完成.
 
-### 不只是比特币，还有以太币，EOS币等
-这个新创建的帐号不只有比特币，还有以太币，EOS币钱包等等, 完整的区块链支持列表[列表](https://mixin.one/network/chains). 支持所有的 ERC20代币与EOS代币.
+### 不只是比特币，还有以太坊，EOS等
+这个帐号不只支持比特币，还支持以太坊，EOS等, 完整的区块链支持[列表](https://mixin.one/network/chains). 这个账户同时也支持所有的 ERC20 代币与 EOS 代币.
 
-创建其它的币的钱包与比特币钱包一样，也只需要读取它的资产信息即可.
+创建其它的币的钱包与创建比特币钱包过程一样，读对应的资产余额就可以.
 
 #### Mixin Network 当前支持的加密货币 (2019-02-19)
 
@@ -138,9 +137,9 @@ The API provide many information about Bitcoin asset.
 |ZEC|c996abc9-d94e-4494-b1cf-2a3fd3ac5714
 |BCH|fd11b6e3-0b87-41f1-a41f-f0e9b49e5bf0
 
-EOS的存币钱包与其它的币有些不同，它由两部分组成， account_name and account tag, 如果你向Mixin Network存入EOS币，你需要填两项数据，account name 统一是**eoswithmixin**,备注里输入你的account_tag,比如**0aa2b00fad2c69059ca1b50de2b45569**.
+EOS的存币地址与其它的币有些不同，它由两部分组成： account_name and account tag, 如果你向Mixin Network存入EOS，你需要填两项数据： account name 是**eoswithmixin**,备注里输入你的account_tag,比如**0aa2b00fad2c69059ca1b50de2b45569**. 
 
-EOS的完整资产内容如下:
+EOS的资产余额返回结果如下:
 ```php
 Array
 (
@@ -164,21 +163,21 @@ Array
 )
 ```
 
-### 存入比特币与读取余额
-现在，你可以向比特币的钱包，存币了。
+### 存入比特币与读取比特币余额
+现在，你可以向比特币的钱包存币了。
 
-当然，在比特币网络里转币，手续费是相当贵的，费用的中位数在0.001BTC,按当前4000美元的价格，在4美元左右，有一个方便的办法，如果你有[Mixin Messenger]()帐号，里面并且有比特币的话，可以直接转比特币给新创建的帐号，它们在同一个Mixin Network网络内，这是免手续费的，并且即时确认.
+当然，在比特币网络里转币，手续费是相当贵的，费用的中位数在0.001BTC,按当前4000美元的价格，在4美元左右，有一个方便的办法，如果你有[Mixin Messenger](https://mixin.one/messenger)帐号，里面并且有比特币的话，可以直接提现比特币到新创建的帐号的比特币充值地址，它们在同一个Mixin Network网络内，手续费为0，而且1秒到账。
 
-通过下面的代码，可以读取比特币钱包信息.
+下面的代码，可以读取比特币钱包余额.
 ```php
 $btc = $mixinSdkNew->Wallet()->readAsset("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 print_r($btc);
 ```
 ### Mixin Network网内免手续费的，并且即时确认
-任何币在Mixin Network内部的交易，都是免手续费的，并且即时确认!
-**所有的交易，都需要通过密码(PIN)完成**
+任何币在Mixin Network内部的交易，都是无手续费的，并且立刻到账。
+前期准备： 账户设置了PIN
 
-对于新创建的帐号，我们通过updatePin来设置, 代码如下：
+对于新创建的帐号，我们通过updatePin来设置新PIN码, 代码如下：
 ```php
 //Create a PIN.
 $pinInfo = $mixinSdkNew->Pin()->updatePin('',PIN);
@@ -205,7 +204,7 @@ print_r($btc);
 - **要点提示**: 提现是需要支付收续费的,准备好比特币包地址!
 
 #### 增加目的钱包地址到Mixin Network
-调用createAddress API, 将会返回一个address_id,这个地址用来确认提现事务！
+调用createAddress API, 将会返回一个address_id,下一步的提现操作会用到这个id。
 ```php
 $btcInfo = $mixinSdkNew->Wallet()->createAddress("c6d0c728-2624-429b-8e0d-d9d19b6592fa",
                                                     "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C",
@@ -231,15 +230,15 @@ Array
 ```
 
 
-#### 创建提现地址成功后，你可以用readAddress读取费率，在费率便宜的时候，再提现.
+#### 创建提现地址成功后，你可以用readAddress读取最新的提现费。
 ```php
-$wdInfo = $mixinSdkBot->Wallet()->readAddress($btcInfo["address_id"]);
+$wdInfo = $mixinSdkNew->Wallet()->readAddress($btcInfo["address_id"]);
 ```
 
 #### 提交提现请求，Mixin Network会即时处理提现请求.
 提交提现请求到Mixin Network, $btcInfo["address_id"]就是createAddress创建的。
 ```php
-$wdInfo = $mixinSdkBot->Wallet()->withdrawal($btcInfo["address_id"],
+$wdInfo = $mixinSdkNew->Wallet()->withdrawal($btcInfo["address_id"],
                             "0.01",
                             $mixinSdkBot->getConfig()['default']['pin'],
                             "BTC withdral");
