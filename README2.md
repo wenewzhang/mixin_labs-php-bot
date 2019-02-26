@@ -1,6 +1,7 @@
+# PHP Bitcoin tutorial based on Mixin SDK II: Receive and send Bitcoin in Mixin Messenger
+![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg
 In [the previous chapter](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), your first bot just work. The bot echo message from user.
 
-# Receive and send Bitcoin in Mixin Messenger
 Create an app.php file with following code:
 ```php
 <?php
