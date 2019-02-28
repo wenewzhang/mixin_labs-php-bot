@@ -60,7 +60,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-最新的Composer在这儿![Composer](https://getcomposer.org/download/)
+最新的Composer在这儿[Composer](https://getcomposer.org/download/)
 请确保PHP与composer安装在$PATH包含的目录之内，直接运行**php -v** 或 **composer -V** 就可以检查出来，如果提示如下，表示安装正确！
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
