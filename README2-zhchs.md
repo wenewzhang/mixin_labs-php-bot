@@ -236,22 +236,22 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
 ```
 如果控制台出现 "LIST_PENDING_MESSAGES"字样, 连接到mixin.one成功了，正在侦听用户发送消息给它!
 
-![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/pay-links.jpg)
+![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/pay-links.jpg)
 
 按帮助来操作,发送消息得到相应的支付提示
 - **1** 机器人回复 APP_CARD 支付链接.
 - **2** 机器人回复 APP_BUTTON_GROUP 支付链接.
 - **? or help** : 显示帮助
 点击上面的链接，将会弹出一个窗口，输入你的密码，将支付币给机器人!
-![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/click-link-to-pay.jpg)
+![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/click-link-to-pay.jpg)
 
 [Mixin Messenger支持的消息类型](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/)
 
 如下图所示，用户点击支付链接，输入密码，支付0.01 EOS给机器人，机器人马上返还给用户！
-![pay-link](https://github.com/myrual/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
+![pay-link](https://github.com/myrual/mixin_network-nodejs-bot2/raw/master/Pay_and_refund_quickly.jpg)
 
 亲爱的开发者，你也可以从消息控制面板里，点击转帐，直接将币转给机器人！它还是一样的立即返还！
-![transfer and tokens](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/transfer-any-tokens.jpg)
+![transfer and tokens](https://github.com/wenewzhang/mixin_network-nodejs-bot2/raw/master/transfer-any-tokens.jpg)
 
 ## 源代码解释
 ```php
