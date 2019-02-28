@@ -136,7 +136,7 @@ composer.json  composer.lock  vendor
 记下这些[生成的参数](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
 它们将用于config.php中.
 
-![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
+![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/mixin_network-keys.jpg)
 在项目目录下，创建config.php,将生成的参数，替换成你的！
 > config.php
 ```php
