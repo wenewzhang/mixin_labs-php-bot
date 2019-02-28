@@ -1,4 +1,4 @@
-# PHP Bitcoin tutorial based on Mixin
+# PHP Bitcoin tutorial based on Mixin Network
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
 A Mixin messenger bot will be created in this tutorial. The bot is powered by PHP and echo message and Bitcoin from user.
 
