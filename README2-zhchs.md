@@ -272,7 +272,15 @@ if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
     }
 } //end of SYSTEM_ACCOUNT_SNAPSHOT
 ```
-如果机器人收到币，$dtPay->amount 大于零；如果机器人支付币给用户，接收到的消息是一样的，唯一不同的是$dtPay->amount是一个负数.
+如果机器人收到币，
+```php
+$dtPay->amount
+```
+大于零；如果机器人支付币给用户，接收到的消息是一样的，唯一不同的是
+```php
+$dtPay->amount
+```
+是一个负数.
 
 ```php
 function refundInstant($_assetID,$_amount,$_opponent_id) {
