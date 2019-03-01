@@ -7,7 +7,7 @@ We have created a bot to [echo message](https://github.com/wenewzhang/mixin_labs
 3. How to send Bitcoin with zero transaction fee and confirmed in 1 second
 4. How to send Bitcoin to other wallet
 
-## Create a Bitcoin wallet by Mixin Network PHP SDK
+
 Pre-request: You should have a Mixin Network account. Create an accounte can be done by one line code:
 
 ```php
