@@ -363,6 +363,6 @@ function generateReceipt($msgID):Array {
 }
 ```
 ### Fim
-Agora seu bot funcionou, você pode hackeá-lo
+Agora seu bot funcionou, você pode hackeá-lo.
 
 O código completo está [aqui](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
