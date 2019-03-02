@@ -1,4 +1,4 @@
-# Tutorial PHP de bitcoin baseado na rede Mixin. 
+# Tutorial PHP de bitcoin baseado na Mixin Network. 
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
 Um bot do mixin messenger será criado neste tutorial. O bot é desenvolvido por PHP e ecoa mensagem e Bitcoin do usuário.
 
@@ -130,7 +130,7 @@ Você precisa criar um app no dashboard. Esse [tutorial](https://mixin-network.g
 Depois do que o app é criado no dashboard, você ainda precisa [gerar parâmetro](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
 e escreva o conteúdo requerido, esse conteúdo será escrito no arquivo config.php.
 
-![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
+![mixin_network-keys](https://i.ibb.co/NYF4Scr/mixin-network-keys.jpg)
 Na pasta do projeto, crie o arquivo: config.php. Copie o seguinte conteúdo dentro.
 > config.php
 ```php
