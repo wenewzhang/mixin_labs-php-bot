@@ -290,7 +290,7 @@ O código gera um token válido e cria conexão entre o websocket e o servidor d
 
 [API da operação](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guia da operação](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
 
-O mixin-sdk-php implementa a função getToken, chame-a e gere um token..
+O mixin-sdk-php implementa a função getToken, chame-a e gere um token.
 ```php
 class callTraitClass {
   use MixinSDKTrait;
