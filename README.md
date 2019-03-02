@@ -164,7 +164,7 @@ EOF
 ```
 Substitua o valor por **conteúdo gerado no dashboard**.
 
-### Olá mundo en PHP
+### Olá mundo em PHP
 Copie o seguinte código em app.php, crie o arquivo app.php se ainda estiver faltando em sua pasta
 ```php
 <?php
