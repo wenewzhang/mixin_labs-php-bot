@@ -128,7 +128,7 @@ Você precisa criar um app no dashboard. Esse [tutorial](https://mixin-network.g
 
 ### Gere o parâmetro do seu app no dashboard
 Depois do que o app é criado no dashboard, você ainda precisa [gerar parâmetro](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
-E escreva o conteúdo requerido, esse conteúdo será escrito no arquivo config.php.
+e escreva o conteúdo requerido, esse conteúdo será escrito no arquivo config.php.
 
 ![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
 Na pasta do projeto, crie o arquivo: config.php. Copie o seguinte conteúdo dentro.
