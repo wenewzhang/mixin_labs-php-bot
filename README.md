@@ -1,18 +1,18 @@
-# PHP Bitcoin tutorial based on Mixin Network
+# Tutorial PHP de bitcoin baseado na rede Mixin. 
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
-A Mixin messenger bot will be created in this tutorial. The bot is powered by PHP and echo message and Bitcoin from user.
+Um bot do mixin messenger será criado neste tutorial. O bot é desenvolvido por PHP e ecoa mensagem e Bitcoin do usuário.
 
 [Mixin network resource](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
-## What you will learn from this tutorial
-1. [How to create bot in Mixin messenger and reply message to user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|
-2. [How to receive Bitcoin and send Bitcoin in Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md) 
-3. [How to create a Bitcoin wallet based on Mixin Network API](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md) 
-## Create bot in Mixin messenger and reply message to user
-### PHP environment setup:
-This tutorial is written in PHP 7. So you need to install [PHP](http://php.net/) and [Composer](https://getcomposer.org/).
+## O que você irá aprender deste tutorial:
+1. [Como criar bot no Mixin Messenger e responder uma mensagem para o usuário](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|
+2. [Como receber Bitcoin e enviar Bitcoin no Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md) 
+3. [Como criar uma carteira Bitcoin baseada na API do Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md) 
+## Criar um bot no Mixin Messenger e responder mensagem para o usuário?
+### Configuração do ambiente PHP:
+Este tutorial é escrito em PHP 7. Então você precisa instalar [PHP](http://php.net/) e [Composer](https://getcomposer.org/).
 
-On macOS
+No macOS
 ```bash
 brew update
 brew install php@7.3
@@ -22,7 +22,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/opt/php@7.3/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-If you install a old php 7.1 before, execute **brew unlink php@7.1** to remove the symbol links, and then execute **brew link php@7.3** to link php 7.3 to **php** default
+Se você instalou um PHP passado antes do 7.1, execute **brew unlink php@7.1**  para remover os links de símbolos, e então execute, **brew link php@7.3** para ligar o php 7.3 ao **php** padrão
 ```bash
 wenewzha:mixin_labs-php-bot wenewzhang$ brew unlink php@7.1
 Unlinking /usr/local/Cellar/php/7.1.23... 24 symlinks removed
@@ -33,14 +33,14 @@ If you need to have this software first in your PATH instead consider running:
   echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
   echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
 ```
-After the php 7.3 installed and symlinks created, according your OS environment settings, if **php -v** prompt "command not found", issue **echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"'** to bash_profile.
+Depois do php 7.3 instalado e symlinks criados, de acordo com configurações do seu ambiente de SO, se **php -v** levar "command not found", emita **echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"'** para o bash_profile.
 ```bash
 echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
 echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-On Ubuntu
+No Ubuntu
 ```bash
 apt update
 apt upgrade
@@ -57,8 +57,8 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-The latest composer can be download from [here](https://getcomposer.org/download/)
-Make sure the the $PATH variable contains install directory, following command can be used to check the installation
+O último compositor pode ser baixado[aqui](https://getcomposer.org/download/)
+Certifique-se de que a variável $PATH contenha o diretório de instalação, o seguinte comando pode ser usado checar a instalação
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
 PHP 7.2.13 (cli) (built: Dec  7 2018 10:41:23) ( NTS )
@@ -68,13 +68,13 @@ Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
 wenewzha:minecraft wenewzhang$ composer -V
 Composer version 1.8.0 2018-12-03 10:31:16
 ```
-### Create the project
-Go to your documents folder then create a directory, for example: **mixin_labs-php-bot**
+### Crie o projeto
+Vá até sua pasta de documentos e crie um diretório, por exemplo: **mixin_labs-php-bot**
 ```bash
 mkdir mixin_labs-php-bot
 mixin_labs-php-bot
 ```
-Execute **composer init** in your project directory, follow the instruction to create the composer.json,
+Execute **composer init** no diretório do seu projeto, siga a instrução para criar o composer.json,
  ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# composer init
   Welcome to the Composer config generator
@@ -101,18 +101,18 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-This tutorial requires two libraries.
-* [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network.
-* [Ratchet pawl](https://github.com/ratchetphp/Pawl) is a asynchronous websocket client.
+Esse tutorial exige duas bibliotecas.
+* [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) é um PHP SDK para a Mixin Network.
+* [Ratchet pawl](https://github.com/ratchetphp/Pawl) é um cliente de websocket assíncrono.
 
-In composer.json file, add the two libraries in the "require" code block.
+No arquivo composer.json, adicione as duas bibliotecas no código de bloco "require".
 ```bash
 "require": {
     "exinone/mixin-sdk-php": "^1.1",
     "ratchet/pawl": "^0.3.3",
 },
 ```
-Save composer.json file and then execute **composer install** to download required libraries.
+Salve o arquivo composer.json e então execute **composer install** para baixar as biblotecas exigidas.
 ```bash
 composer install
 ```
