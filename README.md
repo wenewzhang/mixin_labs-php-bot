@@ -131,6 +131,7 @@ Depois do que o app é criado no dashboard, você ainda precisa [gerar parâmetr
 e escreva o conteúdo requerido, esse conteúdo será escrito no arquivo config.php.
 
 ![mixin_network-keys](https://i.ibb.co/NYF4Scr/mixin-network-keys.jpg)
+
 Na pasta do projeto, crie o arquivo: config.php. Copie o seguinte conteúdo dentro.
 > config.php
 ```php
