@@ -277,7 +277,7 @@ Adicione o bot (por exemplo, o id desse bot é 7000101639) como seu amigo no [Mi
 
 
 ### Resumo do código fonte
-O código PHP cria um clente websocket.
+O código PHP cria um cliente websocket.
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
