@@ -57,7 +57,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-O último compositor pode ser baixado [aqui](https://getcomposer.org/download/)
+O último compositor pode ser baixado [aqui](https://getcomposer.org/download/).
 Certifique-se de que a variável $PATH contenha o diretório de instalação, o seguinte comando pode ser usado checar a instalação
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
