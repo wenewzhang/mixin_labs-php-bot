@@ -348,7 +348,7 @@ função **onMessage** será chamada quando a mensagem é empurrada para o clien
 ```
 Não apenas texto, imagens e outros tipos de mensagens serão empurradas para seu bot. Você pode achar mais [detalhes](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) sobre mensagens do Messenger.
 
-Envie uma operação READ para o deixar o servidor saber que essa mensagem foi lida. O bot receberá a mensagem duplicada quando se conectar ao servidor novamente, se o bot não enviar resposta.
+Envie uma operação READ para o deixar o servidor saber que essa mensagem foi lida. O bot receberá a mensagem duplicada quando se conectar ao servidor novamente, se o bot não enviar resposta:
 ```php
 echo "\nNeed reply server a receipt!\n";
 $RspMsg = generateReceipt($jsMsg->data->message_id);
