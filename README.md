@@ -58,7 +58,7 @@ php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
 O último compositor pode ser baixado [aqui](https://getcomposer.org/download/).
-Certifique-se de que a variável $PATH contenha o diretório de instalação, o seguinte comando pode ser usado checar a instalação
+Certifique-se de que a variável $PATH contenha o diretório de instalação, o seguinte comando pode ser usado para checar a instalação
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
 PHP 7.2.13 (cli) (built: Dec  7 2018 10:41:23) ( NTS )
