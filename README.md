@@ -29,7 +29,7 @@ Unlinking /usr/local/Cellar/php/7.1.23... 24 symlinks removed
 wenewzha:mixin_labs-php-bot wenewzhang$ brew link php@7.3
 Warning: php@7.3 is keg-only and must be linked with --force
 
-If you need to have this software first in your PATH instead consider running:
+Se você precisa ter esse software primeiro no seu PATH considere ao invés disso executar:
   echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
   echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
 ```
@@ -116,22 +116,22 @@ Salve o arquivo composer.json e então execute **composer install** para baixar 
 ```bash
 composer install
 ```
-A vendor directory is created in the project directory after all libraries are downloaded.
+Um diretório fornecedor é criado no diretório do projeto depois que todas bibliotecas são baixadas.
 ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# ls
 composer.json  composer.lock  vendor
 ```
-If you clone this repository from Github repo, you only need to execute **composer install** to download all libraries.
+Se você clonar esse repositório do repo Github, você apenas precisa executar **composer install** para baixar todas bibliotecas.
 
-### Create your first app in Mixin Network developer dashboard
-You need to create an app in dashboard. This [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) can help you.
+### Crie seu primeiro aplicativo no dashboard de desenvolvedor da Mixin Network 
+Você precisa criar um app no dashboard. Esse [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) pode te ajudar.
 
-### Generate parameter of your app in dashboard
-After app is created in dashboard, you still need to [generate parameter](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
-and write down required content, these content will be written into config.php file.
+### Gere o parâmetro do seu app no dashboard
+Depois do que o app é criado no dashboard, você ainda precisa [gerar parâmetro](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
+E escreva o conteúdo requerido, esse conteúdo será escrito no arquivo config.php.
 
 ![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
-In project folder, create a file: config.php. Copy the following content into it.
+Na pasta do projeto, crie o arquivo: config.php. Copie o seguinte conteúdo dentro.
 > config.php
 ```php
 <?php
@@ -162,10 +162,10 @@ EOF
     ,  //import your private_key
 ];
 ```
-Replace the value with **content generated in dashboard**.
+Substitua o valor por **conteúdo gerado no dashboard**.
 
-### Hello world in PHP
-Copy the following code into app.php, create app.php file if it is missing in your folder
+### Olá mundo en PHP
+Copie o seguinte código em app.php, crie o arquivo app.php se ainda estiver faltando em sua pasta
 ```php
 <?php
 
@@ -259,11 +259,11 @@ function generateReceipt($msgID):Array {
 }
 
 ```
-Run the code
+Execute o código
 ```bash
 php app.php
 ```
-The following content will be displayed in console.
+O seguinte conteúdo será mostrado no console.
 ```bash
 wenewzha:mixin_labs-php-bot wenewzhang$ php helloworld.php
 a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca","action":"LIST_PENDING_MESSAGES"}stdClass Object
@@ -272,12 +272,12 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca"
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-Add the bot(for example, this bot id is 7000101639) as your friend in [Mixin Messenger](https://mixin.one/messenger) and send your messages.
-![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.jpeg)
+Adicione o bot (por exemplo, o id desse bot é 7000101639) como seu amigo no [Mixin Messenger](https://mixin.one/messenger) e envie suas mensagens.
+![mixin_messenger](https://i.ibb.co/583s5XH/helloworld.jpg)
 
 
-### Source code summary
-The PHP code creates a websocket client.
+### Resumo do código fonte
+O código PHP cria um clente websocket.
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
@@ -286,11 +286,11 @@ $reactConnector = new \React\Socket\Connector($loop, [
 $connector = new \Ratchet\Client\Connector($loop,$reactConnector);
 ```
 
-The code generates a valid token and creates connection between the websocket and Mixin Messenger server. Messages will be pushed to websocket client.
+O código gera um token válido e cria conexão entre o websocket e o servidor do Mixin Messenger. Mensagens serão empurradas para o cliente websocket.
 
-[API of the operation](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guide of the operation](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
+[API da operação](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guia da operação](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
 
-The mixin-sdk-php implements the getToken function, call it and generate a token.
+O mixin-sdk-php implementa a função getToken, chame-a e gere um token..
 ```php
 class callTraitClass {
   use MixinSDKTrait;
@@ -304,13 +304,13 @@ class callTraitClass {
 $callTrait = new callTraitClass();
 $Token = $callTrait->getToken('GET', '/', '');
 ```
-Connect to  Mixin messenger server with the correct token.
+Conecte-se ao servidor do Mixin Messenger com o token correto.
 ```php
 $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                                     'Authorization' => 'Bearer '.$Token
                                       ])
 ```
-Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
+Envie "LIST_PENDING_MESSAGES" para o servidor para receber mensagens pendentes.
 ```php
 /*                   start listen for the incoming message          */
     $message = [
@@ -321,7 +321,7 @@ Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
     $msg = new Frame(gzencode(json_encode($message)),true,Frame::OP_BINARY);
     $conn->send($msg);
 ```
-**onMessage** function will be called when message is pushed to websocket client.
+função **onMessage** será chamada quando a mensagem é empurrada para o cliente websocket.
 ```php
 ->then(function(Ratchet\Client\WebSocket $conn) {
     $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
@@ -346,9 +346,9 @@ Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
         echo "Connection closed ({$code} - {$reason})\n";
     });                                      
 ```
-Not only text, images and other type message will be pushed to your bot. You can find more [details](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) about Messenger message.
+Não apenas texto, imagens e outros tipos de mensagens serão empurradas para seu bot. Você pode achar mais [detalhes](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) sobre mensagens do Messenger.
 
-Send a READ operation message to the server let it knows this message has been read. The bot will receive the duplicated message when the bot connected to server again if bot don't send response.
+Envie uma operação READ para o deixar o servidor saber que essa mensagem foi lida. O bot receberá a mensagem duplicada quando se conectar ao servidor novamente, se o bot não enviar resposta.
 ```php
 echo "\nNeed reply server a receipt!\n";
 $RspMsg = generateReceipt($jsMsg->data->message_id);
@@ -362,7 +362,7 @@ function generateReceipt($msgID):Array {
   return $RspMsg;
 }
 ```
-### End
-Now your bot worked, you can hack it.
+### Fim
+Agora seu bot funcionou, você pode hackeá-lo
 
-Full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
+O código completo está [aqui](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
