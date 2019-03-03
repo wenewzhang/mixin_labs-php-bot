@@ -1,5 +1,5 @@
 # Tutorial PHP Bitcoin berdasarkan Mixin Network
-![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
+![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 Bot messenger Mixin akan dibuat dalam tutorial ini. Bot ini didukung oleh PHP dan pesan gema dan Bitcoin dari pengguna.
 
 [Sumbebr Daya Jaringan Mixin](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
