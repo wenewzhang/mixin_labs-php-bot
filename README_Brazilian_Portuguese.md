@@ -1,5 +1,5 @@
 # Tutorial PHP de bitcoin baseado na Mixin Network. 
-![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
+![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 Um bot do mixin messenger será criado neste tutorial. O bot é desenvolvido por PHP e ecoa mensagem e Bitcoin do usuário.
 
 [Recursos Mixin Network](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
