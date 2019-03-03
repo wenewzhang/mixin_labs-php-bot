@@ -5,9 +5,9 @@ A Mixin messenger bot will be created in this tutorial. The bot is powered by PH
 [Mixin network resource](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
 ## What you will learn from this tutorial
-1. [How to create bot in Mixin messenger and reply message to user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|
-2. [How to receive Bitcoin and send Bitcoin in Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md) 
-3. [How to create a Bitcoin wallet based on Mixin Network API](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md) 
+1. [How to create bot in Mixin messenger and reply message to user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|[Portuguese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README_Brazilian_Portuguese.md)
+2. [How to receive Bitcoin and send Bitcoin in Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md)
+3. [How to create a Bitcoin wallet based on Mixin Network API](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md)
 ## Create bot in Mixin messenger and reply message to user
 ### PHP environment setup:
 This tutorial is written in PHP 7. So you need to install [PHP](http://php.net/) and [Composer](https://getcomposer.org/).
