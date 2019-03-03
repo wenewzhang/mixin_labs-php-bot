@@ -1,18 +1,18 @@
-# PHP Bitcoin tutorial based on Mixin Network
+# Tutorial PHP de bitcoin baseado na Mixin Network. 
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
-A Mixin messenger bot will be created in this tutorial. The bot is powered by PHP and echo message and Bitcoin from user.
+Um bot do mixin messenger será criado neste tutorial. O bot é desenvolvido por PHP e ecoa mensagem e Bitcoin do usuário.
 
-[Mixin network resource](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
+[Recursos Mixin Network](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
-## What you will learn from this tutorial
-1. [How to create bot in Mixin messenger and reply message to user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|
-2. [How to receive Bitcoin and send Bitcoin in Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md) 
-3. [How to create a Bitcoin wallet based on Mixin Network API](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md) 
-## Create bot in Mixin messenger and reply message to user
-### PHP environment setup:
-This tutorial is written in PHP 7. So you need to install [PHP](http://php.net/) and [Composer](https://getcomposer.org/).
+## O que você aprenderá deste tutorial:
+1. [Como criar bot no Mixin Messenger e responder uma mensagem para o usuário](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|
+2. [Como receber Bitcoin e enviar Bitcoin no Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md) 
+3. [Como criar uma carteira Bitcoin baseada na API do Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md) 
+## Criar um bot no Mixin Messenger e responder mensagem para o usuário
+### Configuração do ambiente PHP:
+Este tutorial é escrito em PHP 7. Então você precisa instalar [PHP](http://php.net/) e [Composer](https://getcomposer.org/).
 
-On macOS
+No macOS
 ```bash
 brew update
 brew install php@7.3
@@ -22,25 +22,25 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/opt/php@7.3/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-If you install a old php 7.1 before, execute **brew unlink php@7.1** to remove the symbol links, and then execute **brew link php@7.3** to link php 7.3 to **php** default
+Se você instalou um PHP passado antes do 7.1, execute **brew unlink php@7.1**  para remover os links de símbolos, e então execute, **brew link php@7.3** para ligar o php 7.3 ao **php** padrão
 ```bash
 wenewzha:mixin_labs-php-bot wenewzhang$ brew unlink php@7.1
 Unlinking /usr/local/Cellar/php/7.1.23... 24 symlinks removed
 wenewzha:mixin_labs-php-bot wenewzhang$ brew link php@7.3
 Warning: php@7.3 is keg-only and must be linked with --force
 
-If you need to have this software first in your PATH instead consider running:
+Se você precisa ter esse software primeiro no seu PATH considere ao invés disso executar:
   echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
   echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
 ```
-After the php 7.3 installed and symlinks created, according your OS environment settings, if **php -v** prompt "command not found", issue **echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"'** to bash_profile.
+Depois do php 7.3 instalado e symlinks criados, de acordo com configurações do seu ambiente de SO, se **php -v** levar "command not found", emita **echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"'** para o bash_profile.
 ```bash
 echo 'export PATH="/usr/local/opt/php@7.3/bin:$PATH"' >> ~/.bash_profile
 echo 'export PATH="/usr/local/opt/php@7.3/sbin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-On Ubuntu
+No Ubuntu
 ```bash
 apt update
 apt upgrade
@@ -57,8 +57,8 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 ```
-The latest composer can be download from [here](https://getcomposer.org/download/)
-Make sure the the $PATH variable contains install directory, following command can be used to check the installation
+O último compositor pode ser baixado [aqui](https://getcomposer.org/download/).
+Certifique-se de que a variável $PATH contenha o diretório de instalação, o seguinte comando pode ser usado para checar a instalação
 ```bash
 wenewzha:minecraft wenewzhang$ php -v
 PHP 7.2.13 (cli) (built: Dec  7 2018 10:41:23) ( NTS )
@@ -68,13 +68,13 @@ Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
 wenewzha:minecraft wenewzhang$ composer -V
 Composer version 1.8.0 2018-12-03 10:31:16
 ```
-### Create the project
-Go to your documents folder then create a directory, for example: **mixin_labs-php-bot**
+### Crie o projeto
+Vá até sua pasta de documentos e crie um diretório, por exemplo: **mixin_labs-php-bot**
 ```bash
 mkdir mixin_labs-php-bot
 mixin_labs-php-bot
 ```
-Execute **composer init** in your project directory, follow the instruction to create the composer.json,
+Execute **composer init** no diretório do seu projeto, siga a instrução para criar o composer.json,
  ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# composer init
   Welcome to the Composer config generator
@@ -101,37 +101,38 @@ Would you like to define your dev dependencies (require-dev) interactively [yes]
 }
 Do you confirm generation [yes]? yes
 ```
-This tutorial requires two libraries.
-* [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) is a PHP SDK for Mixin Network.
-* [Ratchet pawl](https://github.com/ratchetphp/Pawl) is a asynchronous websocket client.
+Esse tutorial exige duas bibliotecas.
+* [mixin-sdk-php](https://github.com/ExinOne/mixin-sdk-php) é um PHP SDK para a Mixin Network.
+* [Ratchet pawl](https://github.com/ratchetphp/Pawl) é um cliente de websocket assíncrono.
 
-In composer.json file, add the two libraries in the "require" code block.
+No arquivo composer.json, adicione as duas bibliotecas no código de bloco "require".
 ```bash
 "require": {
     "exinone/mixin-sdk-php": "^1.1",
     "ratchet/pawl": "^0.3.3",
 },
 ```
-Save composer.json file and then execute **composer install** to download required libraries.
+Salve o arquivo composer.json e então execute **composer install** para baixar as biblotecas exigidas.
 ```bash
 composer install
 ```
-A vendor directory is created in the project directory after all libraries are downloaded.
+Um diretório fornecedor é criado no diretório do projeto depois que todas bibliotecas são baixadas.
 ```bash
 root@iZj6cbmqen2lqp7l48nfgkZ:~/mixin_labs-php-bot# ls
 composer.json  composer.lock  vendor
 ```
-If you clone this repository from Github repo, you only need to execute **composer install** to download all libraries.
+Se você clonar esse repositório do repo Github, você apenas precisa executar **composer install** para baixar todas bibliotecas.
 
-### Create your first app in Mixin Network developer dashboard
-You need to create an app in dashboard. This [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) can help you.
+### Crie seu primeiro aplicativo no dashboard de desenvolvedor da Mixin Network 
+Você precisa criar um app no dashboard. Esse [tutorial](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account) pode te ajudar.
 
-### Generate parameter of your app in dashboard
-After app is created in dashboard, you still need to [generate parameter](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
-and write down required content, these content will be written into config.php file.
+### Gere o parâmetro do seu app no dashboard
+Depois do que o app é criado no dashboard, você ainda precisa [gerar parâmetro](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
+e escreva o conteúdo requerido, esse conteúdo será escrito no arquivo config.php.
 
-![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
-In project folder, create a file: config.php. Copy the following content into it.
+![mixin_network-keys](https://i.ibb.co/NYF4Scr/mixin-network-keys.jpg)
+
+Na pasta do projeto, crie o arquivo: config.php. Copie o seguinte conteúdo dentro.
 > config.php
 ```php
 <?php
@@ -162,10 +163,10 @@ EOF
     ,  //import your private_key
 ];
 ```
-Replace the value with **content generated in dashboard**.
+Substitua o valor por **conteúdo gerado no dashboard**.
 
-### Hello world in PHP
-Copy the following code into app.php, create app.php file if it is missing in your folder
+### Olá mundo em PHP
+Copie o seguinte código em app.php, crie o arquivo app.php se ainda estiver faltando em sua pasta
 ```php
 <?php
 
@@ -259,11 +260,11 @@ function generateReceipt($msgID):Array {
 }
 
 ```
-Run the code
+Execute o código
 ```bash
 php app.php
 ```
-The following content will be displayed in console.
+O seguinte conteúdo será mostrado no console.
 ```bash
 wenewzha:mixin_labs-php-bot wenewzhang$ php helloworld.php
 a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca","action":"LIST_PENDING_MESSAGES"}stdClass Object
@@ -272,12 +273,12 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca"
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-Add the bot(for example, this bot id is 7000101639) as your friend in [Mixin Messenger](https://mixin.one/messenger) and send your messages.
-![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.jpeg)
+Adicione o bot (por exemplo, o id desse bot é 7000101639) como seu amigo no [Mixin Messenger](https://mixin.one/messenger) e envie suas mensagens.
+![mixin_messenger](https://i.ibb.co/583s5XH/helloworld.jpg)
 
 
-### Source code summary
-The PHP code creates a websocket client.
+### Resumo do código fonte
+O código PHP cria um cliente websocket.
 ```php
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
@@ -286,11 +287,11 @@ $reactConnector = new \React\Socket\Connector($loop, [
 $connector = new \Ratchet\Client\Connector($loop,$reactConnector);
 ```
 
-The code generates a valid token and creates connection between the websocket and Mixin Messenger server. Messages will be pushed to websocket client.
+O código gera um token válido e cria conexão entre o websocket e o servidor do Mixin Messenger. Mensagens serão empurradas para o cliente websocket.
 
-[API of the operation](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guide of the operation](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
+[API da operação](https://developers.mixin.one/api/beta-mixin-message/authentication/), [Guia da operação](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/receive-asset-change-notification)
 
-The mixin-sdk-php implements the getToken function, call it and generate a token.
+O mixin-sdk-php implementa a função getToken, chame-a e gere um token.
 ```php
 class callTraitClass {
   use MixinSDKTrait;
@@ -304,13 +305,13 @@ class callTraitClass {
 $callTrait = new callTraitClass();
 $Token = $callTrait->getToken('GET', '/', '');
 ```
-Connect to  Mixin messenger server with the correct token.
+Conecte-se ao servidor do Mixin Messenger com o token correto.
 ```php
 $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                                     'Authorization' => 'Bearer '.$Token
                                       ])
 ```
-Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
+Envie "LIST_PENDING_MESSAGES" para o servidor para receber mensagens pendentes.
 ```php
 /*                   start listen for the incoming message          */
     $message = [
@@ -321,7 +322,7 @@ Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
     $msg = new Frame(gzencode(json_encode($message)),true,Frame::OP_BINARY);
     $conn->send($msg);
 ```
-**onMessage** function will be called when message is pushed to websocket client.
+função **onMessage** será chamada quando a mensagem é empurrada para o cliente websocket.
 ```php
 ->then(function(Ratchet\Client\WebSocket $conn) {
     $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
@@ -346,9 +347,9 @@ Send "LIST_PENDING_MESSAGES" to server to receive pending messages.
         echo "Connection closed ({$code} - {$reason})\n";
     });                                      
 ```
-Not only text, images and other type message will be pushed to your bot. You can find more [details](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) about Messenger message.
+Não apenas texto, imagens e outros tipos de mensagens serão empurradas para seu bot. Você pode achar mais [detalhes](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/) sobre mensagens do Messenger.
 
-Send a READ operation message to the server let it knows this message has been read. The bot will receive the duplicated message when the bot connected to server again if bot don't send response.
+Envie uma operação READ para o deixar o servidor saber que essa mensagem foi lida. O bot receberá a mensagem duplicada quando se conectar ao servidor novamente, se o bot não enviar resposta:
 ```php
 echo "\nNeed reply server a receipt!\n";
 $RspMsg = generateReceipt($jsMsg->data->message_id);
@@ -362,7 +363,7 @@ function generateReceipt($msgID):Array {
   return $RspMsg;
 }
 ```
-### End
-Now your bot worked, you can hack it.
+### Fim
+Agora seu bot funcionou, você pode hackeá-lo.
 
-Full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
+O código completo está [aqui](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.php)
