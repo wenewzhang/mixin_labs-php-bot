@@ -233,7 +233,6 @@ Klik tautan di halaman obrolan, masukkan kode PIN untuk membayar koin ke bot.
 Panduan Lengkap [Pengantar Pesan Mixin](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
 
 Pengguna dapat membayar 0,001 Bitcoin ke bot, Bitcoin 0,001 akan dikembalikan dalam 1 detik. Bahkan, pengguna dapat membayar koin apa pun. 
-![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
 ![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/raw/master/Pay_and_refund_quickly.jpg)
 
 Pengembang dapat mengirim Bitcoin ke bot mereka di halaman obrolan. Bot akan mengirim kembali segera setelah menerima Bitcoin.
