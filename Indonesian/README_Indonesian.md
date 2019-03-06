@@ -273,7 +273,7 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca"
 )
 ```
 Tambahkan Bot(misalnya, id bot ini adalah 7000101639) sebagai teman Anda di [Mixin Messenger](https://mixin.one/messenger) dan kirim pesan Anda.
-![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.jpeg)
+![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/helloworld.jpeg)
 
 
 ### Ringkasan summary code
