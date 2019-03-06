@@ -1,5 +1,5 @@
 # PHP Bitcoin tutorial based on Mixin Network II: Receive and send Bitcoin in Mixin Messenger
-![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
+![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 
 In [the previous chapter](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), your first bot just work. The bot echo message from user.
 
@@ -236,14 +236,14 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
 ```
 The bot connect to the mixin.one successfully when console output "LIST_PENDING_MESSAGES".
 
-![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/pay-links.jpg)
+![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/pay-links.jpg)
 
 The bot has told you how to interact:
 - **1** the bot send an APP_CARD link.
 - **2** the bot send an APP_BUTTON_GROUP link.
 - **? or help** for help!
 Click the links in chatting page, input PIN code to pay coin to bot.
-![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/click-link-to-pay.jpg)
+![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/click-link-to-pay.jpg)
 
 Full [Mixin Messenger messages introduction](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
 
@@ -251,7 +251,7 @@ User can pay 0.001 Bitcoin to bot, the 0.001 Bitcoin will be refunded in 1 secon
 ![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
 
 Developer can send Bitcoin to their bots in chatting page. The bot will send back immediately after received Bitcoin.
-![transfer  Bitcoin](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/transfer-any-tokens.jpg)
+![transfer  Bitcoin](https://github.com/wenewzhang/mixin_network-nodejs-bot2/raw/master/transfer-any-tokens.jpg)
 
 ## Source code summary
 ```php
