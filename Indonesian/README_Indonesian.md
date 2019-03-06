@@ -130,7 +130,7 @@ Anda perlu membuat aplikasi di dasboard. [tutorial] ini(https://mixin-network.gi
 Setelah aplikasi terbuat didasboard, anda masih perlu [membuat parameter](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
 menuliskan konten yang diperlukan, konten ini akan ditulis ke file config.php.
 
-![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
+![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/mixin_network-keys.jpg)
 Dalam folder proyek, buat file: config.php. Salin konten berikut ke dalamnya.
 > config.php
 ```php
