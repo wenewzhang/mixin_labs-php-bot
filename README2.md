@@ -248,7 +248,7 @@ Click the links in chatting page, input PIN code to pay coin to bot.
 Full [Mixin Messenger messages introduction](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
 
 User can pay 0.001 Bitcoin to bot, the 0.001 Bitcoin will be refunded in 1 seconds. In fact, user can pay any coins.
-![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
+![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/raw/master/Pay_and_refund_quickly.jpg)
 
 Developer can send Bitcoin to their bots in chatting page. The bot will send back immediately after received Bitcoin.
 ![transfer  Bitcoin](https://github.com/wenewzhang/mixin_network-nodejs-bot2/raw/master/transfer-any-tokens.jpg)
