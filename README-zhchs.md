@@ -1,4 +1,5 @@
 # 基于Mixin Network的PHP比特币开发教程
+![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
 [Mixin Network](https://mixin.one) 是一个免费的 极速的端对端加密数字货币交易系统.
 在本章中，你可以按教程在Mixin Messenger中创建一个bot来接收用户消息, 学到如何给机器人转**比特币** 或者 让机器人给你转**比特币**.
 
