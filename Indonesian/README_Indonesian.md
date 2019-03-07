@@ -5,8 +5,8 @@ Bot messenger Mixin akan dibuat dalam tutorial ini. Bot ini didukung oleh PHP da
 [Sumbebr Daya Jaringan Mixin](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
 ## Apa yang akan Anda pelajari dari tutorial ini
-1. [Cara membuat bot di Mixin messenger dan membalas pesan ke pengguna](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)
-2. [Cara menerima Bitcoin dan mengirim Bitcoin di Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)
+1. [Cara membuat bot di Mixin messenger dan membalas pesan ke pengguna](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)
+2. [Cara menerima Bitcoin dan mengirim Bitcoin di Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README2_Indonesian.md)
 3. [Cara membuat dompet Bitcoin berdasarkan Mixin Network API](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)
 # Buat bot di Mixin messenger dan balas pesan ke pengguna
 # Penyiapan set untuk PHP:
