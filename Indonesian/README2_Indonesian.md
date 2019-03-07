@@ -1,7 +1,7 @@
 # Tutorial PHP Bitcoin berdasarkan Mixin Network II: Menerima dan mengirim Bitcoin di Mixin Messenger
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 
-Pada [Bab sebelumnya](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), bot pertama Anda hanya berfungsi. Pesan gema bot dari pengguna.
+Pada [Bab sebelumnya](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md), bot pertama Anda hanya berfungsi. Pesan gema bot dari pengguna.
 
 Buat file app.php dengan kode berikut:
 ```php
