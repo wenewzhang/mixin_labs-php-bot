@@ -243,7 +243,7 @@ Pengembang dapat mengirim Bitcoin ke bot mereka di halaman obrolan. Bot akan men
 $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
 $conn->send($msg);
 ```
-The bot send messages to user, Which use json serialize and then use gzencode compress it.
+Bot mengirim pesan ke pengguna, yang menggunakan json serialize dan kemudian menggunakan gzencode kompres.
 ```php
 if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
   // refundInstant
@@ -256,9 +256,10 @@ if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
     }
 } //end of SYSTEM_ACCOUNT_SNAPSHOT
 ```
-* The $dtPay->amount is negative if bot sends Bitcoin to user successfully.
-* The $dtPay->amount is positive if bot receives Bitcoin.
-Following code transfer the Bitcoin to user.
+* Jumlah $ dtPay-> negatif jika bot berhasil mengirim Bitcoin ke pengguna.
+* Jumlah $ dtPay-> positif jika bot menerima Bitcoin.
+
+Kode berikut mentransfer Bitcoin ke pengguna.
 ```php
 function refundInstant($_assetID,$_amount,$_opponent_id) {
   $mixinSdk = new MixinSDK(require './config.php');
