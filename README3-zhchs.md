@@ -1,8 +1,8 @@
-## 通过Mixin Network PHP SDK创建一个比特币钱包
+# 基于Mixin Network的PHP比特币开发教程: 创建比特币钱包
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 我们已经创建过一个[回复消息](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md)的机器人和一个能自动[支付比特币](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)的机器人.
 
-#### 通过本教程的学习，你可以学到如下内容
+### 通过本教程的学习，你可以学到如下内容
 1. 如何创建一个比特币钱包.
 2. 如何读取比特币钱包的余额.
 3. 如何支付比特币并即时确认.
