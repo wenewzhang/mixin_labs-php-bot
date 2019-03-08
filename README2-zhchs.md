@@ -1,5 +1,5 @@
 
-# 第二课: 机器人接受比特币并立即退还用户
+# 基于Mixin Network的PHP比特币开发教程: 机器人接受比特币并立即退还用户
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 
 在 [上一篇教程中](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md), 我们创建了自动回复消息的机器人,当用户发送消息"Hello,World!"时，机器人会自动回复同一条消息!
