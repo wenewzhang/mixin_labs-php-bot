@@ -1,4 +1,6 @@
 # PHP Bitcoin tutorial based on Mixin Network III: Create Bitcoin wallet, read balance and send Bitcoin
+![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
+
 We have created a bot to [echo message](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) and [echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md).
 
 ### What you will learn from this chapter
