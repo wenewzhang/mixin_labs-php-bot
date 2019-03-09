@@ -1,9 +1,9 @@
-# PHP Bitcoin tutorial based on Mixin Network II: Receive and send Bitcoin in Mixin Messenger
-![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
+# PHP Bitcoin tutorial baseado na Mixin Network II: Receba e envie Bitcoin no Mixin Messenger
+![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 
-In [the previous chapter](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), your first bot just work. The bot echo message from user.
+No [cápitulo anterior](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), seu primeiro bot acabou de funcionar. O bot ecoa mensagem do usuário.
 
-Create an app.php file with following code:
+Crie um arquivo app.php com o seguinte código:
 ```php
 <?php
 require __DIR__ . '/vendor/autoload.php';
@@ -219,8 +219,8 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
   print_r($BotInfo);
 }
 ```
-### Hello Bitcoin
-Run **php app.php** in the project directory.
+### Olá Bitcoin
+Execute **php app.php** no diretório do projeto.
 
 ```bash
 php app.php
@@ -234,31 +234,31 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"12c7a470-d6a4-403d-94e8-e6f8ae833971"
     [action] => LIST_PENDING_MESSAGES
 )
 ```
-The bot connect to the mixin.one successfully when console output "LIST_PENDING_MESSAGES".
+O bot se conecta com o mixin.one com sucesso quando a saída do console é "LIST_PENDING_MESSAGES".
 
-![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/pay-links.jpg)
+![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/pay-links.jpg)
 
-The bot has told you how to interact:
-- **1** the bot send an APP_CARD link.
-- **2** the bot send an APP_BUTTON_GROUP link.
-- **? or help** for help!
-Click the links in chatting page, input PIN code to pay coin to bot.
-![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/click-link-to-pay.jpg)
+O bot te disse como interagir:
+- **1** O bot manda um APP_CARD link.
+- **2** O bot manda um APP_BUTTON_GROUP link.
+- **? ou help** para ajuda!
+Clique nos links na página de conversa, insira o código PIN para pagar moeda para o bot.
+![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/click-link-to-pay.jpg)
 
-Full [Mixin Messenger messages introduction](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
+Completa [introdução às mensagens do Mixin Messenger](https://developers.mixin.one/api/beta-mixin-message/websocket-messages/).
 
-User can pay 0.001 Bitcoin to bot, the 0.001 Bitcoin will be refunded in 1 seconds. In fact, user can pay any coins.
-![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/Pay_and_refund_quickly.jpg)
+O usuário pode pagar 0.001 Bitcoin para o bot, os 0.001 Bitcoin serão devolvidos em 1 segundo. De fato, o usuário pode pagar em qualquer moeda.
+![pay-link](https://github.com/wenewzhang/mixin_network-nodejs-bot2/raw/master/Pay_and_refund_quickly.jpg)
 
-Developer can send Bitcoin to their bots in chatting page. The bot will send back immediately after received Bitcoin.
-![transfer  Bitcoin](https://github.com/wenewzhang/mixin_network-nodejs-bot2/blob/master/transfer-any-tokens.jpg)
+O desenvolvedor pode enviar Bitcoin para seus bots na página de conversa. O bot enviará de volta imediatamente após receber o Bitcoin.
+![transfer  Bitcoin](https://github.com/wenewzhang/mixin_network-nodejs-bot2/raw/master/transfer-any-tokens.jpg)
 
-## Source code summary
+## Resumo do código fonte
 ```php
 $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
 $conn->send($msg);
 ```
-The bot send messages to user, Which use json serialize and then use gzencode compress it.
+O bot envia mensagem para o usuário, O qual usa use json para serializar e então usa gzencode para comprimir.
 
 ```php
 if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
@@ -273,10 +273,10 @@ if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
 } //end of SYSTEM_ACCOUNT_SNAPSHOT
 ```
 
-* The $dtPay->amount is negative if bot sends Bitcoin to user successfully.
-* The $dtPay->amount is positive if bot receives Bitcoin.
+* O valor $dtPay-> é negativo se o bot envia Bitcoin para o usuário com sucesso.
+* O valor $dtPay-> é positivo se o bot receber Bitcoin.
 
-Following code transfer the Bitcoin to user.
+O seguinte código transfere o Bitcoin para o usuário.
 ```php
 function refundInstant($_assetID,$_amount,$_opponent_id) {
   $mixinSdk = new MixinSDK(require './config.php');
@@ -289,4 +289,4 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
 ```
 
 
-Full code is [here](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/app.php)
+O código completo está [aqui](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/app.php)
