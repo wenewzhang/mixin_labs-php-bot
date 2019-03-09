@@ -258,7 +258,7 @@ O desenvolvedor pode enviar Bitcoin para seus bots na página de conversa. O bot
 $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
 $conn->send($msg);
 ```
-O bot envia mensagem para o usuário, O qual usa use json para serializar e então usa gzencode para comprimir.
+O bot envia mensagem para o usuário, O qual usa json para serializar e então usa gzencode para comprimir.
 
 ```php
 if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
