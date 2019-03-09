@@ -5,9 +5,9 @@ Um bot do mixin messenger será criado neste tutorial. O bot é desenvolvido por
 [Recursos Mixin Network](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
 ## O que você aprenderá deste tutorial:
-1. [Como criar bot no Mixin Messenger e responder uma mensagem para o usuário](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README_Brazilian_Portuguese.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|
-2. [Como receber Bitcoin e enviar Bitcoin no Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2_Brazilian_Portuguese.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md) 
-3. [Como criar uma carteira Bitcoin baseada na API do Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md) 
+1. [Como criar bot no Mixin Messenger e responder uma mensagem para o usuário](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README_Brazilian_Portuguese.md)|
+2. [Como receber Bitcoin e enviar Bitcoin no Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2_Brazilian_Portuguese.md)|
+3. [Como criar uma carteira Bitcoin baseada na API do Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)|
 ## Criar um bot no Mixin Messenger e responder mensagem para o usuário
 ### Configuração do ambiente PHP:
 Este tutorial é escrito em PHP 7. Então você precisa instalar [PHP](http://php.net/) e [Composer](https://getcomposer.org/).
