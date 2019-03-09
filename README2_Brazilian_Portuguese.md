@@ -239,8 +239,8 @@ O bot se conecta com o mixin.one com sucesso quando a saída do console é "LIST
 ![pay-links](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/pay-links.jpg)
 
 O bot te disse como interagir:
-- **1** O bot manda um APP_CARD link.
-- **2** O bot manda um APP_BUTTON_GROUP link.
+- **1** O bot manda um link APP_CARD.
+- **2** O bot manda um link APP_BUTTON_GROUP.
 - **? ou help** para ajuda!
 Clique nos links na página de conversa, insira o código PIN para pagar moeda para o bot.
 ![click-pay-link-to-pay](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/click-link-to-pay.jpg)
