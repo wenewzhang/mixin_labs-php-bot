@@ -6,7 +6,7 @@
 [Mixin network 资源汇总](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
 ## 课程简介
-1. [创建一个接受消息的机器人](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md#创建一个接受消息的机器人)
+1. [创建一个机器人](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md#创建一个接受消息的机器人)
 2. [机器人接受比特币并立即退还用户](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md)
 3. [创建比特币钱包](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md)
 
