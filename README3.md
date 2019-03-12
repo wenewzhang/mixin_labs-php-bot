@@ -76,7 +76,7 @@ OGnv4SY6cLo/xFUf9fx0nmxfYXLzKE63vA9Ii5ZPq39bYK/2R5iKGvHn+OcTAQ2q
 )
 ```
 
-Now you need to carefully keep the account information. You need these information to read asset balance and other content.
+Now you need to carefully keep the account information. These information are required to read asset balance and other content of account.
 ### Create Bitcoin wallet for the Mixin Network account
 The Bitcoin  wallet is not generated automatically at same time when we create Mixin Network account. Read Bitcoin asset once to generate a Bitcoin wallet.
 ```php
