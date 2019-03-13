@@ -5,6 +5,9 @@ use ExinOne\MixinSDK\Traits\MixinSDKTrait;
 use ExinOne\MixinSDK\MixinSDK;
 use Ramsey\Uuid\Uuid;
 use Ratchet\RFC6455\Messaging\Frame;
+use MessagePack\MessagePack;
+
+const EXIN_BOT = "61103d28-3ac2-44a2-ae34-bd956070dab1";
 
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
@@ -32,7 +35,7 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
 ->then(function(Ratchet\Client\WebSocket $conn) {
     $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
         $jsMsg = json_decode(gzdecode($msg));
-        print_r($jsMsg);
+        // print_r($jsMsg);
         if ($jsMsg->action === 'CREATE_MESSAGE' and property_exists($jsMsg,'data')) {
           echo "\nNeed reply server a receipt!\n";
           $RspMsg = generateReceipt($jsMsg->data->message_id);
@@ -60,7 +63,21 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                   $conn->send($msg);
               }//end of pay2
               elseif ($isCmd === '3') {
-                  transfer();
+                  $marketInfo = getExchangeCoins("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+                  echo $marketInfo;
+                  $msgData = sendPlainText($jsMsg->data->conversation_id, $marketInfo);
+                  $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
+                  $conn->send($msg);
+              } elseif ($isCmd === '4') {
+                  $marketInfo = getExchangeCoins("815b0b1a-2764-3736-8faa-42d694fa620a");
+                  echo $marketInfo;
+                  $msgData = sendPlainText($jsMsg->data->conversation_id, $marketInfo);
+                  $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
+                  $conn->send($msg);
+              } elseif ($isCmd === '6') {
+                  $msgData = sendAppCardBuyUSDTSellBTC($jsMsg);
+                  $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
+                  $conn->send($msg);
               } else {
                   $msgData = sendPlainText($jsMsg->data->conversation_id,
                                             base64_decode($jsMsg->data->data));
@@ -72,7 +89,7 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
             // refundInstant
               echo "user id:".$jsMsg->data->user_id;
               $dtPay = json_decode(base64_decode($jsMsg->data->data));
-              print_r($dtPay);
+              // print_r($dtPay);
               if ($dtPay->amount > 0) {
                 echo "paid!".$dtPay->asset_id;
                 refundInstant($dtPay->asset_id,$dtPay->amount,$jsMsg->data->user_id);
@@ -105,9 +122,14 @@ $loop->run();
 function sendUsage($conversation_id):Array {
   $msgHelp = <<<EOF
    Usage:
-   ? or help : for help!
-   1         : pay by APP_CARD
-   2         : pay by APP_BUTTON_GROUP
+   ? or help : for help! \n
+   1         : pay by APP_BUTTON_GROUP \n
+   2         : pay by APP_CARD \n
+   3         : ask price of USDT/BTC \n
+   4         : ask price of BTC/USDT \n
+   3x        : Buy USDT sell BTC \n
+   4x        : Buy BTC sell USDT \n
+   6         : Buy USDT sell BTC Directly \n
 EOF;
   return sendPlainText($conversation_id,$msgHelp);
 }
@@ -196,6 +218,39 @@ function sendAppCard($jsMsg):Array
    return $msgPayButton;
 }
 
+function sendAppCardBuyUSDTSellBTC($jsMsg):Array
+{
+  $client_id = (require "./config.php")['client_id'];
+  $memo = base64_encode(MessagePack::pack([
+                       'A' => Uuid::fromString('815b0b1a-2764-3736-8faa-42d694fa620a')->getBytes(),
+                       ]));
+   $payLink = "https://mixin.one/pay?recipient=".
+                EXIN_BOT."&asset=".
+                "c6d0c728-2624-429b-8e0d-d9d19b6592fa".
+                "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
+                "&memo=".$memo;
+   $msgData = [
+       'icon_url'    =>  "https://mixin.one/assets/98b586edb270556d1972112bd7985e9e.png",
+       'title'       =>  "Pay 0.0001 BTC",
+       'description' =>  "pay",
+       'action'      =>  $payLink,
+   ];
+   $msgParams = [
+     'conversation_id' => $jsMsg->data->conversation_id,// $callTrait->config[client_id],
+     // 'recipient_id'    => $jsMsg->data->user_id,
+     'category'        => 'APP_CARD',//'PLAIN_TEXT',
+     'status'          => 'SENT',
+     'message_id'      => Uuid::uuid4()->toString(),
+     'data'            => base64_encode(json_encode($msgData)),//base64_encode("hello!"),
+   ];
+   $msgPayButton = [
+     'id'     =>  Uuid::uuid4()->toString(),
+     'action' =>  'CREATE_MESSAGE',
+     'params' =>   $msgParams,
+   ];
+   return $msgPayButton;
+}
+
 function transfer() {
   $mixinSdk = new MixinSDK(require './config.php');
   print_r($mixinSdk->getConfig());
@@ -214,4 +269,30 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
   $BotInfo = $mixinSdk->Wallet()->transfer($_assetID,$_opponent_id,
                                            $mixinSdk->getConfig()['default']['pin'],$_amount);
   print_r($BotInfo);
+}
+
+function getExchangeCoins($base_coin) :string {
+  $client = new GuzzleHttp\Client();
+  $res = $client->request('GET', 'https://exinone.com/exincore/markets?base_asset='.$base_coin, [
+      ]);
+  $result = "";
+  if ($res->getStatusCode() == "200") {
+    // echo $res->getStatusCode() . PHP_EOL;
+    $resInfo = json_decode($res->getBody(), true);
+    echo "Asset ID | Asset Symbol | Price | Amount | Exchanges" . PHP_EOL;
+    $result = "Asset ID | Asset Symbol | Price | Amount | Exchanges" . PHP_EOL;
+    foreach ($resInfo["data"] as $key => $coinInfo) {
+      echo ($coinInfo["exchange_asset"] ." ".$coinInfo["exchange_asset_symbol"]. "/". $coinInfo["base_asset_symbol"] .
+            " ". $coinInfo["price"] ." ". $coinInfo["minimum_amount"] ."-". $coinInfo["maximum_amount"] . " ");
+      $result .= $coinInfo["exchange_asset_symbol"]. "/". $coinInfo["base_asset_symbol"] .
+                  " ". $coinInfo["price"] ." ". $coinInfo["minimum_amount"] ."-". $coinInfo["maximum_amount"] . " ";
+      foreach ($coinInfo["exchanges"] as $key => $exchange) {
+        echo $exchange . " ";
+        $result .= $exchange . " ";
+      }
+      echo PHP_EOL;
+      $result .= PHP_EOL;
+    }
+  }
+  return $result;
 }

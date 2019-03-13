@@ -18,23 +18,30 @@ $uuid = Uuid::fromBytes(
 getExchangeCoins("815b0b1a-2764-3736-8faa-42d694fa620a");
 getExchangeCoins("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 
-function getExchangeCoins($base_coin) {
+function getExchangeCoins($base_coin) :string {
   $client = new GuzzleHttp\Client();
   $res = $client->request('GET', 'https://exinone.com/exincore/markets?base_asset='.$base_coin, [
       ]);
+  $result = "";
   if ($res->getStatusCode() == "200") {
     // echo $res->getStatusCode() . PHP_EOL;
     $resInfo = json_decode($res->getBody(), true);
     echo "------Asset ID | Asset Symbol | Price | Amount | Exchanges --------" . PHP_EOL;
+    $result = "------Asset ID | Asset Symbol | Price | Amount | Exchanges --------" . PHP_EOL;
     foreach ($resInfo["data"] as $key => $coinInfo) {
       echo ($coinInfo["exchange_asset"] ." ".$coinInfo["exchange_asset_symbol"]. "/". $coinInfo["base_asset_symbol"] .
             " ". $coinInfo["price"] ." ". $coinInfo["minimum_amount"] ."-". $coinInfo["maximum_amount"] . " ");
+      $result .= $coinInfo["exchange_asset"] ." ".$coinInfo["exchange_asset_symbol"]. "/". $coinInfo["base_asset_symbol"] .
+                  " ". $coinInfo["price"] ." ". $coinInfo["minimum_amount"] ."-". $coinInfo["maximum_amount"] . " ";
       foreach ($coinInfo["exchanges"] as $key => $exchange) {
         echo $exchange . " ";
+        $result .= $exchange . " ";
       }
       echo PHP_EOL;
+      $result .= PHP_EOL;
     }
   }
+  return $result;
 }
 // print_r($resInfo["data"]);
 // foreach ($resInfo as $coinInfo) {
