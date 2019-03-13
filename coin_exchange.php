@@ -16,13 +16,27 @@ $uuid = Uuid::fromBytes(
                         MessagePack::unpack(base64_decode($memo))['A']
                         )->toString();
 print_r($memo."\n");
-print_r($uuid);
+print_r($uuid . PHP_EOL);
 
 $client = new GuzzleHttp\Client();
 $res = $client->request('GET', 'https://exinone.com/exincore/markets?base_asset=815b0b1a-2764-3736-8faa-42d694fa620a', [
     ]);
-echo $res->getStatusCode();
-// "200"
-echo $res->getHeader('content-type')[0];
-// 'application/json; charset=utf8'
-echo $res->getBody();
+echo $res->getStatusCode() . PHP_EOL;
+$resInfo = json_decode($res->getBody(), true);
+// print_r($resInfo);
+// print_r($resInfo["data"]);
+echo "------Asset ID | Asset Symbol | Price | Amount | Exchanges --------" . PHP_EOL;
+foreach ($resInfo["data"] as $key => $coinInfo) {
+  echo ($coinInfo["exchange_asset"] ." ".$coinInfo["exchange_asset_symbol"]. "/". $coinInfo["base_asset_symbol"] .
+        " ". $coinInfo["price"] ." ". $coinInfo["minimum_amount"] ."-". $coinInfo["maximum_amount"] . " ");
+  foreach ($coinInfo["exchanges"] as $key => $exchange) {
+    echo $exchange . " ";
+  }
+  echo PHP_EOL;
+}
+// print_r($resInfo["data"]);
+// foreach ($resInfo as $coinInfo) {
+//     echo "e" . PHP_EOL;
+//     print_r($coinInfo);
+//     // echo ($coinInfo["exchange_asset"] . $coinInfo["exchange_asset_symbol"] . PHP_EOL);
+// }
