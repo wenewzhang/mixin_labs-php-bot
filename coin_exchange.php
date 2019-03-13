@@ -15,24 +15,26 @@ $memo = base64_encode(MessagePack::pack([
 $uuid = Uuid::fromBytes(
                         MessagePack::unpack(base64_decode($memo))['A']
                         )->toString();
-print_r($memo."\n");
-print_r($uuid . PHP_EOL);
+getExchangeCoins("815b0b1a-2764-3736-8faa-42d694fa620a");
+getExchangeCoins("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
 
-$client = new GuzzleHttp\Client();
-$res = $client->request('GET', 'https://exinone.com/exincore/markets?base_asset=815b0b1a-2764-3736-8faa-42d694fa620a', [
-    ]);
-echo $res->getStatusCode() . PHP_EOL;
-$resInfo = json_decode($res->getBody(), true);
-// print_r($resInfo);
-// print_r($resInfo["data"]);
-echo "------Asset ID | Asset Symbol | Price | Amount | Exchanges --------" . PHP_EOL;
-foreach ($resInfo["data"] as $key => $coinInfo) {
-  echo ($coinInfo["exchange_asset"] ." ".$coinInfo["exchange_asset_symbol"]. "/". $coinInfo["base_asset_symbol"] .
-        " ". $coinInfo["price"] ." ". $coinInfo["minimum_amount"] ."-". $coinInfo["maximum_amount"] . " ");
-  foreach ($coinInfo["exchanges"] as $key => $exchange) {
-    echo $exchange . " ";
+function getExchangeCoins($base_coin) {
+  $client = new GuzzleHttp\Client();
+  $res = $client->request('GET', 'https://exinone.com/exincore/markets?base_asset='.$base_coin, [
+      ]);
+  if ($res->getStatusCode() == "200") {
+    // echo $res->getStatusCode() . PHP_EOL;
+    $resInfo = json_decode($res->getBody(), true);
+    echo "------Asset ID | Asset Symbol | Price | Amount | Exchanges --------" . PHP_EOL;
+    foreach ($resInfo["data"] as $key => $coinInfo) {
+      echo ($coinInfo["exchange_asset"] ." ".$coinInfo["exchange_asset_symbol"]. "/". $coinInfo["base_asset_symbol"] .
+            " ". $coinInfo["price"] ." ". $coinInfo["minimum_amount"] ."-". $coinInfo["maximum_amount"] . " ");
+      foreach ($coinInfo["exchanges"] as $key => $exchange) {
+        echo $exchange . " ";
+      }
+      echo PHP_EOL;
+    }
   }
-  echo PHP_EOL;
 }
 // print_r($resInfo["data"]);
 // foreach ($resInfo as $coinInfo) {
