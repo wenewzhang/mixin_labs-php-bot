@@ -104,7 +104,11 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                 } else {
                   echo "------------MEMO:-coin--exchange--------------";
                   // print_r($dtPay->memo);
-                  print_r(base64_decode($dtPay->memo));
+                  $memoUnpack = MessagePack::unpack(base64_decode($dtPay->memo));
+                  $feeAssetID = Uuid::fromBytes($memoUnpack['FA'])->toString();
+                  $OrderID    = Uuid::fromBytes($memoUnpack['O'])->toString();
+
+                  print_r($memoUnpack);
                 }
               }
           } //end of SYSTEM_ACCOUNT_SNAPSHOT
