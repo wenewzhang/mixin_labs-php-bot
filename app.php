@@ -7,8 +7,11 @@ use Ramsey\Uuid\Uuid;
 use Ratchet\RFC6455\Messaging\Frame;
 use MessagePack\MessagePack;
 
-const EXIN_BOT = "61103d28-3ac2-44a2-ae34-bd956070dab1";
-
+const EXIN_BOT        = "61103d28-3ac2-44a2-ae34-bd956070dab1";
+const MASTER_UUID     = "0b4f49dc-8fb4-4539-9a89-fb3afc613747";
+const BTC_ASSET_ID    = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
+const EOS_ASSET_ID    = "6cfe566e-4aad-470b-8c9a-2fd35b49c68d";
+const USDT_ASSET_ID   = "815b0b1a-2764-3736-8faa-42d694fa620a";
 $loop = \React\EventLoop\Factory::create();
 $reactConnector = new \React\Socket\Connector($loop, [
     'timeout' => 15
@@ -54,22 +57,19 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                   $msgData = sendAppButtons($jsMsg);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
-              }//end of pay1
-
-              elseif ($isCmd === '2') {
+              } elseif ($isCmd === '2') {
                  // print($callTrait->config['client_id']);
                   $msgData = sendAppCard($jsMsg);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
-              }//end of pay2
-              elseif ($isCmd === '3') {
-                  $marketInfo = getExchangeCoins("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+              } elseif ($isCmd === '3') {
+                  $marketInfo = getExchangeCoins(BTC_ASSET_ID);
                   echo $marketInfo;
                   $msgData = sendPlainText($jsMsg->data->conversation_id, $marketInfo);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
               } elseif ($isCmd === '4') {
-                  $marketInfo = getExchangeCoins("815b0b1a-2764-3736-8faa-42d694fa620a");
+                  $marketInfo = getExchangeCoins(USDT_ASSET_ID);
                   echo $marketInfo;
                   $msgData = sendPlainText($jsMsg->data->conversation_id, $marketInfo);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
@@ -78,6 +78,14 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                   $msgData = sendAppCardBuyUSDTSellBTC($jsMsg);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
+              } elseif ($isCmd === '7') {
+                  coinExchange(BTC_ASSET_ID,"0.0001",USDT_ASSET_ID);
+              } elseif ($isCmd === '8') {
+                  $mixinSdk = new MixinSDK(require './config.php');
+                  $asset_info = $mixinSdk->Wallet()->readAsset(BTC_ASSET_ID);
+                  print_r("Bitcoin wallet balance is :".$asset_info["balance"]."\n");
+                  $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
+                  print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
               } else {
                   $msgData = sendPlainText($jsMsg->data->conversation_id,
                                             base64_decode($jsMsg->data->data));
@@ -87,12 +95,17 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
           } //end of PLAIN_TEXT
           if ($jsMsg->data->category === 'SYSTEM_ACCOUNT_SNAPSHOT') {
             // refundInstant
-              echo "user id:".$jsMsg->data->user_id;
+              echo "user id:".$jsMsg->data->user_id . PHP_EOL;
               $dtPay = json_decode(base64_decode($jsMsg->data->data));
-              // print_r($dtPay);
               if ($dtPay->amount > 0) {
-                echo "paid!".$dtPay->asset_id;
-                refundInstant($dtPay->asset_id,$dtPay->amount,$jsMsg->data->user_id);
+                echo "paid!".$dtPay->asset_id . PHP_EOL;
+                if ( $dtPay->opponent_id == MASTER_UUID ) {
+                  // refundInstant($dtPay->asset_id,$dtPay->amount,$jsMsg->data->user_id);
+                } else {
+                  echo "------------MEMO:-coin--exchange--------------";
+                  // print_r($dtPay->memo);
+                  print_r(base64_decode($dtPay->memo));
+                }
               }
           } //end of SYSTEM_ACCOUNT_SNAPSHOT
         } //end of CREATE_MESSAGE
@@ -130,6 +143,7 @@ function sendUsage($conversation_id):Array {
    3x        : Buy USDT sell BTC \n
    4x        : Buy BTC sell USDT \n
    6         : Buy USDT sell BTC Directly \n
+   7         : Bot 0.0001 BTC exchange \n
 EOF;
   return sendPlainText($conversation_id,$msgHelp);
 }
@@ -268,6 +282,17 @@ function refundInstant($_assetID,$_amount,$_opponent_id) {
   // print_r();
   $BotInfo = $mixinSdk->Wallet()->transfer($_assetID,$_opponent_id,
                                            $mixinSdk->getConfig()['default']['pin'],$_amount);
+  print_r($BotInfo);
+}
+
+function coinExchange($_assetID,$_amount,$_targetAssetID) {
+  $mixinSdk = new MixinSDK(require './config.php');
+  // print_r();
+  $memo = base64_encode(MessagePack::pack([
+                       'A' => Uuid::fromString($_targetAssetID)->getBytes(),
+                       ]));
+  $BotInfo = $mixinSdk->Wallet()->transfer($_assetID,EXIN_BOT,
+                                           $mixinSdk->getConfig()['default']['pin'],$_amount,$memo);
   print_r($BotInfo);
 }
 
