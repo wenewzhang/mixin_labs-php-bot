@@ -57,7 +57,7 @@ function getExchangeCoins($base_coin) :string {
   return $result;
 }
 ```
-![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/res/blob/master/btc-usdt-price.jpg)
+![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/btc-usdt-price.jpg)
 
 #### Create a memo to prepare order
 In the chapter two: [Echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) introduce you
@@ -120,7 +120,7 @@ $mixinSdk = new MixinSDK(require './config.php');
 $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
 print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
 ```
-![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/res/blob/master/exchange-and-balance.jpg)
+![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/exchange-and-balance.jpg)
 
 #### Advanced usage
 Some time, you don't want exchange coin through bot, you can pay coin to ExinCore 's bot directly,
@@ -160,10 +160,10 @@ function sendAppCardBuyUSDTSellBTC($jsMsg):Array
    return $msgPayButton;
 }
 ```
-![](https://github.com/wenewzhang/mixin_labs-php-bot/res/blob/master/user-exchange-bitcoin-directly.jpg)
+![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/user-exchange-bitcoin-directly.jpg)
 
 The ExinCore 's bot pay USDT back!
 
-![](https://github.com/wenewzhang/mixin_labs-php-bot/res/blob/master/user-directly-exchage-result.jpg)
+![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/user-directly-exchage-result.jpg)
 
 ## Solution Two: List your order on Ocean.One exchange
