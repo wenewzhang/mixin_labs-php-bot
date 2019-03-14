@@ -1,5 +1,5 @@
  # Туториал по PHP для работы с биткойном через Mixin Network
-![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Bitcoin_php.jpg)
+![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 С помощью данного туториала вы сможете создать бота для Mixin Messenger. Это будет echo-бот на PHP, который сможет принимать Bitcoin от пользователей.
 
 [Каталог ресурсов по Mixin Network](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
@@ -131,7 +131,7 @@ composer.json  composer.lock  vendor
 После того, как вы создадите приложение в панели инструментов, вам нужно ещё [сгенерировать ключ](https://mixin-network.gitbook.io/mixin-network/mixin-messenger-app/create-bot-account#generate-secure-parameter-for-your-app)
 и записать необходимое содержимое в `config.php`
 
-![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/mixin_network-keys.jpg)
+![mixin_network-keys](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/mixin_network-keys.jpg)
 Создайте в проектной папке файл `config.php`. Скопируйте в него следующее содержимое.
 > config.php
 ```php
@@ -274,7 +274,7 @@ a1ce2967-a534-417d-bf12-c86571e4eefa{"id":"4454b6c5-4a89-440c-bd22-7a79cf4954ca"
 )
 ```
 Добавьте бота (например, этого бота — его ID 7000101639) в свой список контактов в [Mixin Messenger](https://mixin.one/messenger) и отправляйте сообщения.
-![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/helloworld.jpeg)
+![mixin_messenger](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/helloworld.jpeg)
 
 
 ### Краткое описание исходного кода
