@@ -74,6 +74,15 @@ function coinExchange($_assetID,$_amount,$_targetAssetID) {
   print_r($BotInfo);
 }
 ```
+If you coin exchange successful, console output like below:
+```bash
+------------MEMO:-coin--exchange--------------
+You Get Coins: 815b0b1a-2764-3736-8faa-42d694fa620a 0.3852528
+Successful Exchange:
+Fee asset ID: 815b0b1a-2764-3736-8faa-42d694fa620a fee is :0.0007736
+Order ID: f49124fe-fc53-46d0-bed8-57bc0c3bf893 Price is :3868.09
+```
+
 #### Read Bitcoin balance
 ```php
 $mixinSdk = new MixinSDK(require './config.php');

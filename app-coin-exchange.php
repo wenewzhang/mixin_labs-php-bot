@@ -48,7 +48,7 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
           if ($jsMsg->data->category === 'PLAIN_TEXT') {
               echo "PLAIN_TEXT:".base64_decode($jsMsg->data->data);
               $isCmd = strtolower(base64_decode($jsMsg->data->data));
-              if ($isCmd ==='?' or $isCmd ==='help') {
+              if ($isCmd ==='?' or $isCmd ==='help' or $isCmd ==='h') {
                   $msgData = sendUsage($jsMsg->data->conversation_id);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
@@ -80,12 +80,22 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                   $conn->send($msg);
               } elseif ($isCmd === '7') {
                   coinExchange(BTC_ASSET_ID,"0.0001",USDT_ASSET_ID);
+              } elseif ($isCmd === '9') {
+                  coinExchange(USDT_ASSET_ID,"1",BTC_ASSET_ID);
               } elseif ($isCmd === '8') {
                   $mixinSdk = new MixinSDK(require './config.php');
                   $asset_info = $mixinSdk->Wallet()->readAsset(BTC_ASSET_ID);
                   print_r("Bitcoin wallet balance is :".$asset_info["balance"]."\n");
+                  $msgBalance = "Bitcoin wallet balance is :".$asset_info["balance"]."\n";
                   $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
                   print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
+                  $msgBalance .= "USDT wallet balance is :".$asset_info["balance"]."\n";
+
+                  $msgData = sendPlainText($jsMsg->data->conversation_id,
+                                            $msgBalance);
+                  $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
+                  $conn->send($msg);
+
               } else {
                   $msgData = sendPlainText($jsMsg->data->conversation_id,
                                             base64_decode($jsMsg->data->data));
@@ -148,11 +158,10 @@ function sendUsage($conversation_id):Array {
    2         : pay by APP_CARD \n
    3         : ask price of USDT/BTC \n
    4         : ask price of BTC/USDT \n
-   3x        : Buy USDT sell BTC \n
-   4x        : Buy BTC sell USDT \n
    6         : Buy USDT sell BTC Directly \n
-   7         : Bot 0.0001 BTC exchange \n
-   8         : Check BitCoin balance \n
+   7         : Pay 0.0001 BTC to Exincore \n
+   8         : Check BTC & USDT balance \n
+   9         : Pay 1 USDT to Exincore \n
 EOF;
   return sendPlainText($conversation_id,$msgHelp);
 }
