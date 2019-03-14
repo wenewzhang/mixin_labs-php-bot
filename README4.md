@@ -57,6 +57,8 @@ function getExchangeCoins($base_coin) :string {
   return $result;
 }
 ```
+![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/btc-usdt-price.jpg)
+
 #### Create a memo to prepare order
 In the chapter two: [Echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) introduce you
 transfer coins, ExinCore not only want know the coin you transferred, but also want know which coin you want to buy, the answer is memo, put you target asset id in memo.
@@ -118,5 +120,50 @@ $mixinSdk = new MixinSDK(require './config.php');
 $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
 print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
 ```
+![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/exchange-and-balance.jpg)
+
+#### Advanced usage
+Some time, you don't want exchange coin through bot, you can pay coin to ExinCore 's bot directly,
+But need your bot create a payment link for you! Here create a APP_CARD link which pay 0.0001 bitcoin to EXIN_BOT,
+target coin is USDT.
+```php
+function sendAppCardBuyUSDTSellBTC($jsMsg):Array
+{
+  $client_id = (require "./config.php")['client_id'];
+  $memo = base64_encode(MessagePack::pack([
+                       'A' => Uuid::fromString('815b0b1a-2764-3736-8faa-42d694fa620a')->getBytes(),
+                       ]));
+   $payLink = "https://mixin.one/pay?recipient=".
+                EXIN_BOT."&asset=".
+                "c6d0c728-2624-429b-8e0d-d9d19b6592fa".
+                "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
+                "&memo=".$memo;
+   $msgData = [
+       'icon_url'    =>  "https://mixin.one/assets/98b586edb270556d1972112bd7985e9e.png",
+       'title'       =>  "Pay 0.0001 BTC",
+       'description' =>  "pay",
+       'action'      =>  $payLink,
+   ];
+   $msgParams = [
+     'conversation_id' => $jsMsg->data->conversation_id,// $callTrait->config[client_id],
+     // 'recipient_id'    => $jsMsg->data->user_id,
+     'category'        => 'APP_CARD',//'PLAIN_TEXT',
+     'status'          => 'SENT',
+     'message_id'      => Uuid::uuid4()->toString(),
+     'data'            => base64_encode(json_encode($msgData)),//base64_encode("hello!"),
+   ];
+   $msgPayButton = [
+     'id'     =>  Uuid::uuid4()->toString(),
+     'action' =>  'CREATE_MESSAGE',
+     'params' =>   $msgParams,
+   ];
+   return $msgPayButton;
+}
+```
+![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/user-exchange-bitcoin-directly.jpg)
+
+The ExinCore 's bot pay USDT back!
+
+![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/user-directly-exchage-result.jpg)
 
 ## Solution Two: List your order on Ocean.One exchange
