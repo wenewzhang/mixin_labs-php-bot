@@ -11,11 +11,14 @@ ExinCore don't know who you are because ExinCore only know your client's uuid.
 You should already have created a wallet based on Mixin Network. Create one by reading [PHP Bitcoin tutorial](https://github.com/wenewzhang/mixin_labs-php-bot).
 
 #### Install required packages
+As you know, we introduce you the mixin-sdk-php in [chapter 1](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), assume it has installed before, let's install **uuid, msgpack** here.
 ```bash
   composer require ramsey/uuid
   composer require rybakit/msgpack
 ```
-#### Deposit USDT into your Mixin Network account(bot) and read balance
+#### Deposit USDT or Bitcoin into your Mixin Network account(bot) and read balance
+ExinCore can exchange between Bitcoin, USDT, EOS, Eth etc. Here show you how to exchange between USDT and Bitcoin,
+you need check the wallet's balance.
 ```php
   $mixinSdk = new MixinSDK(require './config.php');
   $asset_info = $mixinSdk->Wallet()->readAsset(BTC_ASSET_ID);
@@ -23,7 +26,10 @@ You should already have created a wallet based on Mixin Network. Create one by r
   $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
   print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
 ```
-#### read market price
+#### Read market price
+How to check the coin's price? you need know which is the base coin,
+for example, if you want buy Bitcoin and sell USDT, the USDT is the base coin, Also,
+if you want buy USDT and sell Bitcoin, the Bitcoin is the base coin, source code like below.
 ```php
 function getExchangeCoins($base_coin) :string {
   $client = new GuzzleHttp\Client();
@@ -52,13 +58,20 @@ function getExchangeCoins($base_coin) :string {
 }
 ```
 #### Create a memo to prepare order
+In the chapter two: [Echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) introduce you
+transfer coins, ExinCore not only want know the coin you transferred, but also want know which coin you want to buy, the answer is memo, put you target asset id in memo.
 ```php
 $memo = base64_encode(MessagePack::pack([
                      'A' => Uuid::fromString($_targetAssetID)->getBytes(),
                      ]));
 ```
 #### Pay BTC to API gateway with generated memo
+Transfer Bitcoin(BTC_ASSET_ID) to ExinCore(EXIN_BOT), put you target asset uuid in the memo, otherwise, ExinCore will refund you coin immediately!
 ```php
+const EXIN_BOT        = "61103d28-3ac2-44a2-ae34-bd956070dab1";
+const BTC_ASSET_ID    = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
+const EOS_ASSET_ID    = "6cfe566e-4aad-470b-8c9a-2fd35b49c68d";
+const USDT_ASSET_ID   = "815b0b1a-2764-3736-8faa-42d694fa620a";
 coinExchange(BTC_ASSET_ID,"0.0001",USDT_ASSET_ID);
 
 //...........
@@ -74,23 +87,7 @@ function coinExchange($_assetID,$_amount,$_targetAssetID) {
   print_r($BotInfo);
 }
 ```
-If you coin exchange successful, console output like below:
-```bash
-------------MEMO:-coin--exchange--------------
-You Get Coins: 815b0b1a-2764-3736-8faa-42d694fa620a 0.3852528
-Successful Exchange:
-Fee asset ID: 815b0b1a-2764-3736-8faa-42d694fa620a fee is :0.0007736
-Order ID: f49124fe-fc53-46d0-bed8-57bc0c3bf893 Price is :3868.09
-```
-
-#### Read Bitcoin balance
-```php
-$mixinSdk = new MixinSDK(require './config.php');
-$asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
-print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
-```
-
-## Solution Two: List your order on Ocean.One exchange
+The ExinCore should transfer the target coin to your bot, meanwhile, put the fee, order id, price etc. information in the memo, unpack the data like below.
 ```php
 echo "------------MEMO:-coin--exchange--------------" . PHP_EOL;
 // print_r($dtPay->memo);
@@ -104,3 +101,22 @@ if ($memoUnpack['C'] == 1000) {
   echo "Order ID: " . $OrderID . " Price is :" . $memoUnpack['P'] . PHP_EOL;
 } else print_r($memoUnpack);
 ```
+
+If you coin exchange successful, console output like below:
+```bash
+------------MEMO:-coin--exchange--------------
+You Get Coins: 815b0b1a-2764-3736-8faa-42d694fa620a 0.3852528
+Successful Exchange:
+Fee asset ID: 815b0b1a-2764-3736-8faa-42d694fa620a fee is :0.0007736
+Order ID: f49124fe-fc53-46d0-bed8-57bc0c3bf893 Price is :3868.09
+```
+
+#### Read Bitcoin balance
+Check the wallet's balance.
+```php
+$mixinSdk = new MixinSDK(require './config.php');
+$asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
+print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
+```
+
+## Solution Two: List your order on Ocean.One exchange

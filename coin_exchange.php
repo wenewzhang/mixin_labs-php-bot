@@ -15,14 +15,17 @@ $memo = base64_encode(MessagePack::pack([
 $uuid = Uuid::fromBytes(
                         MessagePack::unpack(base64_decode($memo))['A']
                         )->toString();
-getExchangeCoins("815b0b1a-2764-3736-8faa-42d694fa620a");
-getExchangeCoins("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+// getExchangeCoins("815b0b1a-2764-3736-8faa-42d694fa620a");
+// getExchangeCoins("c6d0c728-2624-429b-8e0d-d9d19b6592fa");
+getExchangeCoins();
 
-function getExchangeCoins($base_coin) :string {
+function getExchangeCoins($base_coin = "") :string {
   $client = new GuzzleHttp\Client();
-  $res = $client->request('GET', 'https://exinone.com/exincore/markets?base_asset='.$base_coin, [
+  if ($base_coin === "") $url  = 'https://exinone.com/exincore/markets';
+  else $url = 'https://exinone.com/exincore/markets?base_asset='.$base_coin;
+  $res      = $client->request('GET', $url, [
       ]);
-  $result = "";
+  $result   = "";
   if ($res->getStatusCode() == "200") {
     // echo $res->getStatusCode() . PHP_EOL;
     $resInfo = json_decode($res->getBody(), true);
