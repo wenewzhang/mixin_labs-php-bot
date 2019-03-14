@@ -18,7 +18,7 @@ As you know, we introduce you the mixin-sdk-php in [chapter 1](https://github.co
 ```
 #### Deposit USDT or Bitcoin into your Mixin Network account(bot) and read balance
 ExinCore can exchange between Bitcoin, USDT, EOS, Eth etc. Here show you how to exchange between USDT and Bitcoin,
-you need check the wallet's balance.
+Check the wallet's balance before you make order.
 ```php
   $mixinSdk = new MixinSDK(require './config.php');
   $asset_info = $mixinSdk->Wallet()->readAsset(BTC_ASSET_ID);
@@ -27,9 +27,7 @@ you need check the wallet's balance.
   print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
 ```
 #### Read market price
-How to check the coin's price? you need know which is the base coin,
-for example, if you want buy Bitcoin and sell USDT, the USDT is the base coin, Also,
-if you want buy USDT and sell Bitcoin, the Bitcoin is the base coin, source code like below.
+How to check the coin's price? You need understand what is the base coin. If you want buy Bitcoin and sell USDT, the USDT is the base coin. If you want buy USDT and sell Bitcoin, the Bitcoin is the base coin.
 ```php
 function getExchangeCoins($base_coin) :string {
   $client = new GuzzleHttp\Client();
@@ -60,8 +58,7 @@ function getExchangeCoins($base_coin) :string {
 ![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/btc-usdt-price.jpg)
 
 #### Create a memo to prepare order
-In the chapter two: [Echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) introduce you
-transfer coins, ExinCore not only want know the coin you transferred, but also want know which coin you want to buy, the answer is memo, put you target asset id in memo.
+The chapter two: [Echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) introduce transfer coins. But you need to let ExinCore know which coin you want to buy. Just write your target asset into memo.
 ```php
 $memo = base64_encode(MessagePack::pack([
                      'A' => Uuid::fromString($_targetAssetID)->getBytes(),
