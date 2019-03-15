@@ -55,7 +55,6 @@ function getExchangeCoins($base_coin) :string {
   return $result;
 }
 ```
-![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/btc-usdt-price.jpg)
 
 #### Create a memo to prepare order
 The chapter two: [Echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) introduce transfer coins. But you need to let ExinCore know which coin you want to buy. Just write your target asset into memo.
@@ -88,26 +87,32 @@ function coinExchange($_assetID,$_amount,$_targetAssetID) {
 ```
 The ExinCore should transfer the target coin to your bot, meanwhile, put the fee, order id, price etc. information in the memo, unpack the data like below.
 ```php
-echo "------------MEMO:-coin--exchange--------------" . PHP_EOL;
-// print_r($dtPay->memo);
-echo "You Get Coins: ". $dtPay->asset_id. " " . $dtPay->amount . PHP_EOL;
-$memoUnpack = MessagePack::unpack(base64_decode($dtPay->memo));
-$feeAssetID = Uuid::fromBytes($memoUnpack['FA'])->toString();
-$OrderID    = Uuid::fromBytes($memoUnpack['O'])->toString();
-if ($memoUnpack['C'] == 1000) {
-  echo "Successful Exchange:". PHP_EOL;
-  echo "Fee asset ID: " . $feeAssetID . " fee is :" . $memoUnpack['F'] . PHP_EOL;
-  echo "Order ID: " . $OrderID . " Price is :" . $memoUnpack['P'] . PHP_EOL;
-} else print_r($memoUnpack);
+if ($record['amount'] > 0 and $record['memo'] != '') {
+  echo "------------MEMO:-coin--exchange--------------" . PHP_EOL;
+  echo "memo: " . $record['memo'] . PHP_EOL;
+  // print_r($dtPay->memo);
+  echo "You Get Coins: ". $record['asset_id']. " " . $record['amount'] . PHP_EOL;
+  $memoUnpack = MessagePack::unpack(base64_decode($record['memo']));
+  $feeAssetID = Uuid::fromBytes($memoUnpack['FA'])->toString();
+  $OrderID    = Uuid::fromBytes($memoUnpack['O'])->toString();
+  if ($memoUnpack['C'] == 1000) {
+    echo "Successful Exchange:". PHP_EOL;
+    echo "Fee asset ID: " . $feeAssetID . " fee is :" . $memoUnpack['F'] . PHP_EOL;
+    echo "Order ID: " . $OrderID . " Price is :" . $memoUnpack['P'] . PHP_EOL;
+  } else print_r($memoUnpack);
+  echo "--------------memo-record end---------------" . PHP_EOL;
+}
 ```
 
 If you coin exchange successful, console output like below:
 ```bash
 ------------MEMO:-coin--exchange--------------
-You Get Coins: 815b0b1a-2764-3736-8faa-42d694fa620a 0.3852528
+memo: hqFDzQPooVCnMzg3Mi45N6FGqTAuMDAwNzc0NqJGQcQQgVsLGidkNzaPqkLWlPpiCqFUoUahT8QQIbfeL6p5RVOcEP0mLb+t+g==
+You Get Coins: 815b0b1a-2764-3736-8faa-42d694fa620a 0.3857508
 Successful Exchange:
-Fee asset ID: 815b0b1a-2764-3736-8faa-42d694fa620a fee is :0.0007736
-Order ID: f49124fe-fc53-46d0-bed8-57bc0c3bf893 Price is :3868.09
+Fee asset ID: 815b0b1a-2764-3736-8faa-42d694fa620a fee is :0.0007746
+Order ID: 21b7de2f-aa79-4553-9c10-fd262dbfadfa Price is :3872.97
+--------------memo-record end---------------
 ```
 
 #### Read Bitcoin balance
@@ -117,50 +122,26 @@ $mixinSdk = new MixinSDK(require './config.php');
 $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
 print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
 ```
-![Bitcoint wallet balance](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/exchange-and-balance.jpg)
 
-#### Advanced usage
-Some time, you don't want exchange coin through bot, you can pay coin to ExinCore 's bot directly,
-But need your bot create a payment link for you! Here create a APP_CARD link which pay 0.0001 bitcoin to EXIN_BOT,
-target coin is USDT.
-```php
-function sendAppCardBuyUSDTSellBTC($jsMsg):Array
-{
-  $client_id = (require "./config.php")['client_id'];
-  $memo = base64_encode(MessagePack::pack([
-                       'A' => Uuid::fromString('815b0b1a-2764-3736-8faa-42d694fa620a')->getBytes(),
-                       ]));
-   $payLink = "https://mixin.one/pay?recipient=".
-                EXIN_BOT."&asset=".
-                "c6d0c728-2624-429b-8e0d-d9d19b6592fa".
-                "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
-                "&memo=".$memo;
-   $msgData = [
-       'icon_url'    =>  "https://mixin.one/assets/98b586edb270556d1972112bd7985e9e.png",
-       'title'       =>  "Pay 0.0001 BTC",
-       'description' =>  "pay",
-       'action'      =>  $payLink,
-   ];
-   $msgParams = [
-     'conversation_id' => $jsMsg->data->conversation_id,// $callTrait->config[client_id],
-     // 'recipient_id'    => $jsMsg->data->user_id,
-     'category'        => 'APP_CARD',//'PLAIN_TEXT',
-     'status'          => 'SENT',
-     'message_id'      => Uuid::uuid4()->toString(),
-     'data'            => base64_encode(json_encode($msgData)),//base64_encode("hello!"),
-   ];
-   $msgPayButton = [
-     'id'     =>  Uuid::uuid4()->toString(),
-     'action' =>  'CREATE_MESSAGE',
-     'params' =>   $msgParams,
-   ];
-   return $msgPayButton;
-}
-```
-![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/user-exchange-bitcoin-directly.jpg)
+[Full source code](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
 
-The ExinCore 's bot pay USDT back!
+## Source code usage
+Execute **php call_apis.php** to run it.
 
-![](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/res/user-directly-exchage-result.jpg)
+- 1: Create user and update PIN
+- 2: Read Bitcoin balance & address
+- 3: Read USDT balance & address
+- 4: Read EOS balance
+- 5: Read EOS address
+- 6: Transfer Bitcoin from bot to new user
+- 7: Transfer Bitcoin from new user to Master
+- 8: Withdraw bot's Bitcoin
+- qu: Read market price(USDT)
+- qb: Read market price(BTC)
+- b: Balance of  bot (USDT & BTC)
+- s: Read Snapshots
+- tb: Transfer 0.0001 BTC buy USDT
+- tu: Transfer $1 USDT buy BTC
+- q: Exit
 
 ## Solution Two: List your order on Ocean.One exchange
