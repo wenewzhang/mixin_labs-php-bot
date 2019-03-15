@@ -86,21 +86,30 @@ function coinExchange($_assetID,$_amount,$_targetAssetID) {
 }
 ```
 The ExinCore should transfer the target coin to your bot, meanwhile, put the fee, order id, price etc. information in the memo, unpack the data like below.
+- **readUserSnapshots** Read snapshots of the user.
 ```php
-if ($record['amount'] > 0 and $record['memo'] != '') {
-  echo "------------MEMO:-coin--exchange--------------" . PHP_EOL;
-  echo "memo: " . $record['memo'] . PHP_EOL;
-  // print_r($dtPay->memo);
-  echo "You Get Coins: ". $record['asset_id']. " " . $record['amount'] . PHP_EOL;
-  $memoUnpack = MessagePack::unpack(base64_decode($record['memo']));
-  $feeAssetID = Uuid::fromBytes($memoUnpack['FA'])->toString();
-  $OrderID    = Uuid::fromBytes($memoUnpack['O'])->toString();
-  if ($memoUnpack['C'] == 1000) {
-    echo "Successful Exchange:". PHP_EOL;
-    echo "Fee asset ID: " . $feeAssetID . " fee is :" . $memoUnpack['F'] . PHP_EOL;
-    echo "Order ID: " . $OrderID . " Price is :" . $memoUnpack['P'] . PHP_EOL;
-  } else print_r($memoUnpack);
-  echo "--------------memo-record end---------------" . PHP_EOL;
+$limit        = 20;
+$offset       = '2019-03-10T01:58:25.362528Z';
+$snapInfo = $mixinSdk_BotInstance->Wallet()->readUserSnapshots($limit, $offset);
+// print_r($networkInfo2);
+foreach ($snapInfo as  $record) {
+  // echo $key . PHP_EOL;
+  // print_r($record);
+  if ($record['amount'] > 0 and $record['memo'] != '') {
+    echo "------------MEMO:-coin--exchange--------------" . PHP_EOL;
+    echo "memo: " . $record['memo'] . PHP_EOL;
+    // print_r($dtPay->memo);
+    echo "You Get Coins: ". $record['asset_id']. " " . $record['amount'] . PHP_EOL;
+    $memoUnpack = MessagePack::unpack(base64_decode($record['memo']));
+    $feeAssetID = Uuid::fromBytes($memoUnpack['FA'])->toString();
+    $OrderID    = Uuid::fromBytes($memoUnpack['O'])->toString();
+    if ($memoUnpack['C'] == 1000) {
+      echo "Successful Exchange:". PHP_EOL;
+      echo "Fee asset ID: " . $feeAssetID . " fee is :" . $memoUnpack['F'] . PHP_EOL;
+      echo "Order ID: " . $OrderID . " Price is :" . $memoUnpack['P'] . PHP_EOL;
+    } else print_r($memoUnpack);
+    echo "--------------memo-record end---------------" . PHP_EOL;
+  }
 }
 ```
 

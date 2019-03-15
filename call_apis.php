@@ -167,7 +167,7 @@ while (true) {
   }
   if ($line == 's') {
     $limit        = 20;
-    $offset       = '201-03-10T01:58:25.362528Z';
+    $offset       = '2019-03-10T01:58:25.362528Z';
     $snapInfo = $mixinSdk_BotInstance->Wallet()->readUserSnapshots($limit, $offset);
     // print_r($networkInfo2);
     foreach ($snapInfo as  $record) {
