@@ -107,7 +107,20 @@ function coinExchange($_assetID,$_amount,$_targetAssetID) {
   print_r($BotInfo);
 }
 ```
+如果你想卖出比特币买入USDT,调用方式如下：
+
+```php
+coinExchange($config,BTC_ASSET_ID,"0.0001",USDT_ASSET_ID);
+```
+
+如果你想卖出USDT买入比特币,调用方式如下：
+
+```php
+coinExchange($config,USDT_ASSET_ID,"1",BTC_ASSET_ID);
+```
+
 交易完成后，Exincore会将你需要的币转到你的帐上，同样，会在memo里，记录成交价格，交易费用等信息！你只需要按下面的方式解开即可！
+- **readUserSnapshots** 读取钱包的交易记录。
 ```php
 $limit        = 20;
 $offset       = '2019-03-10T01:58:25.362528Z';
