@@ -78,6 +78,10 @@ $connector('wss://blaze.mixin.one', ['protocol' => 'Mixin-Blaze-1'],[
                   $msgData = sendAppCardBuyUSDTSellBTC($jsMsg);
                   $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
                   $conn->send($msg);
+              }  elseif ($isCmd === 'eu') {
+                  $msgData = sendAppCardBuyUSDTSellEOS($jsMsg);
+                  $msg = new Frame(gzencode(json_encode($msgData)),true,Frame::OP_BINARY);
+                  $conn->send($msg);
               } elseif ($isCmd === '7') {
                   coinExchange(BTC_ASSET_ID,"0.0001",USDT_ASSET_ID);
               } elseif ($isCmd === '9') {
@@ -159,6 +163,7 @@ function sendUsage($conversation_id):Array {
    3         : ask price of USDT/BTC \n
    4         : ask price of BTC/USDT \n
    6         : Buy USDT sell BTC Directly \n
+   eu        : Buy USDT sell BTC Directly \n
    7         : Pay 0.0001 BTC to Exincore \n
    8         : Check BTC & USDT balance \n
    9         : Pay 1 USDT to Exincore \n
@@ -260,6 +265,39 @@ function sendAppCardBuyUSDTSellBTC($jsMsg):Array
                 EXIN_BOT."&asset=".
                 "c6d0c728-2624-429b-8e0d-d9d19b6592fa".
                 "&amount=0.0001"."&trace=".Uuid::uuid4()->toString().
+                "&memo=".$memo;
+   $msgData = [
+       'icon_url'    =>  "https://mixin.one/assets/98b586edb270556d1972112bd7985e9e.png",
+       'title'       =>  "Pay 0.0001 BTC",
+       'description' =>  "pay",
+       'action'      =>  $payLink,
+   ];
+   $msgParams = [
+     'conversation_id' => $jsMsg->data->conversation_id,// $callTrait->config[client_id],
+     // 'recipient_id'    => $jsMsg->data->user_id,
+     'category'        => 'APP_CARD',//'PLAIN_TEXT',
+     'status'          => 'SENT',
+     'message_id'      => Uuid::uuid4()->toString(),
+     'data'            => base64_encode(json_encode($msgData)),//base64_encode("hello!"),
+   ];
+   $msgPayButton = [
+     'id'     =>  Uuid::uuid4()->toString(),
+     'action' =>  'CREATE_MESSAGE',
+     'params' =>   $msgParams,
+   ];
+   return $msgPayButton;
+}
+
+function sendAppCardBuyUSDTSellEOS($jsMsg):Array
+{
+  $client_id = (require "./config.php")['client_id'];
+  $memo = base64_encode(MessagePack::pack([
+                       'A' => Uuid::fromString('815b0b1a-2764-3736-8faa-42d694fa620a')->getBytes(),
+                       ]));
+   $payLink = "https://mixin.one/pay?recipient=".
+                EXIN_BOT."&asset=".
+                EOS_ASSET_ID.
+                "&amount=1"."&trace=".Uuid::uuid4()->toString().
                 "&memo=".$memo;
    $msgData = [
        'icon_url'    =>  "https://mixin.one/assets/98b586edb270556d1972112bd7985e9e.png",

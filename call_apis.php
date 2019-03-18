@@ -25,7 +25,11 @@ const BTC_ASSET_ID    = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
 const EOS_ASSET_ID    = "6cfe566e-4aad-470b-8c9a-2fd35b49c68d";
 const USDT_ASSET_ID   = "815b0b1a-2764-3736-8faa-42d694fa620a";
 const BTC_WALLET_ADDR = "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C";
-const AMOUNT          = "0.0001";
+const AMOUNT          = "0.1";
+const EOS_THIRD_EXCHANGE_NAME
+                      = "huobideposit";
+const EOS_THIRD_EXCHANGE_TAG
+                      = "1872050";
 // Mixin Network support cryptocurrencies (2019-02-19)
 // |EOS|6cfe566e-4aad-470b-8c9a-2fd35b49c68d
 // |CNB|965e5c6e-434c-3fa9-b780-c50f43cd955c
@@ -43,8 +47,8 @@ const AMOUNT          = "0.0001";
 // |BCH|fd11b6e3-0b87-41f1-a41f-f0e9b49e5bf0
 
 $msg  = "1: Create user and update PIN\n2: Read Bitcoin balance & address \n3: Read USDT balance & address\n4: Read EOS balance\n";
-$msg .= "5: Read EOS address\n6: Transfer Bitcoin from bot to new user\n7: Transfer Bitcoin from new user to Master\n";
-$msg .= "8: Withdraw bot's Bitcoin\nqu: Read market price(USDT)\nqb: Read market price(BTC)\nb: Balance of  bot (USDT & BTC)\n";
+$msg .= "5: Read EOS address\n6: Transfer Bitcoin from bot to new user\n7: Transfer Bitcoin from new user to Master\n7e: Transfer EOS from new user to bot\n";
+$msg .= "8: Withdraw bot's Bitcoin\n9: Withdraw bot's EOS\nqu: Read market price(USDT)\nqb: Read market price(BTC)\nb: Balance of  bot (USDT & BTC & EOS)\n";
 $msg .= "s: Read Snapshots \ntb: Transfer 0.0001 BTC buy USDT\ntu: Transfer $1 USDT buy BTC\n";
 $msg .= "q: Exit \nMake your choose:";
 while (true) {
@@ -78,6 +82,8 @@ while (true) {
     print_r("Bot Bitcoin wallet balance is :".$asset_info["balance"]."\n");
     $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(USDT_ASSET_ID);
     print_r("Bot USDT wallet balance is :".$asset_info["balance"]."\n");
+    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(EOS_ASSET_ID);
+    print_r("Bot EOS wallet balance is :".$asset_info["balance"]."\n");
   }
   if ($line == '2') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
@@ -128,7 +134,7 @@ while (true) {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
       $new_user_id = $data[3];
-      $trans_info = $mixinSdk_BotInstance->Wallet()->transfer(BTC_ASSET_ID,$new_user_id,
+      $trans_info = $mixinSdk_BotInstance->Wallet()->transfer(EOS_ASSET_ID,$new_user_id,
                                                $mixinSdk_BotInstance->getConfig()['default']['pin'],AMOUNT);
       print_r($trans_info);
     }
@@ -152,18 +158,64 @@ while (true) {
       } else print("Create user first\n");
     } else print("Can not find this user id by Mixin ID!");
   }
+  if ($line == '7e') {
+    // $userInfo = $mixinSdk_BotInstance->Network()->readUser(MASTER_ID);
+    if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $mixinSdk_eachAccountInstance= new MixinSDK(GenerateConfigByCSV($data));
+        $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(EOS_ASSET_ID);
+        if ( (float) $asset_info["balance"] > 0 ) {
+          $trans_info = $mixinSdk_eachAccountInstance->Wallet()->transfer(EOS_ASSET_ID,
+                                                   $mixinSdk_BotInstance->getConfig()['default']['client_id'],
+                                                   $mixinSdk_eachAccountInstance->getConfig()['default']['pin'],
+                                                   $asset_info["balance"]);
+          print_r($trans_info);
+        } else print($data[3] . " has no coins!\n");
+    }
+      fclose($handle);
+    } else print("Create user first\n");
+  }
   if ($line == '8') {
     $btcInfo = $mixinSdk_BotInstance->Wallet()->createAddress(BTC_ASSET_ID,
                                               BTC_WALLET_ADDR,
                                               $mixinSdk_BotInstance->getConfig()['default']['pin'],
                                               "BTC withdral",false);
     print("Bitcoin winthdrawal fee is:".$btcInfo["fee"]."\n");
-    $wdInfo = $mixinSdk_BotInstance->Wallet()->withdrawal($btc["address_id"],
-                                AMOUNT,
-                                $mixinSdk_BotInstance->getConfig()['default']['pin'],
-                                "BTC withdral");
-    // $wdInfo = $mixinSdk_BotInstance->Wallet()->readAddress($btcInfo["address_id"]);
-    print_r($wdInfo);
+    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(BTC_ASSET_ID);
+    $wdAmount = (float) $asset_info["balance"] - (float) $wdInfo["fee"];
+    echo "EOS withdraw amount is: " . $wdAmount . PHP_EOL;
+    if ( $wdAmount > 0 ) {
+      echo "Are you deposit Bitcoin " . floatval($wdAmount). " to " . BTC_WALLET_ADDR  . "(y/n)";
+      $cmd = readline("");
+      if ($cmd == 'y' ) {
+        $wdInfo = $mixinSdk_BotInstance->Wallet()->withdrawal($btcInfo["address_id"],
+                                    floatval($wdAmount),
+                                    $mixinSdk_BotInstance->getConfig()['default']['pin'],
+                                    "btc withdraw");
+        print_r($wdInfo);
+      }
+    } else echo "Not Enough asset to withdraw!" . PHP_EOL.
+  }
+  if ($line == '9') {
+    $wdInfo = $mixinSdk_BotInstance->Wallet()->createAddress(EOS_ASSET_ID,
+                                              EOS_THIRD_EXCHANGE_TAG,
+                                              $mixinSdk_BotInstance->getConfig()['default']['pin'],
+                                              EOS_THIRD_EXCHANGE_NAME,true);
+    print("EOS winthdrawal fee is:".$wdInfo["fee"]."\n");
+    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(EOS_ASSET_ID);
+    $wdAmount = (float) $asset_info["balance"] - (float) $wdInfo["fee"];
+    echo "EOS withdraw amount is: " . $wdAmount . PHP_EOL;
+    if ( $wdAmount > 0 ) {
+      echo "Are you deposit EOS " . floatval($wdAmount). " to " . EOS_THIRD_EXCHANGE_NAME . " " . EOS_THIRD_EXCHANGE_TAG . "(y/n)";
+      $cmd = readline("");
+      if ($cmd == 'y' ) {
+        $wdInfo = $mixinSdk_BotInstance->Wallet()->withdrawal($wdInfo["address_id"],
+                                    floatval($wdAmount),
+                                    $mixinSdk_BotInstance->getConfig()['default']['pin'],
+                                    "eos withdraw");
+        print_r($wdInfo);
+      }
+    } else echo "Not Enough asset to withdraw!" . PHP_EOL.
   }
   if ($line == 's') {
     $limit        = 20;
