@@ -131,9 +131,6 @@ $mixinSdk = new MixinSDK(require './config.php');
 $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
 print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
 ```
-
-[Full source code](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
-
 ## Source code usage
 Execute **php call_apis.php** to run it.
 
@@ -145,6 +142,7 @@ Execute **php call_apis.php** to run it.
 - 6: Transfer Bitcoin from bot to new user
 - 7: Transfer Bitcoin from new user to Master
 - 8: Withdraw bot's Bitcoin
+- 9: Withdraw bot's EOS
 - qu: Read market price(USDT)
 - qb: Read market price(BTC)
 - b: Balance of  bot (USDT & BTC)
@@ -152,5 +150,7 @@ Execute **php call_apis.php** to run it.
 - tb: Transfer 0.0001 BTC buy USDT
 - tu: Transfer $1 USDT buy BTC
 - q: Exit
+
+[Full source code](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
 
 ## Solution Two: List your order on Ocean.One exchange

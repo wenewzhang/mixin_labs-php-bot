@@ -194,7 +194,7 @@ while (true) {
                                     "btc withdraw");
         print_r($wdInfo);
       }
-    } else echo "Not Enough asset to withdraw!" . PHP_EOL.
+    } else echo "Not Enough asset to withdraw!" . PHP_EOL;
   }
   if ($line == '9') {
     $wdInfo = $mixinSdk_BotInstance->Wallet()->createAddress(EOS_ASSET_ID,
@@ -215,7 +215,7 @@ while (true) {
                                     "eos withdraw");
         print_r($wdInfo);
       }
-    } else echo "Not Enough asset to withdraw!" . PHP_EOL.
+    } else echo "Not Enough asset to withdraw!" . PHP_EOL;
   }
   if ($line == 's') {
     $limit        = 20;
