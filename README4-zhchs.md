@@ -1,30 +1,28 @@
-# How to trade bitcoin through PHP language
+# 如何用 PHP 进行Bitcoin交易!
 
-## Solution One: pay to ExinCore API
-[Exincore](https://github.com/exinone/exincore) provide a commercial trading API on Mixin Network.
+## 方案一: 通过ExinCore API进行币币交易
+[Exincore](https://github.com/exinone/exincore) 提供了基于Mixin Network的币币交易API.
 
-You pay USDT to ExinCore, ExinCore transfer Bitcoin to you on the fly with very low fee and fair price. Every transaction is anonymous to public but still can be verified on blockchain explorer. Only you and ExinCore know the details.
+你可以支付USDT给ExinCore, ExinCore会以最低的价格，最优惠的交易费将你购买的比特币转给你, 每一币交易都是匿名的，并且可以在区块链上进行验证，交易的细节只有你与ExinCore知道！
 
-ExinCore don't know who you are because ExinCore only know your client's uuid.
+ExinCore 也不知道你是谁，它只知道你的UUID.
 
-### Pre-request:
-You should  have created a bot based on Mixin Network. Create one by reading [PHP Bitcoin tutorial](https://github.com/wenewzhang/mixin_labs-php-bot).
+### 预备知识:
+你先需要创建一个机器人, 方法在 [教程一](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md).
 
-#### Install required packages
-As you know, we introduce you the mixin-sdk-php in [chapter 1](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md), assume it has installed before, let's install **uuid, msgpack** here.
+#### 安装依赖包
+正如教程一里我们介绍过的， 我们需要依赖 **mixin-sdk-php**, 你应该先安装过它了， 这儿我们再安装 **uuid, msgpack** 两个软件包.
 ```bash
   composer require ramsey/uuid
   composer require rybakit/msgpack
 ```
-#### Deposit USDT or Bitcoin into your Mixin Network account and read balance
-ExinCore can exchange between Bitcoin, USDT, EOS, Eth etc. Here show you how to exchange between USDT and Bitcoin,
-Check the wallet's balance & address before you make order.
-
-- Check the address & balance, remember it Bitcoin wallet address.
-- Deposit Bitcoin to this Bitcoin wallet address.
-- Check Bitcoin balance after 100 minutes later.
-**By the way, Bitcoin & USDT 's address are the same.**
-
+#### 充币到 Mixin Network, 并读出它的余额.
+ExinCore可以进行BTC, USDT, EOS, ETH 等等交易， 这儿演示如果用 USDT购买BTC 或者 用BTC购买USDT, 交易前，先检查一下钱包地址！
+完整的步骤如下:
+- 检查比特币或USDT的余额，钱包地址。并记下钱包地址。
+- 从第三方交易所或者你的冷钱包中，将币充到上述钱包地址。
+- 再检查一下币的余额，看到帐与否。(比特币的到帐时间是5个区块的高度，约100分钟)。
+**请注意，比特币与USDT的地址是一样的。
 ```php
 if ($line == '2') {
   if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
@@ -49,8 +47,8 @@ if ($line == '3') {
   } else print("Create user first\n");
 }
 ```
-#### Read market price
-How to check the coin's price? You need understand what is the base coin. If you want buy Bitcoin and sell USDT, the USDT is the base coin. If you want buy USDT and sell Bitcoin, the Bitcoin is the base coin.
+#### 查询ExinCore市场的价格信息
+如果来查询ExinCore市场的价格信息呢？你要先了解你交易的基础币是什么，如果你想买比特币，卖出USDT,那么基础货币就是USDT;如果你想买USDT,卖出比特币，那么基础货币就是比特币.
 ```php
 function getExchangeCoins($base_coin) :string {
   $client = new GuzzleHttp\Client();
@@ -79,15 +77,15 @@ function getExchangeCoins($base_coin) :string {
 }
 ```
 
-#### Create a memo to prepare order
-The chapter two: [Echo Bitcoin](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) introduce transfer coins. But you need to let ExinCore know which coin you want to buy. Just write your target asset into memo.
+#### 交易前，创建一个Memo!
+在第二章里,[基于Mixin Network的PHP比特币开发教程: 机器人接受比特币并立即退还用户](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md), 我们学习过退还用户比特币，在这里，我们除了给ExinCore支付币外，还要告诉他我们想购买的币是什么，即将想购买的币存到memo里。
 ```php
 $memo = base64_encode(MessagePack::pack([
                      'A' => Uuid::fromString($_targetAssetID)->getBytes(),
                      ]));
 ```
-#### Pay BTC to API gateway with generated memo
-Transfer Bitcoin(BTC_ASSET_ID) to ExinCore(EXIN_BOT), put you target asset uuid in the memo, otherwise, ExinCore will refund you coin immediately!
+#### 币币交易的完整流程
+转币给ExinCore时，将memo写入你希望购买的币，否则，ExinCore会直接退币给你！
 ```php
 const EXIN_BOT        = "61103d28-3ac2-44a2-ae34-bd956070dab1";
 const BTC_ASSET_ID    = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
@@ -108,8 +106,7 @@ function coinExchange($_assetID,$_amount,$_targetAssetID) {
   print_r($BotInfo);
 }
 ```
-The ExinCore should transfer the target coin to your bot, meanwhile, put the fee, order id, price etc. information in the memo, unpack the data like below.
-- **readUserSnapshots** Read snapshots of the user.
+交易完成后，Exincore会将你需要的币转到你的帐上，同样，会在memo里，记录成交价格，交易费用等信息！你只需要按下面的方式解开即可！
 ```php
 $limit        = 20;
 $offset       = '2019-03-10T01:58:25.362528Z';
@@ -136,7 +133,7 @@ foreach ($snapInfo as  $record) {
 }
 ```
 
-If you coin exchange successful, console output like below:
+一次成功的交易如下：
 ```bash
 ------------MEMO:-coin--exchange--------------
 memo: hqFDzQPooVCnMzg3Mi45N6FGqTAuMDAwNzc0NqJGQcQQgVsLGidkNzaPqkLWlPpiCqFUoUahT8QQIbfeL6p5RVOcEP0mLb+t+g==
@@ -147,15 +144,15 @@ Order ID: 21b7de2f-aa79-4553-9c10-fd262dbfadfa Price is :3872.97
 --------------memo-record end---------------
 ```
 
-#### Read Bitcoin balance
-Check the wallet's balance.
+#### 读取币的余额
+通过读取币的余额，来确认交易情况！
 ```php
 $mixinSdk = new MixinSDK(require './config.php');
 $asset_info = $mixinSdk->Wallet()->readAsset(USDT_ASSET_ID);
 print_r("USDT wallet balance is :".$asset_info["balance"]."\n");
 ```
-## Source code usage
-Execute **php call_apis.php** to run it.
+## 源代码执行
+执行 **php call_apis.php** 即可开始交易了.
 
 - 1: Create user and update PIN
 - 2: Read Bitcoin balance & address
@@ -174,6 +171,6 @@ Execute **php call_apis.php** to run it.
 - tu: Transfer $1 USDT buy BTC
 - q: Exit
 
-[Full source code](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
+[完整代码](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/call_apis.php)
 
 ## Solution Two: List your order on Ocean.One exchange
