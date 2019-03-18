@@ -23,6 +23,7 @@ Check the wallet's balance & address before you make order.
 - Check the address & balance, remember it Bitcoin wallet address.
 - Deposit Bitcoin to this Bitcoin wallet address.
 - Check Bitcoin balance after 100 minutes later.
+
 **By the way, Bitcoin & USDT 's address are the same.**
 
 ```php
