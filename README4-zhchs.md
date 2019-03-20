@@ -1,4 +1,5 @@
 # 如何用 PHP 买卖Bitcoin
+![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 
 ## 方案一: 通过ExinCore API进行币币交易
 [Exincore](https://github.com/exinone/exincore) 提供了基于Mixin Network的币币交易API.
