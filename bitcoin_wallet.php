@@ -16,20 +16,35 @@ class callTraitClass {
   }
 }
 
-$mixinSdk_BotInstance = new MixinSDK(require './config.php');
+$mixinSdk_BotInstance         = new MixinSDK(require './config.php');
 
-const PIN             = "945689";
-const MASTER_ID       = "37222956";
-const EXIN_BOT        = "61103d28-3ac2-44a2-ae34-bd956070dab1";
-const BTC_ASSET_ID    = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
-const EOS_ASSET_ID    = "6cfe566e-4aad-470b-8c9a-2fd35b49c68d";
-const USDT_ASSET_ID   = "815b0b1a-2764-3736-8faa-42d694fa620a";
-const BTC_WALLET_ADDR = "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C";
-const AMOUNT          = "0.1";
-const EOS_THIRD_EXCHANGE_NAME
-                      = "huobideposit";
-const EOS_THIRD_EXCHANGE_TAG
-                      = "1872050";
+const PIN                     = "945689";
+const MASTER_ID               = "37222956";
+const OCEANONE_BOT            = "aaff5bef-42fb-4c9f-90e0-29f69176b7d4";
+const EXIN_BOT                = "61103d28-3ac2-44a2-ae34-bd956070dab1";
+const BTC_ASSET_ID            = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
+const EOS_ASSET_ID            = "6cfe566e-4aad-470b-8c9a-2fd35b49c68d";
+const USDT_ASSET_ID           = "815b0b1a-2764-3736-8faa-42d694fa620a";
+
+const ETC_ASSET_ID            = "2204c1ee-0ea2-4add-bb9a-b3719cfff93a";
+const XRP_ASSET_ID            = "23dfb5a5-5d7b-48b6-905f-3970e3176e27";
+const XEM_ASSET_ID            = "27921032-f73e-434e-955f-43d55672ee31";
+const ETH_ASSET_ID            = "43d61dcd-e413-450d-80b8-101d5e903357";
+const DASH_ASSET_ID           = "6472e7e3-75fd-48b6-b1dc-28d294ee1476";
+const DOGE_ASSET_ID           = "6770a1e5-6086-44d5-b60f-545f9d9e8ffd";
+const LTC_ASSET_ID            = "76c802a2-7c88-447f-a93e-c29c9e5dd9c8";
+const SIA_ASSET_ID            = "990c4c29-57e9-48f6-9819-7d986ea44985";
+const ZEN_ASSET_ID            = "a2c5d22b-62a2-4c13-b3f0-013290dbac60";
+const ZEC_ASSET_ID            = "c996abc9-d94e-4494-b1cf-2a3fd3ac5714";
+const BCH_ASSET_ID            = "fd11b6e3-0b87-41f1-a41f-f0e9b49e5bf0";
+const XIN_ASSET_ID            = "c94ac88f-4671-3976-b60a-09064f1811e8";
+const CNB_ASSET_ID            = "965e5c6e-434c-3fa9-b780-c50f43cd955c";
+const ERC20_BENZ              = "2b9c216c-ef60-398d-a42a-eba1b298581d";
+
+const BTC_WALLET_ADDR         = "14T129GTbXXPGXXvZzVaNLRFPeHXD1C25C";
+const AMOUNT                  = "0.1";
+const EOS_THIRD_EXCHANGE_NAME = "huobideposit";
+const EOS_THIRD_EXCHANGE_TAG  = "1872050";
 // Mixin Network support cryptocurrencies (2019-02-19)
 // |EOS|6cfe566e-4aad-470b-8c9a-2fd35b49c68d
 // |CNB|965e5c6e-434c-3fa9-b780-c50f43cd955c
@@ -50,8 +65,10 @@ $msg  = "1: Create Wallet and update PIN\n2: Read Bitcoin balance & address \n3:
 $msg .= "tbb: Transfer BTC from Bot to Wallet\ntbm: Transfer BTC from Wallet to Master\n";
 $msg .= "teb: Transfer EOS from Bot to Wallet\ntem: Transfer EOS from Wallet to Master\n";
 $msg .= "tub: Transfer USDT from Bot to Wallet\ntum: Transfer USDT from Wallet to Master\n";
-$msg .= "8: Withdraw bot's Bitcoin\n9: Withdraw bot's EOS\nqu: Read market price(USDT)\nqb: Read market price(BTC)\nb: Balance of  bot (USDT & BTC & EOS)\n";
+$msg .= "8: Withdraw bot's Bitcoin\n9: Withdraw bot's EOS\nqu: Read market price(USDT)\nqb: Read market price(BTC)\n";
+$msg .= "ab: get Bot Assets\naw: get Wallet Assets\n";
 $msg .= "s: Read Snapshots \ntb: Transfer 0.0001 BTC buy USDT\ntu: Transfer $1 USDT buy BTC\n";
+$msg .= "o: OceanOne Limit\n";
 $msg .= "q: Exit \nMake your choose:";
 while (true) {
   echo $msg;
@@ -79,13 +96,17 @@ while (true) {
     }
     fclose($fp);
   }
-  if ($line == 'b') {
-    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(BTC_ASSET_ID);
-    print_r("Bot Bitcoin wallet balance is :".$asset_info["balance"]."\n");
-    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(USDT_ASSET_ID);
-    print_r("Bot USDT wallet balance is :".$asset_info["balance"]."\n");
-    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(EOS_ASSET_ID);
-    print_r("Bot EOS wallet balance is :".$asset_info["balance"]."\n");
+  if ($line == 'ab') {
+    $asset_info = $mixinSdk_BotInstance->Wallet()->readAssets();
+    print_r($asset_info);
+    foreach ($asset_info as $key => $asset) {
+      echo $asset["symbol"] . " ";
+    }
+  }
+  if ($line == 'aw') {
+    $mixinSdk_eachAccountInstance = GenerateWalletSDKFromCSV();
+    $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAssets();
+    print_r($asset_info);
   }
   if ($line == '2') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
@@ -111,7 +132,7 @@ while (true) {
   }
   if ($line == '4') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+    if (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
       $mixinSdk_eachAccountInstance= new MixinSDK(GenerateConfigByCSV($data));
       $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(EOS_ASSET_ID);
       print_r("EOS wallet address is :".$asset_info["account_name"]."\n");
@@ -327,6 +348,16 @@ while (true) {
   if ($line == 'q') {
     exit();
   }
+  if ($line == 'o') {
+    $lmsg  = "1:  Fetch XIN/USDT orders\n";
+    $lmsg .= "q:  Exit\n";
+    while (true) {
+      echo $lmsg;
+      $ocmd = readline("");
+      if ($ocmd == 'q') break;
+      if ( $ocmd == '1') { getOceanOneMarketInfos(XIN_ASSET_ID,USDT_ASSET_ID);}
+    }
+  }
 }
 
 function GenerateConfigByCSV($data) :array {
@@ -338,6 +369,24 @@ function GenerateConfigByCSV($data) :array {
   $newConfig["client_id"]   = $data[3];
   $newConfig["pin"]         = $data[4];
   return $newConfig;
+}
+
+function getOceanOneMarketInfos($targetCoin, $baseCoin)  {
+  $client = new GuzzleHttp\Client();
+  $baseUrl = "https://events.ocean.one/markets/".$targetCoin."-".$baseCoin."/book";
+  $res = $client->request('GET', $baseUrl, [
+      ]);
+  if ($res->getStatusCode() == "200") {
+    // echo $res->getStatusCode() . PHP_EOL;
+    $resInfo = json_decode($res->getBody(), true);
+    echo "Side | Price | Amount | Funds" . PHP_EOL;
+    foreach ($resInfo["data"]["data"]["asks"] as $key => $exchange) {
+      echo $exchange["side"] . " " . $exchange["price"] . " " . $exchange["amount"] . $exchange["funds"] . PHP_EOL;
+    }
+    foreach ($resInfo["data"]["data"]["bids"] as $key => $exchange) {
+      echo $exchange["side"] . " " . $exchange["price"] . " " . $exchange["amount"] . $exchange["funds"] . PHP_EOL;
+    }
+  }
 }
 
 function getExchangeCoins($base_coin) :string {
