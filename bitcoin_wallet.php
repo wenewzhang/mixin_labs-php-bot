@@ -22,6 +22,7 @@ const PIN                     = "945689";
 const MASTER_ID               = "37222956";
 const OCEANONE_BOT            = "aaff5bef-42fb-4c9f-90e0-29f69176b7d4";
 const EXIN_BOT                = "61103d28-3ac2-44a2-ae34-bd956070dab1";
+const MASTER_UUID             = "0b4f49dc-8fb4-4539-9a89-fb3afc613747";
 const BTC_ASSET_ID            = "c6d0c728-2624-429b-8e0d-d9d19b6592fa";
 const EOS_ASSET_ID            = "6cfe566e-4aad-470b-8c9a-2fd35b49c68d";
 const USDT_ASSET_ID           = "815b0b1a-2764-3736-8faa-42d694fa620a";
@@ -65,6 +66,7 @@ $msg  = "1: Create Wallet and update PIN\n2: Read Bitcoin balance & address \n3:
 $msg .= "tbb: Transfer BTC from Bot to Wallet\ntbm: Transfer BTC from Wallet to Master\n";
 $msg .= "teb: Transfer EOS from Bot to Wallet\ntem: Transfer EOS from Wallet to Master\n";
 $msg .= "tub: Transfer USDT from Bot to Wallet\ntum: Transfer USDT from Wallet to Master\n";
+$msg .= "tcb: Transfer CNB from Bot to Wallet\ntcm: Transfer CNB from Wallet to Master\n";
 $msg .= "8: Withdraw bot's Bitcoin\n9: Withdraw bot's EOS\nqu: Read market price(USDT)\nqb: Read market price(BTC)\n";
 $msg .= "ab: get Bot Assets\naw: get Wallet Assets\n";
 $msg .= "s: Read Snapshots \ntb: Transfer 0.0001 BTC buy USDT\ntu: Transfer $1 USDT buy BTC\n";
@@ -107,7 +109,10 @@ while (true) {
   if ($line == 'aw') {
     $mixinSdk_eachAccountInstance = GenerateWalletSDKFromCSV();
     $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAssets();
-    print_r($asset_info);
+    foreach ($asset_info as $key => $asset) {
+      echo  $asset["symbol"] . " " . $asset["balance"] ." ". $asset["price_btc"] .
+            " ". $asset["public_key"].PHP_EOL;
+    }
   }
   if ($line == '2') {
     if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
@@ -247,6 +252,37 @@ while (true) {
       print_r($trans_info);
     }
   }
+  if ($line == 'tcm') {
+    $userInfo = $mixinSdk_BotInstance->Network()->readUser(MASTER_ID);
+    if (isset($userInfo["user_id"])) {
+      if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
+      if (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+          $mixinSdk_eachAccountInstance= new MixinSDK(GenerateConfigByCSV($data));
+          $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(CNB_ASSET_ID);
+          if ( (float) $asset_info["balance"] > 0 ) {
+            $trans_info = $mixinSdk_eachAccountInstance->Wallet()->transfer(CNB_ASSET_ID,$userInfo["user_id"],
+                                                     $mixinSdk_eachAccountInstance->getConfig()['default']['pin'],
+                                                     $asset_info["balance"]);
+            print_r($trans_info);
+          } else print($data[3] . " has no coins!\n");
+      }
+        fclose($handle);
+      } else print("Create user first\n");
+    } else print("Can not find this user id by Mixin ID!");
+  }
+  if ($line == 'tcb') {
+    // $userInfo = $mixinSdk_BotInstance->Network()->readUser(MASTER_ID);
+    $mixinSdk_eachAccountInstance = GenerateWalletSDKFromCSV();
+    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(CNB_ASSET_ID);
+    print_r($asset_info);
+    if ( (float) $asset_info["balance"] > 0 ) {
+      $trans_info = $mixinSdk_BotInstance->Wallet()->transfer(CNB_ASSET_ID,
+                                               $mixinSdk_eachAccountInstance->getConfig()['default']['client_id'],
+                                               $mixinSdk_BotInstance->getConfig()['default']['pin'],
+                                               $asset_info["balance"]);
+      print_r($trans_info);
+    }
+  }
   if ($line == '8') {
     $btcInfo = $mixinSdk_BotInstance->Wallet()->createAddress(BTC_ASSET_ID,
                                               BTC_WALLET_ADDR,
@@ -350,13 +386,48 @@ while (true) {
     exit();
   }
   if ($line == 'o') {
-    $lmsg  = "1:  Fetch XIN/USDT orders\n";
+    $lmsg  = "1:  Fetch XIN/USDT orders\ns1: Sell XIN/USDT\nb1: Buy XIN/USDT\n";
     $lmsg .= "q:  Exit\n";
     while (true) {
       echo $lmsg;
       $ocmd = readline("");
       if ($ocmd == 'q') break;
       if ( $ocmd == '1') { getOceanOneMarketInfos(XIN_ASSET_ID,USDT_ASSET_ID);}
+      if ( $ocmd == 's1') { getOceanOneMarketInfos(XIN_ASSET_ID,USDT_ASSET_ID);}
+      if ( $ocmd == 'b1') {
+        $p = readline("Input the Price of XIN/USDT: ");
+        $a = readline("Input the Amount of USDT: ");
+        $tMemo = GenerateOrderMemo("B",XIN_ASSET_ID,$p);
+        echo $tMemo .  PHP_EOL;
+        $mixinSdk_WalletInstance = GenerateWalletSDKFromCSV();
+        $asset_info = $mixinSdk_WalletInstance->Wallet()->readAsset(USDT_ASSET_ID);
+
+        print_r($asset_info);
+        if ( ((float) $asset_info["balance"] >= 1) && ( (float) $asset_info["balance"] >= (float) $a ) ) {
+          $transInfos = $mixinSdk_WalletInstance->Wallet()->transfer(USDT_ASSET_ID,OCEANONE_BOT,
+                                                      $mixinSdk_WalletInstance->getConfig()['default']['pin'],
+                                                      $a,
+                                                      $tMemo);
+          print_r($transInfos);
+        } else { echo "Not enough USDT!\n";}
+      }
+      if ( $ocmd == 'c' ) {
+        $mixinSdk_WalletInstance = GenerateWalletSDKFromCSV();
+        $asset_info = $mixinSdk_WalletInstance->Wallet()->readAsset(CNB_ASSET_ID);
+        if ( ((float) $asset_info["balance"] == 0) ) {
+           echo "Please deposit some CNB to this Wallet!" . PHP_EOL;
+        } else {
+           $orderid = readline("Input the Order id ( trace_id ): ");
+           $cMemo =  base64_encode(MessagePack::pack([
+                                 'O' => Uuid::fromString($orderid)->getBytes(),
+                                 ]));
+           $transInfos = $mixinSdk_WalletInstance->Wallet()->transfer(CNB_ASSET_ID,OCEANONE_BOT,
+                                                       $mixinSdk_WalletInstance->getConfig()['default']['pin'],
+                                                       "0.00000001",
+                                                       $cMemo);
+           print_r($transInfos);
+        }
+      }
     }
   }
 }
@@ -430,4 +501,14 @@ function GenerateWalletSDKFromCSV() :MixinSDK {
     print("Create user first\n");
     return null;
   }
+}
+
+function GenerateOrderMemo($side, $asset, $price) :string {
+  $memo = base64_encode(MessagePack::pack([
+                       'S' => $side,
+                       'A' => Uuid::fromString($asset)->getBytes(),
+                       'P' => $price,
+                       'T' => 'L',
+                       ]));
+  return $memo;
 }
