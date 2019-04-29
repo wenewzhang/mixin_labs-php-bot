@@ -100,7 +100,8 @@ while (true) {
     $asset_info = $mixinSdk_BotInstance->Wallet()->readAssets();
     print_r($asset_info);
     foreach ($asset_info as $key => $asset) {
-      echo $asset["symbol"] . " ";
+      echo  $asset["symbol"] . " " . $asset["balance"] ." ". $asset["price_btc"] .
+            " ". $asset["public_key"].PHP_EOL;
     }
   }
   if ($line == 'aw') {
