@@ -16,7 +16,7 @@
 #### 安装依赖包
 正如教程一里我们介绍过的， 我们需要依赖 [**mixin-sdk-php**](https://packagist.org/packages/exinone/mixin-sdk-php), 你应该已经先安装过它了.
 
-#### Install required packages
+#### 安装依赖的库
 [第四课](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4-zhchs.md), 在上一课中已经安装好了.
 
 #### 充币到 Mixin Network, 并读出它的余额.
