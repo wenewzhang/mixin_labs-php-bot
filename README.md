@@ -8,7 +8,8 @@ A Mixin messenger bot will be created in this tutorial. The bot is powered by PH
 1. [How to create bot in Mixin messenger and reply message to user](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) |[Indonesian](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md)|[Portuguese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README_Brazilian_Portuguese.md)
 2. [How to receive Bitcoin and send Bitcoin in Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md)
 3. [Create Bitcoin wallet, read balance and send Bitcoin by PHP based on Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md)
-4. [How to trade bitcoin through PHP language](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4.md) |  [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4-zhchs.md)
+4. [How to trade bitcoin through PHP language: Pay to ExinCore](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4.md) |  [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4-zhchs.md)
+5. [How to trade bitcoin through PHP: List your order on Ocean.One](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README5.md) | [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README5-zhchs.md)
 
 ## Create bot in Mixin messenger and reply message to user
 ### PHP environment setup:
