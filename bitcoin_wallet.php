@@ -68,6 +68,7 @@ $msg .= "teb: Transfer EOS from Bot to Wallet\ntem: Transfer EOS from Wallet to 
 $msg .= "tub: Transfer USDT from Bot to Wallet\ntum: Transfer USDT from Wallet to Master\n";
 $msg .= "tcb: Transfer CNB from Bot to Wallet\ntcm: Transfer CNB from Wallet to Master\n";
 $msg .= "txb: Transfer XIN from Bot to Wallet\ntcm: Transfer XIN from Wallet to Master\n";
+$msg .= "trb:Transfer ERC20 from Bot to Wallet\ntrm:Transfer ERC20 from Wallet to Master\n";
 $msg .= "8: Withdraw bot's Bitcoin\n9: Withdraw bot's EOS\nqu: Read market price(USDT)\nqb: Read market price(BTC)\n";
 $msg .= "ab: get Bot Assets\naw: get Wallet Assets\n";
 $msg .= "s: Read Snapshots \ntb: Transfer 0.0001 BTC buy USDT\ntu: Transfer $1 USDT buy BTC\n";
@@ -103,16 +104,16 @@ while (true) {
     $asset_info = $mixinSdk_BotInstance->Wallet()->readAssets();
     print_r($asset_info);
     foreach ($asset_info as $key => $asset) {
-      echo  $asset["symbol"] . " " . $asset["balance"] ." ". $asset["price_btc"] .
-            " ". $asset["public_key"].PHP_EOL;
+      echo  $asset["symbol"] . "    " . $asset["asset_id"] ."    ". $asset["balance"] .
+            "    ". $asset["public_key"].PHP_EOL;
     }
   }
   if ($line == 'aw') {
     $mixinSdk_eachAccountInstance = GenerateWalletSDKFromCSV();
     $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAssets();
     foreach ($asset_info as $key => $asset) {
-      echo  $asset["symbol"] . " " . $asset["balance"] ." ". $asset["price_btc"] .
-            " ". $asset["public_key"].PHP_EOL;
+      echo  $asset["symbol"] . "   " . $asset["asset_id"] ."   ". $asset["balance"] .
+            "   ". $asset["public_key"].PHP_EOL;
     }
   }
   if ($line == '2') {
@@ -315,6 +316,37 @@ while (true) {
       print_r($trans_info);
     }
   }
+  if ($line == 'trm') {
+    $userInfo = $mixinSdk_BotInstance->Network()->readUser(MASTER_ID);
+    if (isset($userInfo["user_id"])) {
+      if (($handle = fopen("new_users.csv", "r")) !== FALSE) {
+      if (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+          $mixinSdk_eachAccountInstance= new MixinSDK(GenerateConfigByCSV($data));
+          $asset_info = $mixinSdk_eachAccountInstance->Wallet()->readAsset(ERC20_BENZ);
+          if ( (float) $asset_info["balance"] > 0 ) {
+            $trans_info = $mixinSdk_eachAccountInstance->Wallet()->transfer(ERC20_BENZ,$userInfo["user_id"],
+                                                     $mixinSdk_eachAccountInstance->getConfig()['default']['pin'],
+                                                     $asset_info["balance"]);
+            print_r($trans_info);
+          } else print($data[3] . " has no coins!\n");
+      }
+        fclose($handle);
+      } else print("Create user first\n");
+    } else print("Can not find this user id by Mixin ID!");
+  }
+  if ($line == 'trb') {
+    // $userInfo = $mixinSdk_BotInstance->Network()->readUser(MASTER_ID);
+    $mixinSdk_eachAccountInstance = GenerateWalletSDKFromCSV();
+    $asset_info = $mixinSdk_BotInstance->Wallet()->readAsset(ERC20_BENZ);
+    print_r($asset_info);
+    if ( (float) $asset_info["balance"] > 0 ) {
+      $trans_info = $mixinSdk_BotInstance->Wallet()->transfer(ERC20_BENZ,
+                                               $mixinSdk_eachAccountInstance->getConfig()['default']['client_id'],
+                                               $mixinSdk_BotInstance->getConfig()['default']['pin'],
+                                               $asset_info["balance"]);
+      print_r($trans_info);
+    }
+  }
   if ($line == '8') {
     $btcInfo = $mixinSdk_BotInstance->Wallet()->createAddress(BTC_ASSET_ID,
                                               BTC_WALLET_ADDR,
@@ -419,12 +451,14 @@ while (true) {
   }
   if ($line == 'o') {
     $lmsg  = "1:  Fetch XIN/USDT orders\ns1: Sell XIN/USDT\nb1: Buy XIN/USDT\n";
+    $lmsg  .= "2:  Fetch ERC20(Benz)/USDT orders\ns2: Sell Benz/USDT\nb2: Buy Benz/USDT\n";
     $lmsg .= "q:  Exit\n";
     while (true) {
       echo $lmsg;
       $ocmd = readline("");
       if ($ocmd == 'q') break;
       if ( $ocmd == '1') { getOceanOneMarketInfos(XIN_ASSET_ID,USDT_ASSET_ID);}
+      if ( $ocmd == '2') { getOceanOneMarketInfos(ERC20_BENZ,USDT_ASSET_ID);}
       if ( $ocmd == 's1') {
         $p = readline("Input the Price of XIN/USDT: ");
         $a = readline("Input the Amount of XIN: ");
@@ -445,6 +479,39 @@ while (true) {
         $p = readline("Input the Price of XIN/USDT: ");
         $a = readline("Input the Amount of USDT: ");
         $tMemo = GenerateOrderMemo("B",XIN_ASSET_ID,$p);
+        echo $tMemo .  PHP_EOL;
+        $mixinSdk_WalletInstance = GenerateWalletSDKFromCSV();
+        $asset_info = $mixinSdk_WalletInstance->Wallet()->readAsset(USDT_ASSET_ID);
+
+        print_r($asset_info);
+        if ( ((float) $asset_info["balance"] >= 1) && ( (float) $asset_info["balance"] >= (float) $a ) ) {
+          $transInfos = $mixinSdk_WalletInstance->Wallet()->transfer(USDT_ASSET_ID,OCEANONE_BOT,
+                                                      $mixinSdk_WalletInstance->getConfig()['default']['pin'],
+                                                      $a,
+                                                      $tMemo);
+          print_r($transInfos);
+        } else { echo "Not enough USDT!\n";}
+      }
+      if ( $ocmd == 's2') {
+        $p = readline("Input the Price of Benz/USDT: ");
+        $a = readline("Input the Amount of Benz: ");
+        $tMemo = GenerateOrderMemo("A",USDT_ASSET_ID,$p);
+        echo $tMemo .  PHP_EOL;
+        $mixinSdk_WalletInstance = GenerateWalletSDKFromCSV();
+        $asset_info = $mixinSdk_WalletInstance->Wallet()->readAsset(ERC20_BENZ);
+        print_r($asset_info);
+        if ( (float) $asset_info["balance"] >= (float) $a ) {
+          $transInfos = $mixinSdk_WalletInstance->Wallet()->transfer(ERC20_BENZ,OCEANONE_BOT,
+                                                      $mixinSdk_WalletInstance->getConfig()['default']['pin'],
+                                                      $a,
+                                                      $tMemo);
+          print_r($transInfos);
+        } else { echo "Not enough ERC20_BENZ!\n";}
+      }
+      if ( $ocmd == 'b2') {
+        $p = readline("Input the Price of Benz/USDT: ");
+        $a = readline("Input the Amount of USDT: ");
+        $tMemo = GenerateOrderMemo("B",ERC20_BENZ,$p);
         echo $tMemo .  PHP_EOL;
         $mixinSdk_WalletInstance = GenerateWalletSDKFromCSV();
         $asset_info = $mixinSdk_WalletInstance->Wallet()->readAsset(USDT_ASSET_ID);
