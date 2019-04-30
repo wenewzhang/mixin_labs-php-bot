@@ -10,6 +10,7 @@ A Mixin messenger bot will be created in this tutorial. The bot is powered by PH
 3. [Create Bitcoin wallet, read balance and send Bitcoin by PHP based on Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md)| [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md)
 4. [How to trade bitcoin through PHP language: Pay to ExinCore](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4.md) |  [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4-zhchs.md)
 5. [How to trade bitcoin through PHP: List your order on Ocean.One](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README5.md) | [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README5-zhchs.md)
+6. [How to trade ERC-20 compliant coins on OceanOne through PHP](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README6.md) | [Chinese](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README6-zhchs.md)
 
 ## Create bot in Mixin messenger and reply message to user
 ### PHP environment setup:

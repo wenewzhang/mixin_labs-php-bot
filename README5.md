@@ -212,6 +212,8 @@ Build it and then run it.
 
 - **php bitcoin_wallet.php** run it.
 
+Commands of trade with OceanOne:
+
 - o: Ocean.One Exchange
 - q: Exit
 
