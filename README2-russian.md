@@ -1,4 +1,4 @@
-# Туториал по PHP для работы с биткойном через Mixin Network II: Получайте и отправляйте Bitcoin в Mixin Messenger
+# Туториал по PHP для работы с биткойном через Mixin Network, часть II: Получайте и отправляйте Bitcoin в Mixin Messenger
 ![](https://github.com/wenewzhang/mixin_labs-php-bot/raw/master/Bitcoin_php.jpg)
 
 В [предыдущей главе](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README.md) ваш первый бот начал работать. Это echo-бот, он возвращал сообщения. 
