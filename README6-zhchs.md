@@ -5,7 +5,7 @@
 
 此处我们用一个叫做Benz的[ERC20 token](https://etherscan.io/token/0xc409b5696c5f9612e194a582e14c8cd41ecdbc67)为例。这个token已经被充值进Mixin Network，你可以在[区块链浏览器](https://mixin.one/snapshots/2b9c216c-ef60-398d-a42a-eba1b298581d )看到这个token在Mixin Network内部的总数和交易
 ### 预备知识:
-先将Ben币存入你的钱包，然后使用**getAssets** API读取它的UUID.
+先将Benz币存入你的钱包，然后使用**getAssets** API读取它的UUID.
 
 ### 取得该币的UUID
 调用 **getAssets** API 会返回json数据, 如:
