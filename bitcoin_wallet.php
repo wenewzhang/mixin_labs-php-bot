@@ -473,6 +473,7 @@ while (true) {
                                                       $a,
                                                       $tMemo);
           print_r($transInfos);
+          echo "The Order ID (trace_id) is: " . $transInfos["trace_id"] . PHP_EOL;
         } else { echo "Not enough XIN!\n";}
       }
       if ( $ocmd == 'b1') {
@@ -490,6 +491,7 @@ while (true) {
                                                       $a,
                                                       $tMemo);
           print_r($transInfos);
+          echo "The Order ID (trace_id) is: " . $transInfos["trace_id"] . PHP_EOL;
         } else { echo "Not enough USDT!\n";}
       }
       if ( $ocmd == 's2') {
@@ -506,6 +508,7 @@ while (true) {
                                                       $a,
                                                       $tMemo);
           print_r($transInfos);
+          echo "The Order ID (trace_id) is: " . $transInfos["trace_id"] . PHP_EOL;
         } else { echo "Not enough ERC20_BENZ!\n";}
       }
       if ( $ocmd == 'b2') {
@@ -523,6 +526,7 @@ while (true) {
                                                       $a,
                                                       $tMemo);
           print_r($transInfos);
+          echo "The Order ID (trace_id) is: " . $transInfos["trace_id"] . PHP_EOL;
         } else { echo "Not enough USDT!\n";}
       }
       if ( $ocmd == 'c' ) {
@@ -567,10 +571,10 @@ function getOceanOneMarketInfos($targetCoin, $baseCoin)  {
     $resInfo = json_decode($res->getBody(), true);
     echo "Side | Price | Amount | Funds" . PHP_EOL;
     foreach ($resInfo["data"]["data"]["asks"] as $key => $exchange) {
-      echo $exchange["side"] . " " . $exchange["price"] . " " . $exchange["amount"] . $exchange["funds"] . PHP_EOL;
+      echo $exchange["side"] . " " . $exchange["price"] . " " . $exchange["amount"] ." " . $exchange["funds"] . PHP_EOL;
     }
     foreach ($resInfo["data"]["data"]["bids"] as $key => $exchange) {
-      echo $exchange["side"] . " " . $exchange["price"] . " " . $exchange["amount"] . $exchange["funds"] . PHP_EOL;
+      echo $exchange["side"] . " " . $exchange["price"] . " " . $exchange["amount"] ." " . $exchange["funds"] . PHP_EOL;
     }
   }
 }
