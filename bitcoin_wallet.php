@@ -452,7 +452,7 @@ while (true) {
   if ($line == 'o') {
     $lmsg  = "1:  Fetch XIN/USDT orders\ns1: Sell XIN/USDT\nb1: Buy XIN/USDT\n";
     $lmsg  .= "2:  Fetch ERC20(Benz)/USDT orders\ns2: Sell Benz/USDT\nb2: Buy Benz/USDT\n";
-    $lmsg .= "q:  Exit\n";
+    $lmsg .= "c: Cancel Order\nq:  Exit\n";
     while (true) {
       echo $lmsg;
       $ocmd = readline("");
