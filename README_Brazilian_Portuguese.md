@@ -8,7 +8,7 @@ Um bot do mixin messenger será criado neste tutorial. O bot é desenvolvido por
 1. [Como criar bot no Mixin Messenger e responder uma mensagem para o usuário](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README_Brazilian_Portuguese.md)|
 2. [Como receber Bitcoin e enviar Bitcoin no Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2_Brazilian_Portuguese.md)|
 3. [Como criar uma carteira Bitcoin baseada na API do Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3_Brazilian_Portuguese.md)|
-4. [Como negociar bitcoin através da linguagem PHP](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4__Brazilian_Portuguese.md)
+4. [Como negociar bitcoin através da linguagem PHP](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4_Brazilian_Portuguese.md)
 5. [Como negociar bitcoin através de PHP](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README5_Brazilian_Portuguese.md)
 ## Criar um bot no Mixin Messenger e responder mensagem para o usuário
 ### Configuração do ambiente PHP:
