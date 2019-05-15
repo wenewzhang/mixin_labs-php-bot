@@ -9,6 +9,8 @@
 2. [Туториал по PHP для работы с биткойном через Mixin Network, часть II: Получайте и отправляйте Bitcoin в Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-russian.md)
 3. [Туториал по PHP для работы с биткойном через Mixin Network, часть III: Создавайте биткойн-кошелёк, проверяйте баланс и отправляйте биткойны](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-russian.md)
 4. [Как торговать биткойнами с помощью PHP (часть IV)](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4-russian.md)
+5. [Как торговать биткойнами с помощью PHP](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README5-russian.md)
+
 ## Как создать бота для Mixin Messenger и сформировать ответные сообщения пользователям
 ### Настройка среды PHP
 Данный туториал написан для `PHP 7.3`, поэтому нужно установить [PHP](http://php.net/) и менеджер зависимостей [Composer](https://getcomposer.org/).
