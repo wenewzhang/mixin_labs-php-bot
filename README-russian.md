@@ -5,9 +5,10 @@
 [Каталог ресурсов по Mixin Network](https://github.com/awesome-mixin-network/index_of_Mixin_Network_resource)
 
 ## С помощью данного туториала вы научитесь
-1. [Создавать бота для Mixin Messenger и формировать ответные сообщения пользователям](https://github.com/wenewzhang/mixin_labs-php-bot#create-bot-and-receive-message-from-user) | [Китайский](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-zhchs.md) | [Индонезийский](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/Indonesian/README_Indonesian.md) | [Португальский](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README_Brazilian_Portuguese.md)
-2. [Получать и отправлять биткойны в Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2.md) | [Китайский](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-zhchs.md)
-3. [Создавать биткойн-кошелёк на основе API Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3.md) | [Китайский](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-zhchs.md)
+1. [Туториал по PHP для работы с биткойном через Mixin Network](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README-russian.md)
+2. [Туториал по PHP для работы с биткойном через Mixin Network, часть II: Получайте и отправляйте Bitcoin в Mixin Messenger](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README2-russian.md)
+3. [Туториал по PHP для работы с биткойном через Mixin Network, часть III: Создавайте биткойн-кошелёк, проверяйте баланс и отправляйте биткойны](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README3-russian.md)
+4. [Как торговать биткойнами с помощью PHP (часть IV)](https://github.com/wenewzhang/mixin_labs-php-bot/blob/master/README4-russian.md)
 ## Как создать бота для Mixin Messenger и сформировать ответные сообщения пользователям
 ### Настройка среды PHP
 Данный туториал написан для `PHP 7.3`, поэтому нужно установить [PHP](http://php.net/) и менеджер зависимостей [Composer](https://getcomposer.org/).
